@@ -28,7 +28,7 @@
                 <nav>
                     <ul id="menu">
                         <li>@Html.ActionLink("Dashboard", "Dashboard", "Landlord")</li>
-                        <li>@Html.ActionLink("Receipts", "Receipts", "Landlord")</li>
+                        <li>@Html.ActionLink("Receipts", "Index", "Receipts")</li>
                         <li>@Html.ActionLink("Reports", "Contact", "Home")</li>
                         <li>@Html.ActionLink("Applicants", "Contact", "Home")</li>
                         <li>@Html.ActionLink("Tasks", "Contact", "Home")</li>
@@ -42,7 +42,12 @@
             </div>
 
             <div id="content">
+                
                 <section id="main" class="column">
+                    @if (TempData["message"] != null)
+                {
+                    <div class="Message">@TempData["message"]</div>
+                }
                     @RenderBody()
                 </section>
             </div>

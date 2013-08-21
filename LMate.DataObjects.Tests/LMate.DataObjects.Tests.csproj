@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B47E3582-D5C6-486B-811D-D2D46FCACBC6}</ProjectGuid>
+    <ProjectGuid>{5E8E4BAB-E99A-4732-B869-6C2D051D60E8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LMate.BusinessObjects</RootNamespace>
-    <AssemblyName>LMate.BusinessObjects</AssemblyName>
+    <RootNamespace>LMate.DataObjects.Tests</RootNamespace>
+    <AssemblyName>LMate.DataObjects.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Receipt.cs" />
+    <Compile Include="ReceiptRepoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LMate.BusinessObjects\LMate.BusinessObjects.csproj">
+      <Project>{b47e3582-d5c6-486b-811d-d2d46fcacbc6}</Project>
+      <Name>LMate.BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMate.DataObjects\LMate.DataObjects.csproj">
+      <Project>{f3e617f8-d76a-4ed4-b807-775e2ff8fcb9}</Project>
+      <Name>LMate.DataObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

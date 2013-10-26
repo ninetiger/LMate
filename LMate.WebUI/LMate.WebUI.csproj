@@ -162,6 +162,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LandlordController.cs" />
+    <Compile Include="Controllers\ReceiptsController.cs" />
+    <Compile Include="Controllers\ReturnsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -173,6 +176,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ie.css" />
+    <Content Include="Content\Landlord.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -216,6 +221,12 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Landlord\Dashboard.cshtml" />
+    <Content Include="Views\Landlord\Index.cshtml" />
+    <Content Include="Views\Receipts\Edit.cshtml" />
+    <Content Include="Views\Receipts\Index.cshtml" />
+    <Content Include="Views\Shared\_LandlordLayout.cshtml" />
+    <Content Include="Views\Returns\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -226,6 +237,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LMate.BusinessObjects\LMate.BusinessObjects.csproj">
+      <Project>{b47e3582-d5c6-486b-811d-d2d46fcacbc6}</Project>
+      <Name>LMate.BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LMate.DataObjects\LMate.DataObjects.csproj">
+      <Project>{f3e617f8-d76a-4ed4-b807-775e2ff8fcb9}</Project>
+      <Name>LMate.DataObjects</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

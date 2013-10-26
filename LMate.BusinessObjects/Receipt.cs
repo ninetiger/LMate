@@ -4,6 +4,16 @@ using System.Web.Mvc;
 
 namespace LMate.BusinessObjects
 {
+    public enum ReceiptType
+    {
+        ReparisAndMaintenance, Depreciation, Other
+    }
+
+        public enum Status
+    {
+        Depreciable, Sold, Disposed, Removed
+    }
+
     public class Receipt
     {
         [HiddenInput(DisplayValue = false)]
@@ -24,7 +34,8 @@ namespace LMate.BusinessObjects
 
         public string Comment { set; get; }
 
-       // public decimal OpeningAdjustedTaxValue { set; get; }
-       // public decimal DepreciationRate { set; get; }
+        public ReceiptType Type { set; get; }
+
+        public Status Status { set; get; }
     }
 }

@@ -7,8 +7,8 @@ using LMate.BusinessObjects;
 
 namespace LMate.DataObjects.Abstract
 {
-    public interface IReturnRepository
+    public interface IDisposalRepository
     {
-        IQueryable<Return> Returns { get; }
+        IQueryable<Disposal> Disposals { get; }
     }
 }

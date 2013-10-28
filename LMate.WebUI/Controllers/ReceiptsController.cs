@@ -19,13 +19,11 @@ namespace LMate.Controllers
             _repository = new EFReceiptRepository();
         }
 
-        //
-        // GET: /Receipts/
-
         public ActionResult Index()
         {
             return View(_repository.Receipts);
         }
+
         public ViewResult Edit(int receiptId)
         {
             Receipt receipt = _repository.Receipts

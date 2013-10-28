@@ -6,7 +6,8 @@ namespace LMate.BusinessObjects
 {
     public enum ReceiptType
     {
-        ReparisAndMaintenance, Depreciation, Other
+        ReparisAndMaintenance, Asset, Other,
+        Rate, Insurance, AgentCollectionFees
     }
 
         public enum Status

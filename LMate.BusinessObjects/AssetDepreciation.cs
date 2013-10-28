@@ -7,20 +7,21 @@ using System.Web.Mvc;
 
 namespace LMate.BusinessObjects
 {
-    public enum Method
+    public enum DepreciationMethod
     {
-        DV, ST    
+        StraightLineMethod, DiminishingValueMethod
     }
 
-    public class Return
+    public class AssetDepreciation
     {
         [HiddenInput(DisplayValue = false)]
-        public int ReturnID { set; get; }
+        public int ID { set; get; }
+        public int ReceiptID { set; get; }
 
         public decimal OpeningAdjustedTaxValue { set; get; }
         public decimal CloseingAdjustedTaxValue { set; get; }
         public decimal DepreciationRate { set; get; }
-        public Method DepreciationMethond { set; get; }
+        public DepreciationMethod DepreciationMethond { set; get; }
         public int NumberOfMonth { set; get; }
         public decimal DepreciationClaimed { set; get; }
         public string Note { set; get; }

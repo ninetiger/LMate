@@ -1,0 +1,15 @@
+﻿@model LMate.BusinessObjects.RentalIncome
+
+@{
+    ViewBag.Title = "Edit" + @Model.YearEnded;
+    Layout = "~/Views/Shared/_LandlordLayout.cshtml";
+}
+
+<h1>Edit @Model.YearEnded</h1>
+
+@using (Html.BeginForm("Edit", "RentalIncome"))
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Save" />
+    @Html.ActionLink("Cancel and return to List", "Index")
+}

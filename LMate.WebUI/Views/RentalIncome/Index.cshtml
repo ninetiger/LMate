@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LMate.BusinessObjects.RentalIncome>
+
+@{
+    ViewBag.Title = "Rental Incomes";
+    Layout = "~/Views/Shared/_LandlordLayout.cshtml";
+}
+
+<h1>Rental Income </h1>
+<table class="Grid">
+    <tr>
+        <th>ID</th>
+        <th>Year Ended</th>
+        <th>Total Income</th>
+        <th class="NumericCol">Total Expenses</th>
+        <th>Net Rent</th>
+        <th>Edit</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ID</td>
+            <td>@item.YearEnded.ToShortDateString()</td>
+            <td>@item.TotalIncome.ToString("c")</td>
+            <td>@item.TotalExpenses.ToString("c")</td>
+            <td>@item.NetRent.ToString("c")</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { item.ID }, new { @class = "linkAsButton" })
+            </td>
+            <td>
+                @using (Html.BeginForm("Delete", "RentalIncome"))
+                {
+                    @Html.Hidden("ID", item.ID)
+                    <input type="submit" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+</table>
+<p>@Html.ActionLink("Add a new receipt", "Create")</p>
+

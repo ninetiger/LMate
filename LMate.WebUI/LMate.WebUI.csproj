@@ -164,7 +164,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LandlordController.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
-    <Compile Include="Controllers\ReturnsController.cs" />
+    <Compile Include="Controllers\RentalIncomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,7 +226,8 @@
     <Content Include="Views\Receipts\Edit.cshtml" />
     <Content Include="Views\Receipts\Index.cshtml" />
     <Content Include="Views\Shared\_LandlordLayout.cshtml" />
-    <Content Include="Views\Returns\Index.cshtml" />
+    <Content Include="Views\RentalIncome\Index.cshtml" />
+    <Content Include="Views\RentalIncome\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

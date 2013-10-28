@@ -47,11 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IAssetDepreciationRepository.cs" />
     <Compile Include="Abstract\IReceiptRepository.cs" />
-    <Compile Include="Abstract\IReturnRepository.cs" />
+    <Compile Include="Abstract\IBuildingDepreciationRepository.cs" />
+    <Compile Include="Abstract\IDisposalRepository.cs" />
+    <Compile Include="Abstract\IRentalIncomeRepository.cs" />
+    <Compile Include="Concrete\EFDisposalRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
     <Compile Include="Concrete\EFReceiptRepository.cs" />
-    <Compile Include="Concrete\EFReturnRepository.cs" />
+    <Compile Include="Concrete\EFAssetDepreciationRepository.cs" />
+    <Compile Include="Concrete\EFBuildingDepreciationRepository.cs" />
+    <Compile Include="Concrete\EFRentalIncomeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

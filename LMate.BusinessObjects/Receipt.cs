@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -10,7 +11,7 @@ namespace LMate.BusinessObjects
         Rate, Insurance, AgentCollectionFees
     }
 
-        public enum Status
+    public enum Status
     {
         Depreciable, Sold, Disposed, Removed
     }
@@ -18,14 +19,16 @@ namespace LMate.BusinessObjects
     public class Receipt
     {
         [HiddenInput(DisplayValue = false)]
-        public int ReceiptID { set; get; }
+        public int ReceiptID { get; set; }
 
-        public string Description { set; get; }
+        public string Description { get; set; }
 
-        public DateTime DatePurchased { set; get; }
+        [DisplayName("Date purchased")]
+        public DateTime DatePurchased { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a positive price")]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         public byte[] ImageData { get; set; }
@@ -33,10 +36,10 @@ namespace LMate.BusinessObjects
         [HiddenInput(DisplayValue = false)]
         public string ImageMimeType { get; set; }
 
-        public string Comment { set; get; }
+        public string Comment { get; set; }
 
-        public ReceiptType Type { set; get; }
+        public ReceiptType Type { get; set; }
 
-        public Status Status { set; get; }
+        public Status Status { get; set; }
     }
 }

@@ -11,53 +11,62 @@ namespace LMate.WebUI.Controllers
 {
     public class RentalIncomeController : Controller
     {
-        private readonly IRentalIncomeRepository _repository;
+        private readonly IRentalIncomeDetailsRepository _repository;
 
         public RentalIncomeController()//IRentalIncomeRepository rentalIncomeRepository)
         {
             //_repository = rentalIncomeRepository;
-            _repository = new EFRentalIncomeRepository();
+            _repository = new EFRentalIncomeDetailRepository();
         }
 
         public ActionResult Index()
         {
-            return View(_repository.RentalIncomes);
+            return View(_repository.GetRentalIncomes());
         }
 
-        public ViewResult Edit(int id)
+        public ViewResult Edit(int? id)
         {
-            RentalIncome rentalIncome = _repository.RentalIncomes
-                                .FirstOrDefault(r => r.ID == id);
-            return View(rentalIncome);
+            if (id.HasValue)
+            {
+                var rentalIncomeDetail = _repository.RentalIncomeDetails
+                    .FirstOrDefault(r => r.ID == id);
+                return View(rentalIncomeDetail);
+            }
+            else
+            {
+                var prevYearDetail = _repository.GetNewRentalIncomeDetailBasedOnPrevYear();
+                return View(prevYearDetail ?? new RentalIncomeDetail());
+            }
         }
 
         [HttpPost]
-        public ActionResult Edit(RentalIncome rentalIncome)
+        public ActionResult Edit(RentalIncomeDetail rentalIncomeDetail)
         {
             if (ModelState.IsValid)
             {
-                _repository.SaveRentalIncome(rentalIncome);
+                _repository.SaveRentalIncomeDetail(rentalIncomeDetail);
 
-                TempData["message"] = string.Format("Rental income, year ended {0}, has been saved", rentalIncome.YearEnded);
+                TempData["message"] = string.Format("Rental income, year ended {0}, has been saved", rentalIncomeDetail.YearEnded.ToString("yyyy"));
                 return RedirectToAction("Index");
             }
             
-            return View(rentalIncome);
+            return View(rentalIncomeDetail);
         }
 
-        public ViewResult Create()
-        {
-            return View("Edit", new RentalIncome());
-        }
+        //public ViewResult Create()
+        //{
+        //    var prevYearDetail = _repository.GetNewRentalIncomeDetailBasedOnPrevYear();
+        //    return View("Edit", prevYearDetail ?? new RentalIncomeDetail());
+        //}
 
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            RentalIncome deletedRentalIncome = _repository.DeleteRentalIncome(id);
+            var deletedRentalIncomeDetail = _repository.DeleteRentalIncomeDetail(id);
 
-            if (deletedRentalIncome != null)
+            if (deletedRentalIncomeDetail != null)
             {
-                TempData["message"] = string.Format("Rental income, year ended {0}, was deleted", deletedRentalIncome.YearEnded);
+                TempData["message"] = string.Format("Rental income, year ended {0}, was deleted", deletedRentalIncomeDetail.YearEnded.ToString("yyyy"));
             }
             return RedirectToAction("Index");
         }

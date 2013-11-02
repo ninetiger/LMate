@@ -1,40 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LMate.BusinessObjects;
+using LMate.DataObjects.Abstract;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LMate.BusinessObjects;
-using LMate.DataObjects.Abstract;
 
 namespace LMate.DataObjects.Concrete
 {
-    public class EFRentalIncomeRepository : IRentalIncomeRepository
+    public class EFTaxUserRepository : ITaxUserRepository
     {
         private readonly EFDbContext _context = new EFDbContext();
 
-        public IQueryable<RentalIncome> RentalIncomes
+        public IQueryable<TaxUser> TaxUsers
         {
-            get { return _context.RentalIncomes; }
+            get { return _context.TaxUsers; }
         }
 
-
-        public void SaveRentalIncome(RentalIncome rentalIncome)
+        public TaxUser GetTaxUser(int id)
         {
-            if (rentalIncome.ID == 0)
+            return _context.TaxUsers.Find(id);
+        }
+
+        public void SaveTaxUser(TaxUser user)
+        {
+            if (user.ID == 0)
             {
-                _context.RentalIncomes.Add(rentalIncome);
+                _context.TaxUsers.Add(user);
             }
             else
             {
-                RentalIncome dbEntry = _context.RentalIncomes.Find(rentalIncome.ID);
+                TaxUser dbEntry = GetTaxUser(user.ID);
                 if (dbEntry != null)
                 {
-                    dbEntry.YearEnded = rentalIncome.YearEnded;
-                    dbEntry.TotalIncome = rentalIncome.TotalIncome;
-                    dbEntry.TotalExpenses = rentalIncome.TotalExpenses;
-                    dbEntry.NetRent = rentalIncome.NetRent;
+                    dbEntry.Name = user.Name;
+                    dbEntry.IRDNumber = user.IRDNumber;
+                    dbEntry.Address = user.Address;
                 }
             }
 
@@ -58,16 +57,17 @@ namespace LMate.DataObjects.Concrete
             }
         }
 
-        public RentalIncome DeleteRentalIncome(int id)
+        public TaxUser DeleteTaxUser(int id)
         {
-            RentalIncome dbEntry = _context.RentalIncomes.Find(id);
+            TaxUser dbEntry = _context.TaxUsers.Find(id);
 
             if (dbEntry != null)
             {
-                _context.RentalIncomes.Remove(dbEntry);
+                _context.TaxUsers.Remove(dbEntry);
                 _context.SaveChanges();
             }
             return dbEntry;
         }
+
     }
 }

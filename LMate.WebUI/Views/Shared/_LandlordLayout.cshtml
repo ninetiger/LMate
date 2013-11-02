@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     <link href="~/Content/Landlord.css" type="text/css" rel="stylesheet" />
     <link href="/Content/Site.css" type="text/css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" />
     <!--[if lt IE 9]>
 	<link href="~/Content/ie.css" type="text/css" rel="stylesheet" />
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -55,5 +56,13 @@
             </div>
         </div>
     </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    <script>
+        @RenderSection("scripts", required: false);
+        $(function () {
+            @RenderSection("DocumentReady", required: false);
+        });
+    </script>
 </body>
 </html>

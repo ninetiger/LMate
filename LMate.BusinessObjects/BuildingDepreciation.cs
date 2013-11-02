@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace LMate.BusinessObjects
@@ -10,21 +8,30 @@ namespace LMate.BusinessObjects
     public class BuildingDepreciation
     {
         [HiddenInput(DisplayValue = false)]
-        public int ID { set; get; }
-        [HiddenInput(DisplayValue = false)]
-        public int RentalIncomeID { set; get; }
+        public int ID { get; set; }
 
-        public DateTime DatePurchased { set; get; }
-        public string ConstructionMaterialsAndBuildingDescription { set; get; }
+        [DisplayName("Date purchased")]
+        public DateTime DatePurchased { get; set; }
 
-        public DepreciationMethod DepreciationMethond { set; get; }
-        public decimal Value { set; get; } //Straight line method (SL): Cost of buildings (excluding cost of land) Rate; Diminishing value method (DV): Opening Adjusted Tax Value
-        public int RatePercentage { set; get; } //0-100%
-        public decimal DepreciationClaimed { set; get; }
-        public decimal CloseingAdjustedTaxValue { set; get; }
+        [DisplayName("Construction materials and building description")]
+        public string ConstructionMaterialsAndBuildingDescription { get; set; }
 
-        //public decimal OriginalTaxValue { set; get; }
+        [DisplayName("Depreciation methond")]
+        public DepreciationMethod DepreciationMethond { get; set; }
         
-        public string Note { set; get; }
+        public decimal Value { get; set; } //Straight line method (SL): Cost of buildings (excluding cost of land) Rate; Diminishing value method (DV): Opening Adjusted Tax Value
+        
+        [DisplayName("Rate")]
+        public int RatePercentage { get; set; } //0-100%
+
+        [DisplayName("Depreciation claimed")]
+        public decimal DepreciationClaimed { get; set; }
+
+        [DisplayName("Closeing adjusted tax value")]
+        public decimal CloseingAdjustedTaxValue { get; set; }
+
+        //public decimal OriginalTaxValue { get; set; }
+        
+        public string Note { get; set; }
     }
 }

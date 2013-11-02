@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildingDepreciation.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="TaxUser.cs" />
     <Compile Include="Disposal.cs" />
     <Compile Include="Receipt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

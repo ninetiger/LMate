@@ -20,7 +20,7 @@
     {
         <tr>
             <td>@item.ID</td>
-            <td>@item.YearEnded.ToShortDateString()</td>
+            <td>@item.YearEnded.ToString("yyyy")</td>
             <td>@item.TotalIncome.ToString("c")</td>
             <td>@item.TotalExpenses.ToString("c")</td>
             <td>@item.NetRent.ToString("c")</td>
@@ -37,5 +37,5 @@
         </tr>
     }
 </table>
-<p>@Html.ActionLink("Add a new receipt", "Create")</p>
+<p>@Html.ActionLink("Add a new rental income", "Edit")</p>
 

@@ -51,13 +51,15 @@
     <Compile Include="Abstract\IReceiptRepository.cs" />
     <Compile Include="Abstract\IBuildingDepreciationRepository.cs" />
     <Compile Include="Abstract\IDisposalRepository.cs" />
-    <Compile Include="Abstract\IRentalIncomeRepository.cs" />
+    <Compile Include="Abstract\ITaxUserRepository.cs" />
+    <Compile Include="Abstract\IRentalIncomeDetailRepository.cs" />
     <Compile Include="Concrete\EFDisposalRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
+    <Compile Include="Concrete\EFTaxUserRepository.cs" />
     <Compile Include="Concrete\EFReceiptRepository.cs" />
     <Compile Include="Concrete\EFAssetDepreciationRepository.cs" />
     <Compile Include="Concrete\EFBuildingDepreciationRepository.cs" />
-    <Compile Include="Concrete\EFRentalIncomeRepository.cs" />
+    <Compile Include="Concrete\EFRentalIncomeDetailRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

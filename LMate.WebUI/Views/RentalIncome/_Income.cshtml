@@ -1,0 +1,20 @@
+﻿@model LMate.BusinessObjects.RentalIncomeDetail
+
+<div>
+    @Html.LabelFor(x => x.TotalRents)
+    <span class="dollarSign">$</span>
+    @Html.TextBoxFor(x => x.TotalRents)
+
+    @Html.LabelFor(x => x.OtherIncome)
+    @Html.TextBoxFor(x => x.OtherIncomeSpecify)
+    <span class="dollarSign">$</span>
+    @Html.TextBoxFor(x => x.OtherIncome)
+
+    @Html.LabelFor(x => x.GainOrLossOnDisposal)
+    <span class="dollarSign">$</span>
+    @Html.TextBoxFor(x => x.GainOrLossOnDisposal)
+
+    @Html.LabelFor(x => x.TotalIncome)
+    <span class="dollarSign">$</span>
+    @Html.TextBoxFor(x => x.TotalIncome)
+</div>

@@ -1,4 +1,18 @@
-﻿@model LMate.BusinessObjects.RentalIncome
+﻿@model LMate.BusinessObjects.RentalIncomeDetail
+
+@section scripts{
+}
+
+@section DocumentReady{
+    $("#datepicker").datepicker({
+    changeMonth: false,
+    changeYear: true,
+    showButtonPanel: false,
+    dateFormat: 'MM yy',
+    });
+
+    var spinner = $( "#YearEnded" ).spinner();
+}
 
 @{
     ViewBag.Title = "Edit" + @Model.YearEnded;
@@ -9,7 +23,26 @@
 
 @using (Html.BeginForm("Edit", "RentalIncome"))
 {
-    @Html.EditorForModel()
+    @*@Html.Partial("_TaxUserSection", @Model.TaxUser);*@
+    @Html.Partial("_TaxUserDetails")
+
+    <p>===========</p>
+
+    @Html.Partial("_Income")
+
+    <p>===========</p>
+
+    @Html.Partial("_Expenses")
+
+    <p>===========</p>
+
+    @Html.Partial("_DepreciationOfBuildings", Model.BuildingDepreciation)
+    
+        <p>===========</p>
+
+    @Html.Partial("_DepreciationOfAssets", Model.AssetDepreciations)
+
+    @*@Html.EditorForModel()*@
     <input type="submit" value="Save" />
     @Html.ActionLink("Cancel and return to List", "Index")
 }

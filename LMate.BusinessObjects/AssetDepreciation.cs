@@ -15,16 +15,17 @@ namespace LMate.BusinessObjects
     public class AssetDepreciation
     {
         [HiddenInput(DisplayValue = false)]
-        public int ID { set; get; }
-        public int ReceiptID { set; get; }
+        public int ID { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public int ReceiptID { get; set; }
 
-        public decimal OpeningAdjustedTaxValue { set; get; }
-        public decimal CloseingAdjustedTaxValue { set; get; }
-        public decimal DepreciationRate { set; get; }
-        public DepreciationMethod DepreciationMethond { set; get; }
-        public int NumberOfMonth { set; get; }
-        public decimal DepreciationClaimed { set; get; }
-        public string Note { set; get; }
+        public decimal OpeningAdjustedTaxValue { get; set; }
+        public decimal CloseingAdjustedTaxValue { get; set; }
+        public decimal DepreciationRate { get; set; }
+        public DepreciationMethod DepreciationMethond { get; set; }
+        public int NumberOfMonth { get; set; }
+        public decimal DepreciationClaimed { get; set; }
+        public string Note { get; set; }
 
     }
 }

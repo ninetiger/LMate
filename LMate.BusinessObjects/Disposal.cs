@@ -16,12 +16,12 @@ namespace LMate.BusinessObjects
     public class Disposal
     {
         [HiddenInput(DisplayValue = false)]
-        public int ID { set; get; }
+        public int ID { get; set; }
 
-        public int ReceiptID { set; get; }
-        public DateTime Date { set; get; }
-        public string Note { set; get; }
-        public DisposalType Type { set; get; }
-        public string Value { set; get; }
+        public int ReceiptID { get; set; }
+        public DateTime Date { get; set; }
+        public string Note { get; set; }
+        public DisposalType Type { get; set; }
+        public string Value { get; set; }
     }
 }

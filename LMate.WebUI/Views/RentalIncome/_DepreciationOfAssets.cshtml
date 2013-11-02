@@ -1,0 +1,24 @@
+﻿@model List<LMate.BusinessObjects.AssetDepreciation>
+
+<div>
+
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        @Html.LabelFor(x => x[i].ReceiptID)
+        Response.Write("<span class=\"dollarSign\">$</span>");
+        @Html.TextBoxFor(x => x[i].ReceiptID)
+
+        @Html.LabelFor(x => x[i].OpeningAdjustedTaxValue)
+        <span class="dollarSign">$</span>
+        @Html.TextBoxFor(x => x[i].OpeningAdjustedTaxValue)
+
+        @Html.LabelFor(x => x[i].DepreciationRate)
+        @Html.TextBoxFor(x => x[i].DepreciationRate)
+
+        @Html.LabelFor(x => x[i].DepreciationClaimed)
+        @Html.TextBoxFor(x => x[i].DepreciationClaimed)
+
+        @Html.LabelFor(x => x[i].CloseingAdjustedTaxValue)
+        @Html.TextBoxFor(x => x[i].CloseingAdjustedTaxValue)
+    }
+</div>

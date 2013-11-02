@@ -9,7 +9,8 @@ namespace LMate.DataObjects.Concrete
         public DbSet<BuildingDepreciation> BuildingDepreciations { get; set; }
         public DbSet<Disposal> Disposals { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
-        public DbSet<RentalIncome> RentalIncomes { get; set; }
+        public DbSet<RentalIncomeDetail> RentalIncomeDetails { get; set; }
+        public DbSet<TaxUser> TaxUsers { get; set; }
 
         public EFDbContext() : base("DefaultConnection"){}
     }

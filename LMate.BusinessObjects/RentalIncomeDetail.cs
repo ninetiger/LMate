@@ -21,48 +21,58 @@ namespace LMate.BusinessObjects
             RepairsAndMaintenance.Add(new Receipt()
             {
                 Description = "receipt 222",
-                Price = (decimal)19.99,
+                Cost = (decimal)19.99,
                 Type = ReceiptType.ReparisAndMaintenance
             });
             RepairsAndMaintenance.Add(new Receipt()
             {
                 Description = "receipt 333",
-                Price = 156.99m
+                Cost = 156.99m
             });
 
             OtherList = new List<Receipt>();
             OtherList.Add(new Receipt()
             {
                 Description = "other1",
-                Price = 15m,
+                Cost = 15m,
                 Type = ReceiptType.Other
             });
             OtherList.Add(new Receipt()
             {
                 Description = "other 2",
-                Price = (decimal)12.86,
+                Cost = (decimal)12.86,
                 Type = ReceiptType.Insurance
             });
             OtherList.Add(new Receipt()
             {
                 Description = "other 3",
-                Price = (decimal)12.86,
+                Cost = (decimal)12.86,
                 Type = ReceiptType.Other
 
             });
-            BuildingDepreciation = new BuildingDepreciation();
-            BuildingDepreciation.DatePurchased = DateTime.Now;
-            BuildingDepreciation.DepreciationClaimed = 20.56m;
-            BuildingDepreciation.DepreciationMethond = DepreciationMethod.DiminishingValueMethod;
+            DepreciationBuilding = new DepreciationBuilding();
+            DepreciationBuilding.DatePurchased = DateTime.Now;
+            DepreciationBuilding.DepreciationClaimed = 20.56m;
+            DepreciationBuilding.DepreciationMethond = DepreciationMethod.DiminishingValueMethod;
 
-            AssetDepreciations = new List<AssetDepreciation>();
-            AssetDepreciations.Add(new AssetDepreciation()
+            DepreciationAssets = new List<DepreciationAsset>();
+            DepreciationAssets.Add(new DepreciationAsset()
             {
                 DepreciationClaimed = 2.99m
             });
-            AssetDepreciations.Add(new AssetDepreciation()
+            DepreciationAssets.Add(new DepreciationAsset()
             {
-                DepreciationClaimed = 7.99m
+                Receipt = new Receipt
+                {
+                    Description="wahaha",
+                    DatePurchased = DateTime.Now,
+                    Cost = 800.90m
+                },
+                OpeningAdjustedTaxValue = 600.86m,
+                RatePercentage = 20,
+                DepreciationMethond = DepreciationMethod.DiminishingValueMethod,
+                DepreciationClaimed = 7.99m,
+                CloseingAdjustedTaxValue = 531.33m
             });
         }
 
@@ -75,23 +85,23 @@ namespace LMate.BusinessObjects
         //    {
         //        sumRepairsAndMaintenance =
         //            RepairsAndMaintenance.Where(x => x.Type == ReceiptType.ReparisAndMaintenance)
-        //                .Sum(x => x.Price);
+        //                .Sum(x => x.Cost);
         //    }
 
         //    decimal sumOther = 0;
         //    if (OtherList != null)
         //    {
         //        sumOther = OtherList.Where(x => x.Type == ReceiptType.Other)
-        //            .Sum(x => x.Price);
+        //            .Sum(x => x.Cost);
         //    }
 
         //    decimal sumBuilding =
-        //        BuildingDepreciation != null ? BuildingDepreciation.CloseingAdjustedTaxValue : 0;
+        //        DepreciationBuilding != null ? DepreciationBuilding.CloseingAdjustedTaxValue : 0;
 
         //    decimal sumAsset = 0;
-        //    if (AssetDepreciations != null)
+        //    if (DepreciationAssets != null)
         //    {
-        //        sumAsset = AssetDepreciations.Select(x => x.DepreciationClaimed).Sum();
+        //        sumAsset = DepreciationAssets.Select(x => x.DepreciationClaimed).Sum();
         //    }
 
         //    //TotalExpenses = Rates + Insurance + Interest + AgentCollectionFees
@@ -163,7 +173,7 @@ namespace LMate.BusinessObjects
                 return RepairsAndMaintenance != null ?
                        RepairsAndMaintenance
                            .Where(x => x.Type == ReceiptType.ReparisAndMaintenance)
-                           .Sum(x => x.Price)
+                           .Sum(x => x.Cost)
                        : 0;
             }
         }
@@ -177,22 +187,22 @@ namespace LMate.BusinessObjects
                 return OtherList != null
                     ? OtherList
                         .Where(x => x.Type == ReceiptType.Other)
-                        .Sum(x => x.Price)
+                        .Sum(x => x.Cost)
                     : 0;
             }
         }
 
         [DisplayName("Depreciation of buildings")]
-        public BuildingDepreciation BuildingDepreciation { get; set; }
+        public DepreciationBuilding DepreciationBuilding { get; set; }
 
         [DisplayName("Depreciation of assets")]
-        public List<AssetDepreciation> AssetDepreciations { get; set; }
+        public List<DepreciationAsset> DepreciationAssets { get; set; }
         public decimal AssetDepreciationsSum
         {
             get
             {
-                return AssetDepreciations != null ?
-                    AssetDepreciations.Sum(x => x.DepreciationClaimed)
+                return DepreciationAssets != null ?
+                    DepreciationAssets.Sum(x => x.DepreciationClaimed)
                     : 0;
             }
         }
@@ -201,12 +211,12 @@ namespace LMate.BusinessObjects
         {
             get
             {
-                if (BuildingDepreciation == null)
+                if (DepreciationBuilding == null)
                 {
                     return AssetDepreciationsSum;
                 }
                 
-                return BuildingDepreciation.DepreciationClaimed + AssetDepreciationsSum;
+                return DepreciationBuilding.DepreciationClaimed + AssetDepreciationsSum;
             }
         }
 

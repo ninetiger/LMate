@@ -5,8 +5,8 @@ namespace LMate.DataObjects.Concrete
 {
     public class EFDbContext : DbContext
     {
-        public DbSet<AssetDepreciation> AssetDepreciations { get; set; }
-        public DbSet<BuildingDepreciation> BuildingDepreciations { get; set; }
+        public DbSet<DepreciationAsset> DepreciationAssets { get; set; }
+        public DbSet<DepreciationBuilding> DepreciationBuildings { get; set; }
         public DbSet<Disposal> Disposals { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<RentalIncomeDetail> RentalIncomeDetails { get; set; }

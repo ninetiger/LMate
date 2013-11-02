@@ -8,13 +8,13 @@ using LMate.DataObjects.Abstract;
 
 namespace LMate.DataObjects.Concrete
 {
-    public class EFBuildingDepreciationRepository : IBuildingDepreciationRepository
+    public class EFDepreciationBuildingRepository : IDepreciationBuildingRepository
     {
         private readonly EFDbContext _context = new EFDbContext();
 
-        public IQueryable<BuildingDepreciation> BuildingDepreciations
+        public IQueryable<DepreciationBuilding> DepreciationBuildings
         {
-            get { return _context.BuildingDepreciations; }
+            get { return _context.DepreciationBuildings; }
         }
     }
 }

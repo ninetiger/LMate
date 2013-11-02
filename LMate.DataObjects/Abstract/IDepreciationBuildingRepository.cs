@@ -7,8 +7,8 @@ using LMate.BusinessObjects;
 
 namespace LMate.DataObjects.Abstract
 {
-    public interface IBuildingDepreciationRepository
+    public interface IDepreciationBuildingRepository
     {
-        IQueryable<BuildingDepreciation> BuildingDepreciations { get; }
+        IQueryable<DepreciationBuilding> DepreciationBuildings { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace LMate.DataObjects.Concrete
                 {
                     dbEntry.Description = receipt.Description;
                     dbEntry.DatePurchased = receipt.DatePurchased;
-                    dbEntry.Price = receipt.Price;
+                    dbEntry.Cost = receipt.Cost;
                     dbEntry.ImageData = receipt.ImageData;
                     dbEntry.ImageMimeType = receipt.ImageMimeType;
                     dbEntry.Comment = receipt.Comment;

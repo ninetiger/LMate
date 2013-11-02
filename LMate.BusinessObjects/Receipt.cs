@@ -21,6 +21,7 @@ namespace LMate.BusinessObjects
         [HiddenInput(DisplayValue = false)]
         public int ReceiptID { get; set; }
 
+        [DisplayName("Asset")]
         public string Description { get; set; }
 
         [DisplayName("Date purchased")]
@@ -29,7 +30,7 @@ namespace LMate.BusinessObjects
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a positive price")]
         [DataType(DataType.Currency)]
-        public decimal Price { get; set; }
+        public decimal Cost { get; set; }
 
         public byte[] ImageData { get; set; }
 

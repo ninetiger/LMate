@@ -1,5 +1,5 @@
 ﻿@using LMate.BusinessObjects
-@model LMate.BusinessObjects.RentalIncomeDetail
+@model RentalIncomeDetail
 
 <div>
     @Html.LabelFor(x => x.Rates)
@@ -26,7 +26,7 @@
             @Html.TextBoxFor(x => x.RepairsAndMaintenance[i].Description)
 
             <span class="dollarSign">$</span>
-            @Html.TextBoxFor(x => x.RepairsAndMaintenance[i].Price)
+            @Html.TextBoxFor(x => x.RepairsAndMaintenance[i].Cost)
         }
     }
     <span class="dollarSign">$</span>
@@ -41,7 +41,7 @@
             @Html.TextBoxFor(x => x.OtherList[i].Description)
 
             <span class="dollarSign">$</span>
-            @Html.TextBoxFor(x => x.OtherList[i].Price)
+            @Html.TextBoxFor(x => x.OtherList[i].Cost)
         }
     }
     <span class="dollarSign">$</span>
@@ -50,9 +50,9 @@
     <p><label>Depreciation</label></p>
     <p>
         Buildings: <span class="dollarSign">$</span>
-        @(Model.BuildingDepreciation == null
+        @(Model.DepreciationBuilding == null
             ? Html.DisplayTextFor(x => 0m)
-            : Html.DisplayTextFor(x => x.BuildingDepreciation.DepreciationClaimed))
+            : Html.DisplayTextFor(x => x.DepreciationBuilding.DepreciationClaimed))
     </p>
     <p>Assets: <span class="dollarSign">$</span>@Html.DisplayTextFor(x => x.AssetDepreciationsSum)</p>
 

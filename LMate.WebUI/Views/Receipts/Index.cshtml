@@ -11,7 +11,7 @@
         <th>ID</th>
         <th>Description</th>
         <th>DatePurchased</th>
-        <th class="NumericCol">Price</th>
+        <th class="NumericCol">Cost</th>
         <th>Actions</th>
     </tr>
     @foreach (var item in Model) {
@@ -19,7 +19,7 @@
             <td>@item.ReceiptID</td>
             <td>@Html.ActionLink(item.Description, "Edit", new { item.ReceiptID })</td>
             <td>@item.DatePurchased</td>
-            <td class="NumericCol">@item.Price.ToString("c")</td>
+            <td class="NumericCol">@item.Cost.ToString("c")</td>
             <td>
                 @using (Html.BeginForm("Delete", "Receipts"))
                 {

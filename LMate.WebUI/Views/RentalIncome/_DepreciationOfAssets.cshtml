@@ -1,24 +1,38 @@
-﻿@model List<LMate.BusinessObjects.AssetDepreciation>
+﻿@model List<LMate.BusinessObjects.DepreciationAsset>
 
 <div>
 
     @for (int i = 0; i < Model.Count(); i++)
     {
-        @Html.LabelFor(x => x[i].ReceiptID)
-        Response.Write("<span class=\"dollarSign\">$</span>");
-        @Html.TextBoxFor(x => x[i].ReceiptID)
+        @Html.LabelFor(x => x[i].Receipt.Description)
+        @Html.TextBoxFor(x => x[i].Receipt.Description)
 
+        @Html.LabelFor(x => x[i].Receipt.DatePurchased)
+        @Html.TextBoxFor(x => x[i].Receipt.DatePurchased)
+
+        @Html.LabelFor(x => x[i].Receipt.Cost)
+        <span class="dollarSign">$</span>
+        @Html.TextBoxFor(x => x[i].Receipt.Cost)
+        
         @Html.LabelFor(x => x[i].OpeningAdjustedTaxValue)
         <span class="dollarSign">$</span>
         @Html.TextBoxFor(x => x[i].OpeningAdjustedTaxValue)
 
-        @Html.LabelFor(x => x[i].DepreciationRate)
-        @Html.TextBoxFor(x => x[i].DepreciationRate)
+        @Html.LabelFor(x => x[i].RatePercentage)
+        @Html.TextBoxFor(x => x[i].RatePercentage)
+        
+        @Html.LabelFor(x => x[i].DepreciationMethond)
+        @Html.TextBoxFor(x => x[i].DepreciationMethond)
 
         @Html.LabelFor(x => x[i].DepreciationClaimed)
+        <span class="dollarSign">$</span>
         @Html.TextBoxFor(x => x[i].DepreciationClaimed)
 
         @Html.LabelFor(x => x[i].CloseingAdjustedTaxValue)
+        <span class="dollarSign">$</span>
         @Html.TextBoxFor(x => x[i].CloseingAdjustedTaxValue)
     }
+    
+    
+
 </div>

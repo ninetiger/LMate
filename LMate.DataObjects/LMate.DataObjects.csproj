@@ -47,9 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IAssetDepreciationRepository.cs" />
+    <Compile Include="Abstract\IDepreciationAssetRepository.cs" />
     <Compile Include="Abstract\IReceiptRepository.cs" />
-    <Compile Include="Abstract\IBuildingDepreciationRepository.cs" />
+    <Compile Include="Abstract\IDepreciationBuildingRepository.cs" />
     <Compile Include="Abstract\IDisposalRepository.cs" />
     <Compile Include="Abstract\ITaxUserRepository.cs" />
     <Compile Include="Abstract\IRentalIncomeDetailRepository.cs" />
@@ -57,8 +57,8 @@
     <Compile Include="Concrete\EFDbContext.cs" />
     <Compile Include="Concrete\EFTaxUserRepository.cs" />
     <Compile Include="Concrete\EFReceiptRepository.cs" />
-    <Compile Include="Concrete\EFAssetDepreciationRepository.cs" />
-    <Compile Include="Concrete\EFBuildingDepreciationRepository.cs" />
+    <Compile Include="Concrete\EFDepreciationAssetRepository.cs" />
+    <Compile Include="Concrete\EFDepreciationBuildingRepository.cs" />
     <Compile Include="Concrete\EFRentalIncomeDetailRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

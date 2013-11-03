@@ -15,6 +15,11 @@ namespace LMate.BusinessObjects
 
     public class Disposal
     {
+        public Disposal()
+        {
+            Date = DateTime.Now;
+        }
+
         [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
 

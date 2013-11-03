@@ -71,7 +71,7 @@ a {
 
     .site-title a, .site-title a:hover, .site-title a:active {
         background: none;
-        color: #c8c8c8;
+        color: red;
         outline: none;
         text-decoration: none;
     }

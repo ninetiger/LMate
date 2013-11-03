@@ -24,23 +24,27 @@ namespace LMate.DataObjects.Concrete
             return _context.RentalIncomeDetails.Find(id);
         }
 
-        public List<RentalIncome> GetRentalIncomes()
+        public IQueryable<RentalIncome> RentalIncomes
         {
-            var queryable = RentalIncomeDetails.Select(r => new RentalIncome
-                                                    {
-                                                        YearEnded = r.YearEnded,
-                                                        TotalIncome = r.TotalIncome,
-                                                        TotalExpenses = r.TotalExpenses,
-                                                        NetRent = r.NetRent
-                                                    });
-
-            var rentalIncomeList = new List<RentalIncome>();
-            foreach (var item in rentalIncomeList)
+            get
             {
-                rentalIncomeList.Add(item);
-            }
+                var queryable = RentalIncomeDetails.Select(r => new RentalIncome
+                {
+                    YearEnded = r.YearEnded,
+                    TotalIncome = r.TotalRents + r.OtherIncome + r.GainOrLossOnDisposal,
+                    TotalExpenses = r.Rates + r.Insurance + r.Interest + r.AgentCollectionFees
+                       + r.SumRepairsAndMaintenance + r.SumOtherList + r.SumDepreciation,
+                    NetRent = r.TotalIncome + r.TotalExpenses
+                });
 
-            return rentalIncomeList;
+                //var rentalIncomeList = new List<RentalIncome>();
+                //foreach (var item in rentalIncomeList)
+                //{
+                //    rentalIncomeList.Add(item);
+                //}
+
+                return queryable;
+            }
         }
 
         public void SaveRentalIncomeDetail(RentalIncomeDetail rentalIncomeDetail)

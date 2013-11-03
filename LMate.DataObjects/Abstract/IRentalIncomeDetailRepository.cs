@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LMate.BusinessObjects;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LMate.BusinessObjects;
 
 namespace LMate.DataObjects.Abstract
 {
@@ -13,7 +9,7 @@ namespace LMate.DataObjects.Abstract
 
         RentalIncomeDetail GetRentalIncomeDetail(int id);
 
-        List<RentalIncome> GetRentalIncomes();
+        IQueryable<RentalIncome> RentalIncomes { get; }
         
         void SaveRentalIncomeDetail(RentalIncomeDetail rentalIncomeDetail);
 

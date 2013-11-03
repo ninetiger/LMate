@@ -18,6 +18,11 @@ namespace LMate.BusinessObjects
 
     public class Receipt
     {
+        public Receipt()
+        {
+            DatePurchased = DateTime.Now;
+        }
+
         [HiddenInput(DisplayValue = false)]
         public int ReceiptID { get; set; }
 

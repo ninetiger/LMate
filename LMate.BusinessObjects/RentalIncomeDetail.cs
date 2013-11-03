@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace LMate.BusinessObjects
@@ -16,18 +14,20 @@ namespace LMate.BusinessObjects
             TaxUser = new TaxUser();
             TaxUser.Name = "wahaga:=";
             TaxUser.IRDNumber = 32424;
-
+            
             RepairsAndMaintenance = new List<Receipt>();
             RepairsAndMaintenance.Add(new Receipt()
             {
                 Description = "receipt 222",
                 Cost = (decimal)19.99,
-                Type = ReceiptType.ReparisAndMaintenance
+                Type = ReceiptType.ReparisAndMaintenance,
+                DatePurchased = DateTime.Now
             });
             RepairsAndMaintenance.Add(new Receipt()
             {
                 Description = "receipt 333",
-                Cost = 156.99m
+                Cost = 156.99m,
+                DatePurchased = DateTime.Now
             });
 
             OtherList = new List<Receipt>();
@@ -35,20 +35,22 @@ namespace LMate.BusinessObjects
             {
                 Description = "other1",
                 Cost = 15m,
-                Type = ReceiptType.Other
+                Type = ReceiptType.Other,
+                DatePurchased = DateTime.Now
             });
             OtherList.Add(new Receipt()
             {
                 Description = "other 2",
                 Cost = (decimal)12.86,
-                Type = ReceiptType.Insurance
+                Type = ReceiptType.Insurance,
+                DatePurchased = DateTime.Now
             });
             OtherList.Add(new Receipt()
             {
                 Description = "other 3",
                 Cost = (decimal)12.86,
-                Type = ReceiptType.Other
-
+                Type = ReceiptType.Other,
+                DatePurchased = DateTime.Now
             });
             DepreciationBuilding = new DepreciationBuilding();
             DepreciationBuilding.DatePurchased = DateTime.Now;
@@ -56,23 +58,23 @@ namespace LMate.BusinessObjects
             DepreciationBuilding.DepreciationMethond = DepreciationMethod.DiminishingValueMethod;
 
             DepreciationAssets = new List<DepreciationAsset>();
-            DepreciationAssets.Add(new DepreciationAsset()
-            {
-                DepreciationClaimed = 2.99m
-            });
+            //DepreciationAssets.Add(new DepreciationAsset()
+            //{
+            //    DepreciationClaimed = 2.99m
+            //});
             DepreciationAssets.Add(new DepreciationAsset()
             {
                 Receipt = new Receipt
                 {
                     Description="wahaha",
                     DatePurchased = DateTime.Now,
-                    Cost = 800.90m
+                    Cost = 800.90m,
                 },
                 OpeningAdjustedTaxValue = 600.86m,
                 RatePercentage = 20,
                 DepreciationMethond = DepreciationMethod.DiminishingValueMethod,
                 DepreciationClaimed = 7.99m,
-                CloseingAdjustedTaxValue = 531.33m
+                CloseingAdjustedTaxValue = 531.33m,
             });
         }
 
@@ -197,7 +199,7 @@ namespace LMate.BusinessObjects
 
         [DisplayName("Depreciation of assets")]
         public List<DepreciationAsset> DepreciationAssets { get; set; }
-        public decimal AssetDepreciationsSum
+        public decimal SumAssetDepreciations
         {
             get
             {
@@ -207,16 +209,16 @@ namespace LMate.BusinessObjects
             }
         }
 
-        public decimal DepreciationSum
+        public decimal SumDepreciation
         {
             get
             {
                 if (DepreciationBuilding == null)
                 {
-                    return AssetDepreciationsSum;
+                    return SumAssetDepreciations;
                 }
                 
-                return DepreciationBuilding.DepreciationClaimed + AssetDepreciationsSum;
+                return DepreciationBuilding.DepreciationClaimed + SumAssetDepreciations;
             }
         }
 
@@ -227,7 +229,7 @@ namespace LMate.BusinessObjects
             get
             {
                 return Rates + Insurance + Interest + AgentCollectionFees
-                       + SumRepairsAndMaintenance + SumOtherList + DepreciationSum;
+                       + SumRepairsAndMaintenance + SumOtherList + SumDepreciation;
             }
         }
 

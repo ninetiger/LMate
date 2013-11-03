@@ -21,7 +21,7 @@ namespace LMate.WebUI.Controllers
 
         public ActionResult Index()
         {
-            return View(_repository.GetRentalIncomes());
+            return View(_repository.RentalIncomes);
         }
 
         public ViewResult Edit(int? id)

@@ -5,6 +5,10 @@ namespace LMate.BusinessObjects
 {
     public class DepreciationBuilding : Depreciation
     {
+        public DepreciationBuilding()
+        {
+            DatePurchased = DateTime.Now;
+        }
 
         [DisplayName("Date purchased")]
         public DateTime DatePurchased { get; set; }

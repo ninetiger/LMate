@@ -30,18 +30,11 @@ namespace LMate.DataObjects.Concrete
             {
                 var queryable = RentalIncomeDetails.Select(r => new RentalIncome
                 {
+                    ID = r.ID,
                     YearEnded = r.YearEnded,
-                    TotalIncome = r.TotalRents + r.OtherIncome + r.GainOrLossOnDisposal,
-                    TotalExpenses = r.Rates + r.Insurance + r.Interest + r.AgentCollectionFees
-                       + r.SumRepairsAndMaintenance + r.SumOtherList + r.SumDepreciation,
-                    NetRent = r.TotalIncome + r.TotalExpenses
+                    TotalIncome = r.TotalIncome,
+                    TotalExpenses = r.TotalExpenses
                 });
-
-                //var rentalIncomeList = new List<RentalIncome>();
-                //foreach (var item in rentalIncomeList)
-                //{
-                //    rentalIncomeList.Add(item);
-                //}
 
                 return queryable;
             }
@@ -100,7 +93,7 @@ namespace LMate.DataObjects.Concrete
         public RentalIncomeDetail GetNewRentalIncomeDetailBasedOnPrevYear()
         {
             var prevYearRentalIncomeDetail = RentalIncomeDetails.OrderByDescending(x => x.YearEnded).FirstOrDefault();
-            
+
             //if (prevYearRentalIncomeDetail == null) return null;
 
             return prevYearRentalIncomeDetail;

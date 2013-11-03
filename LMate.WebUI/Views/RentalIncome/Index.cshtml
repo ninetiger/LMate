@@ -1,4 +1,5 @@
-﻿@model IEnumerable<LMate.BusinessObjects.RentalIncome>
+﻿@using System.Globalization
+@model IEnumerable<LMate.BusinessObjects.RentalIncome>
 
 @{
     ViewBag.Title = "Rental Incomes";
@@ -20,7 +21,7 @@
     {
         <tr>
             <td>@item.ID</td>
-            <td>@item.YearEnded.ToString("yyyy")</td>
+            <td>@item.YearEnded.ToString(CultureInfo.InvariantCulture)</td>
             <td>@item.TotalIncome.ToString("c")</td>
             <td>@item.TotalExpenses.ToString("c")</td>
             <td>@item.NetRent.ToString("c")</td>

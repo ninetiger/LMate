@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -152,12 +153,15 @@ namespace LMate.BusinessObjects
         public decimal GainOrLossOnDisposal { get; set; }
 
         [DisplayName("Total income")]
+        //todo need to updatedb to cal before uncomment this line
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)] 
         public decimal TotalIncome
         {
             get
             {
                 return TotalRents + OtherIncome + GainOrLossOnDisposal;
             }
+            private set {/* needed for EF */ }
         }
 
         //Expenses
@@ -224,6 +228,8 @@ namespace LMate.BusinessObjects
 
 
         [DisplayName("Total expenses")]
+        //todo need to updatedb to cal before uncomment this line
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)] 
         public decimal TotalExpenses
         {
             get
@@ -231,15 +237,19 @@ namespace LMate.BusinessObjects
                 return Rates + Insurance + Interest + AgentCollectionFees
                        + SumRepairsAndMaintenance + SumOtherList + SumDepreciation;
             }
+            private set {/* needed for EF */ }
         }
 
         [DisplayName("Net rents")]
+        //todo need to updatedb to cal before uncomment this line
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)] 
         public decimal NetRent
         {
             get
             {
                 return TotalIncome + TotalExpenses;
             }
+            private set {/* needed for EF */ }
         }
 
         public string Note { get; set; }

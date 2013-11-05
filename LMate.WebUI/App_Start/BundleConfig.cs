@@ -30,6 +30,8 @@ namespace LMate.WebUI
                       //"~/Content/bootstrap.css",
                       //"~/Content/site.css",
                       "~/Content/landlord.css",
+                      "~/Content/mobile.css",
+                      "~/Content/login.css",
                       "~/Content/themes/base/jquery-ui.css"
                       ));
         }

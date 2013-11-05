@@ -1,20 +1,43 @@
 ﻿@model LMate.BusinessObjects.RentalIncomeDetail
 
 <div>
-    @Html.LabelFor(x => x.TotalRents)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.TotalRents)
-
-    @Html.LabelFor(x => x.OtherIncome)
-    @Html.TextBoxFor(x => x.OtherIncomeSpecify)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.OtherIncome)
-
-    @Html.LabelFor(x => x.GainOrLossOnDisposal)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.GainOrLossOnDisposal)
-
-    @Html.LabelFor(x => x.TotalIncome)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.TotalIncome)
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.TotalRents)
+            </td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.TotalRents)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OtherIncome)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.OtherIncomeSpecify)<br/>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.OtherIncome)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.GainOrLossOnDisposal)
+            </td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.GainOrLossOnDisposal)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.TotalIncome)
+            </td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.TotalIncome)
+            </td>
+        </tr>
+    </table>
 </div>

@@ -1,6 +1,5 @@
-﻿@using System.Activities.Statements
-@using LMate.BusinessObjects
-@model LMate.BusinessObjects.DepreciationBuilding
+﻿@using LMate.BusinessObjects
+@model DepreciationBuilding
 
 @{
     var depreciationMethondSelectList =
@@ -18,33 +17,68 @@
 }
 
 <div>
-    @Html.LabelFor(x => x.DatePurchased)
-    @Html.TextBoxFor(x => x.DatePurchased)
-
-    @Html.LabelFor(x => x.ConstructionMaterialsAndBuildingDescription)
-    @Html.TextBoxFor(x => x.ConstructionMaterialsAndBuildingDescription)
-
-
-    @Html.LabelFor(x => x.DepreciationMethond)
-    @Html.DropDownListFor(x => x.DepreciationMethond, depreciationMethondSelectList)
-    
-    <p>
-        @Html.Label(Model.DepreciationMethond == DepreciationMethod.StraightLineMethod
-                    ? "Cost of buildings (excluding cost of land)"
-                    : "Opening adjusted tax value")
-        <span class="dollarSign">$</span>
-        @Html.TextBoxFor(x => x.Value)
-    </p>
-
-    @Html.LabelFor(x => x.RatePercentage)
-    @Html.TextBoxFor(x => x.RatePercentage)
-
-    @Html.LabelFor(x => x.DepreciationClaimed)
-    @Html.TextBoxFor(x => x.DepreciationClaimed)
-
-    @if (Model.DepreciationMethond == DepreciationMethod.DiminishingValueMethod)
-    {
-        @Html.LabelFor(x => x.CloseingAdjustedTaxValue);
-        @Html.TextBoxFor(x => x.CloseingAdjustedTaxValue);
-    }
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.DatePurchased)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.DatePurchased)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.ConstructionMaterialsAndBuildingDescription)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.ConstructionMaterialsAndBuildingDescription)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.DepreciationMethond)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.DepreciationMethond, depreciationMethondSelectList)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.Label(Model.DepreciationMethond == DepreciationMethod.StraightLineMethod
+                ? "Cost of buildings (excluding cost of land)"
+                : "Opening adjusted tax value")
+            </td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.Value)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.RatePercentage)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.RatePercentage)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.DepreciationClaimed)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.DepreciationClaimed)
+            </td>
+        </tr>
+        @if (Model.DepreciationMethond == DepreciationMethod.DiminishingValueMethod)
+        {
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x.CloseingAdjustedTaxValue);
+                </td>
+                <td>
+                    @Html.TextBoxFor(x => x.CloseingAdjustedTaxValue);
+                </td>
+            </tr>
+        }
+    </table>
 </div>

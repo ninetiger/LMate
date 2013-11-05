@@ -4,35 +4,72 @@
 
     @for (int i = 0; i < Model.Count(); i++)
     {
-        @Html.LabelFor(x => x[i].Receipt.Description)
-        @Html.TextBoxFor(x => x[i].Receipt.Description)
+        <table>
+            <tr>
+                <td>@Html.LabelFor(x => x[i].Receipt.Description)</td>
+                <td>@Html.TextBoxFor(x => x[i].Receipt.Description)</td>
+            </tr>
 
-        @Html.LabelFor(x => x[i].Receipt.DatePurchased)
-        @Html.TextBoxFor(x => x[i].Receipt.DatePurchased)
-
-        @Html.LabelFor(x => x[i].Receipt.Cost)
-        <span class="dollarSign">$</span>
-        @Html.TextBoxFor(x => x[i].Receipt.Cost)
-        
-        @Html.LabelFor(x => x[i].OpeningAdjustedTaxValue)
-        <span class="dollarSign">$</span>
-        @Html.TextBoxFor(x => x[i].OpeningAdjustedTaxValue)
-
-        @Html.LabelFor(x => x[i].RatePercentage)
-        @Html.TextBoxFor(x => x[i].RatePercentage)
-        
-        @Html.LabelFor(x => x[i].DepreciationMethond)
-        @Html.TextBoxFor(x => x[i].DepreciationMethond)
-
-        @Html.LabelFor(x => x[i].DepreciationClaimed)
-        <span class="dollarSign">$</span>
-        @Html.TextBoxFor(x => x[i].DepreciationClaimed)
-
-        @Html.LabelFor(x => x[i].CloseingAdjustedTaxValue)
-        <span class="dollarSign">$</span>
-        @Html.TextBoxFor(x => x[i].CloseingAdjustedTaxValue)
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x[i].Receipt.DatePurchased)
+                </td>
+                <td>
+                    @Html.TextBoxFor(x => x[i].Receipt.DatePurchased)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x[i].Receipt.Cost)
+                </td>
+                <td>
+                    <span class="dollarSign">$</span>
+                    @Html.TextBoxFor(x => x[i].Receipt.Cost)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x[i].OpeningAdjustedTaxValue)
+                </td>
+                <td>
+                    <span class="dollarSign">$</span>
+                    @Html.TextBoxFor(x => x[i].OpeningAdjustedTaxValue)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x[i].RatePercentage)
+                </td>
+                <td>
+                    @Html.TextBoxFor(x => x[i].RatePercentage)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x[i].DepreciationMethond)
+                </td>
+                <td>
+                    @Html.TextBoxFor(x => x[i].DepreciationMethond)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x[i].DepreciationClaimed)
+                </td>
+                <td>
+                    <span class="dollarSign">$</span>
+                    @Html.TextBoxFor(x => x[i].DepreciationClaimed)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x[i].CloseingAdjustedTaxValue)
+                </td>
+                <td>
+                    <span class="dollarSign">$</span>
+                    @Html.TextBoxFor(x => x[i].CloseingAdjustedTaxValue)
+                </td>
+            </tr>
+        </table>
     }
-    
-    
-
 </div>

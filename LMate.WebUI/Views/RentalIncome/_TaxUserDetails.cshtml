@@ -1,19 +1,29 @@
 ﻿@model LMate.BusinessObjects.RentalIncomeDetail
 
 <div>
-    @Html.LabelFor(x=>x.YearEnded)
-    @Html.TextBoxFor(x=>x.YearEnded)
-
-    @Html.LabelFor(x => x.TaxUser.Name)
-    @Html.TextBoxFor(x => x.TaxUser.Name)
-
-    @Html.LabelFor(x => x.TaxUser.IRDNumber)
-    @Html.TextBoxFor(x => x.TaxUser.IRDNumber)
-    
-    @Html.LabelFor(x => x.AddressOfPropertyRented)
-    @Html.TextBoxFor(x => x.AddressOfPropertyRented)
-
-    @Html.LabelFor(x => x.PeriodThePropertyWasAvailableForRenting)
-    @Html.TextBoxFor(x => x.PeriodThePropertyWasAvailableForRenting)
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.YearEnded)
+            </td>
+            <td>@Html.TextBoxFor(x => x.YearEnded)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.TaxUser.Name)</td>
+            <td>@Html.TextBoxFor(x => x.TaxUser.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.TaxUser.IRDNumber)</td>
+            <td>@Html.TextBoxFor(x => x.TaxUser.IRDNumber)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.AddressOfPropertyRented)</td>
+            <td>@Html.TextBoxFor(x => x.AddressOfPropertyRented)</td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.PeriodThePropertyWasAvailableForRenting)</td>
+            <td>@Html.TextBoxFor(x => x.PeriodThePropertyWasAvailableForRenting)</td>
+        </tr>
+</table>
 </div>
 

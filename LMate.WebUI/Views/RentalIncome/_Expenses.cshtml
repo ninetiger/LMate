@@ -2,59 +2,101 @@
 @model RentalIncomeDetail
 
 <div>
-    @Html.LabelFor(x => x.Rates)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.Rates)
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Rates)
+            </td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.Rates)
+            </td>
+        </tr>
+        <tr>
+            <td> @Html.LabelFor(x => x.Insurance)</td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.Insurance)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Interest)
+            </td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.Interest)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.AgentCollectionFees)</td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.TextBoxFor(x => x.AgentCollectionFees)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(x => x.RepairsAndMaintenance)</td>
+            <td> </td>
+        </tr>
 
-    @Html.LabelFor(x => x.Insurance)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.Insurance)
-
-    @Html.LabelFor(x => x.Interest)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.Interest)
-
-    @Html.LabelFor(x => x.AgentCollectionFees)
-    <span class="dollarSign">$</span>
-    @Html.TextBoxFor(x => x.AgentCollectionFees)
-
-    @Html.LabelFor(x => x.RepairsAndMaintenance)
-    @for (int i = 0; i < Model.RepairsAndMaintenance.Count; i++)
-    {
-        if (Model.RepairsAndMaintenance[i].Type == ReceiptType.ReparisAndMaintenance)
+        @for (int i = 0; i < Model.RepairsAndMaintenance.Count; i++)
         {
-            @Html.TextBoxFor(x => x.RepairsAndMaintenance[i].Description)
+            if (Model.RepairsAndMaintenance[i].Type == ReceiptType.ReparisAndMaintenance)
+            {
+                <tr>
+                    <td>@Html.TextBoxFor(x => x.RepairsAndMaintenance[i].Description)</td>
 
-            <span class="dollarSign">$</span>
-            @Html.TextBoxFor(x => x.RepairsAndMaintenance[i].Cost)
+                    <td>
+                        <span class="dollarSign">$</span>
+                        @Html.TextBoxFor(x => x.RepairsAndMaintenance[i].Cost)
+                    </td>
+                </tr>
+            }
         }
-    }
-    <span class="dollarSign">$</span>
-    @Html.DisplayTextFor(x => x.SumRepairsAndMaintenance)
-
-
-    @Html.LabelFor(x => x.OtherList)
-    @for (int i = 0; i < Model.OtherList.Count; i++)
-    {
-        if (Model.OtherList[i].Type == ReceiptType.Other)
+        <tr>
+            <td></td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.DisplayTextFor(x => x.SumRepairsAndMaintenance)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OtherList)
+            </td>
+            <td></td>
+        </tr>
+        @for (int i = 0; i < Model.OtherList.Count; i++)
         {
-            @Html.TextBoxFor(x => x.OtherList[i].Description)
-
-            <span class="dollarSign">$</span>
-            @Html.TextBoxFor(x => x.OtherList[i].Cost)
+            if (Model.OtherList[i].Type == ReceiptType.Other)
+            {
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(x => x.OtherList[i].Description)
+                    </td>
+                    <td>
+                        <span class="dollarSign">$</span>
+                        @Html.TextBoxFor(x => x.OtherList[i].Cost)
+                    </td>
+                </tr>}
         }
-    }
-    <span class="dollarSign">$</span>
-    @Html.DisplayTextFor(x => x.SumOtherList)
+        <tr>
+            <td></td>
+            <td>
+                <span class="dollarSign">$</span>
+                @Html.DisplayTextFor(x => x.SumOtherList)
+            </td>
+        </tr>
+    </table>
 
     <p><label>Depreciation</label></p>
     <p>
         Buildings: <span class="dollarSign">$</span>
         @(Model.DepreciationBuilding == null
-            ? Html.DisplayTextFor(x => 0m)
-            : Html.DisplayTextFor(x => x.DepreciationBuilding.DepreciationClaimed))
+                  ? Html.DisplayTextFor(x => 0m)
+                  : Html.DisplayTextFor(x => x.DepreciationBuilding.DepreciationClaimed))
     </p>
     <p>Assets: <span class="dollarSign">$</span>@Html.DisplayTextFor(x => x.SumAssetDepreciations)</p>
-
 
 </div>

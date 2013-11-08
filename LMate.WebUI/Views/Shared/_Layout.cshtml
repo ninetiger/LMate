@@ -20,43 +20,43 @@
 </head>
 <body>
     <div class="centerlised container">
-            <div id="header">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("LMateLogo", "Index", "Landlord")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                </div>
+        <div id="header">
+            <div class="float-left">
+                <p class="site-title">@Html.ActionLink("LMateLogo", "Index", "Dashboard")</p>
             </div>
-            <div class="clear-float navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">LMate</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="./">Default</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div id="content">
-                <section id="main" class="column">
-                    @RenderBody()
+            <div class="float-right">
+                <section id="login">
+                    @Html.Partial("_LoginPartial")
                 </section>
             </div>
         </div>
+        <div class="clear-float navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LMate</a>
+            </div>
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="./">Default</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            <section id="main">
+                @RenderBody()
+            </section>
+        </div>
+    </div>
     <footer id="footer">
         <div class="container">
             <p>&copy; @DateTime.Now.Year - LMate</p>
@@ -65,6 +65,14 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false);
+    <script>
+        $(function () {
+            $('#navigation li').removeClass('active');
+            $('#navigation li a[href="' + window.location.pathname + '"]').parent().addClass('active');
+
+            @RenderSection("DocumentReady", required: false);
+        });
+    </script>
 </body>
 </html>

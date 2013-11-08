@@ -9,6 +9,7 @@ using LMate.DataObjects.Concrete;
 
 namespace LMate.WebUI.Controllers
 {
+    [Authorize]
     public class RentalIncomeController : Controller
     {
         private readonly IRentalIncomeDetailsRepository _repository;

@@ -372,7 +372,7 @@ namespace LMate.WebUI.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
         }
 

@@ -30,7 +30,7 @@ namespace LMate.WebUI.Controllers
             if (id.HasValue)
             {
                 var rentalIncomeDetail = _repository.RentalIncomeDetails
-                    .FirstOrDefault(r => r.ID == id);
+                    .FirstOrDefault(r => r.Id == id);
                 return View(rentalIncomeDetail);
             }
             else

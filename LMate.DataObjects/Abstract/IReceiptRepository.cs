@@ -9,6 +9,6 @@ namespace LMate.DataObjects.Abstract
 
         void SaveReceipt(Receipt receipt);
 
-        Receipt DeleteReceipt(int receiptID);
+        Receipt DeleteReceipt(int id);
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.ComTypes;
+using System.Web.Mvc;
 
 namespace LMate.WebUI.Models
 {
@@ -24,7 +27,7 @@ namespace LMate.WebUI.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -50,14 +53,39 @@ namespace LMate.WebUI.Models
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+
+    public class RoleViewModel
+    {
+        public RoleViewModel() { }
+
+        public RoleViewModel(ApplicationRole role)
+        {
+            Id = role.Id;
+            Name = role.Name;
+            Description = role.Description;
+        }
+        
+        //[HiddenInput(DisplayValue = false)]
+        public string Id { get; set; }
+
+        [Required]
+        [Display(Name = "Role name")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        public string Name { get; set; }
+
+        [DataType(DataType.Text)]
+        [StringLength(255, ErrorMessage = "The {0} must be less than {1} characters long.")]
+        public string Description { get; set; }
     }
 }

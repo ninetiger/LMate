@@ -114,7 +114,7 @@ namespace LMate.BusinessObjects
         //}
 
         [HiddenInput(DisplayValue = false)]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         private int _yearEnded = DateTime.Now.Year;
         [DisplayName("Year ended 31 March")]

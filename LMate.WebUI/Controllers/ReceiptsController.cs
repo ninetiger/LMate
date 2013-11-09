@@ -24,10 +24,10 @@ namespace LMate.Controllers
             return View(_repository.Receipts);
         }
 
-        public ViewResult Edit(int receiptId)
+        public ViewResult Edit(int id)
         {
             Receipt receipt = _repository.Receipts
-                                .FirstOrDefault(r => r.ReceiptID == receiptId);
+                                .FirstOrDefault(r => r.Id == id);
             return View(receipt);
         }
 
@@ -50,11 +50,9 @@ namespace LMate.Controllers
                 TempData["message"] = string.Format("{0} has been saved", receipt.Description);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                // there is something wrong with the data values
-                return View(receipt);
-            }
+            
+            // there is something wrong with the data values
+            return View(receipt);
         }
 
         public ViewResult Create()
@@ -63,9 +61,9 @@ namespace LMate.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int receiptId)
+        public ActionResult Delete(int id)
         {
-            Receipt deletedReceipt = _repository.DeleteReceipt(receiptId);
+            Receipt deletedReceipt = _repository.DeleteReceipt(id);
 
             if (deletedReceipt != null)
             {
@@ -74,17 +72,15 @@ namespace LMate.Controllers
             return RedirectToAction("Index");
         }
 
-        public FileContentResult GetImage(int receiptId)
+        public FileContentResult GetImage(int id)
         {
-            Receipt prod = _repository.Receipts.FirstOrDefault(r => r.ReceiptID == receiptId);
-            if (prod != null)
+            var receipt = _repository.Receipts.FirstOrDefault(r => r.Id == id);
+            if (receipt != null)
             {
-                return File(prod.ImageData, prod.ImageMimeType);
+                return File(receipt.ImageData, receipt.ImageMimeType);
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 }

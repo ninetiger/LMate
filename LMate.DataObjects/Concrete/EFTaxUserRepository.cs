@@ -22,13 +22,13 @@ namespace LMate.DataObjects.Concrete
 
         public void SaveTaxUser(TaxUser user)
         {
-            if (user.ID == 0)
+            if (user.Id == 0)
             {
                 _context.TaxUsers.Add(user);
             }
             else
             {
-                TaxUser dbEntry = GetTaxUser(user.ID);
+                TaxUser dbEntry = GetTaxUser(user.Id);
                 if (dbEntry != null)
                 {
                     dbEntry.Name = user.Name;

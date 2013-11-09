@@ -11,7 +11,7 @@ namespace LMate.BusinessObjects
     public class RentalIncome
     {
         [HiddenInput(DisplayValue = false)]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [DisplayName("Year ended 31 March")]
         public int YearEnded { get; set; }

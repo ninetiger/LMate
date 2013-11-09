@@ -18,7 +18,7 @@ namespace LMate.DataObjects.Tests
         {
             var receipt = new Receipt
             {
-                ReceiptID = 0,
+                Id = 0,
                 Description = "desc",
                 DatePurchased = DateTime.Now,
                 Cost = 999

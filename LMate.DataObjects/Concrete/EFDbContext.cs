@@ -3,6 +3,7 @@ using System.Data.Entity;
 
 namespace LMate.DataObjects.Concrete
 {
+    //todo make it a singleton???
     public class EFDbContext : DbContext
     {
         public DbSet<DepreciationAsset> DepreciationAssets { get; set; }

@@ -19,14 +19,14 @@
     </tr>
     @foreach (var item in Model) {
         <tr>
-            <td>@item.ReceiptID</td>
-            <td>@Html.ActionLink(item.Description, "Edit", new { item.ReceiptID })</td>
+            <td>@item.Id</td>
+            <td>@Html.ActionLink(item.Description, "Edit", new { item.Id })</td>
             <td>@item.DatePurchased</td>
             <td class="NumericCol">@item.Cost.ToString("c")</td>
             <td>
                 @using (Html.BeginForm("Delete", "Receipts"))
                 {
-                    @Html.Hidden("ReceiptID", item.ReceiptID)
+                    @Html.Hidden("Id", item.Id)
                         <input type="submit" value="Delete"/>
                 }
             </td>

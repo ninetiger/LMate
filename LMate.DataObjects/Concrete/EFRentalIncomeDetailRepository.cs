@@ -30,7 +30,7 @@ namespace LMate.DataObjects.Concrete
             {
                 var queryable = RentalIncomeDetails.Select(r => new RentalIncome
                 {
-                    ID = r.ID,
+                    Id = r.Id,
                     YearEnded = r.YearEnded,
                     TotalIncome = r.TotalIncome,
                     TotalExpenses = r.TotalExpenses
@@ -42,13 +42,13 @@ namespace LMate.DataObjects.Concrete
 
         public void SaveRentalIncomeDetail(RentalIncomeDetail rentalIncomeDetail)
         {
-            if (rentalIncomeDetail.ID == 0)
+            if (rentalIncomeDetail.Id == 0)
             {
                 _context.RentalIncomeDetails.Add(rentalIncomeDetail);
             }
             else
             {
-                RentalIncomeDetail dbEntry = GetRentalIncomeDetail(rentalIncomeDetail.ID);
+                RentalIncomeDetail dbEntry = GetRentalIncomeDetail(rentalIncomeDetail.Id);
                 if (dbEntry != null)
                 {
                     dbEntry.YearEnded = rentalIncomeDetail.YearEnded;

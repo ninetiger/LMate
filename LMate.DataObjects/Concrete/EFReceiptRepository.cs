@@ -17,13 +17,13 @@ namespace LMate.DataObjects.Concrete
 
         public void SaveReceipt(Receipt receipt)
         {
-            if (receipt.ReceiptID == 0)
+            if (receipt.Id == 0)
             {
                 _context.Receipts.Add(receipt);
             }
             else
             {
-                Receipt dbEntry = _context.Receipts.Find(receipt.ReceiptID);
+                Receipt dbEntry = _context.Receipts.Find(receipt.Id);
                 if (dbEntry != null)
                 {
                     dbEntry.Description = receipt.Description;
@@ -55,9 +55,9 @@ namespace LMate.DataObjects.Concrete
             }
         }
 
-        public Receipt DeleteReceipt(int receiptID)
+        public Receipt DeleteReceipt(int id)
         {
-            Receipt dbEntry = _context.Receipts.Find(receiptID);
+            Receipt dbEntry = _context.Receipts.Find(id);
 
             if (dbEntry != null)
             {

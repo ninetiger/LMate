@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace LMate.WebUI.Models
 {
@@ -9,9 +15,24 @@ namespace LMate.WebUI.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection")
-        {
-        }
+        public new IDbSet<ApplicationRole> Roles { get; set; }
+
+        public ApplicationDbContext() : base("DefaultConnection") { }
     }
+
+    public class ApplicationRole : IdentityRole
+    {
+        public string Description { get; set; }
+    }
+
+
+    //public class ApplicationDbContext : IdentityDbContext
+    //{
+    //    public new IDbSet<ApplicationRole> Roles { get; set; }
+    //    public new IDbSet<ApplicationUser> Users { get; set; }
+
+    //    public ApplicationDbContext() : base("DefaultConnection") { }
+
+
+    //}
 }

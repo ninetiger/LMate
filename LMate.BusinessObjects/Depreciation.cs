@@ -11,7 +11,7 @@ namespace LMate.BusinessObjects
     public abstract class Depreciation
     {
         [HiddenInput(DisplayValue = false)]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [DisplayName("Depreciation methond")]
         public DepreciationMethod DepreciationMethond { get; set; }

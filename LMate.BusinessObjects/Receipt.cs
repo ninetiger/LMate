@@ -24,7 +24,7 @@ namespace LMate.BusinessObjects
         }
 
         [HiddenInput(DisplayValue = false)]
-        public int ReceiptID { get; set; }
+        public int Id { get; set; }
 
         [DisplayName("Asset")]
         public string Description { get; set; }

@@ -21,9 +21,9 @@ namespace LMate.BusinessObjects
         }
 
         [HiddenInput(DisplayValue = false)]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
-        public int ReceiptID { get; set; }
+        public int ReceiptId { get; set; }
         public DateTime Date { get; set; }
         public string Note { get; set; }
         public DisposalType Type { get; set; }

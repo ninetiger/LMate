@@ -71,7 +71,7 @@ namespace LMate.WebUI.Controllers
                     Name = model.Name,
                     Description = model.Description
                 };
-                var result = await RoleManager.CreateAsync(role);
+                var result = await RoleManager.CreateAsync(role); 
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Role");

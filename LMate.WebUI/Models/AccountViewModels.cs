@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices.ComTypes;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LMate.WebUI.Models
 {
@@ -64,7 +61,6 @@ namespace LMate.WebUI.Models
         public string ConfirmPassword { get; set; }
     }
 
-
     public class RoleViewModel
     {
         public RoleViewModel() { }
@@ -76,12 +72,11 @@ namespace LMate.WebUI.Models
             Description = role.Description;
         }
         
-        //[HiddenInput(DisplayValue = false)]
         public string Id { get; set; }
 
         [Required]
         [Display(Name = "Role name")]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         public string Name { get; set; }
 
         [DataType(DataType.Text)]

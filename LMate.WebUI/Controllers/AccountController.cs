@@ -23,6 +23,7 @@ namespace LMate.WebUI.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+            userManager.PasswordValidator = new MinimumLengthValidator(3);
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -82,6 +83,7 @@ namespace LMate.WebUI.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var r = UserManager.AddToRole(user.Id, "Individual");
                     await SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }

@@ -24,15 +24,4 @@ namespace LMate.WebUI.Models
     {
         public string Description { get; set; }
     }
-
-
-    //public class ApplicationDbContext : IdentityDbContext
-    //{
-    //    public new IDbSet<ApplicationRole> Roles { get; set; }
-    //    public new IDbSet<ApplicationUser> Users { get; set; }
-
-    //    public ApplicationDbContext() : base("DefaultConnection") { }
-
-
-    //}
 }

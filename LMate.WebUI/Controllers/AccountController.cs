@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,7 +14,7 @@ using LMate.WebUI.Models;
 
 namespace LMate.WebUI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         public AccountController()
@@ -310,6 +312,113 @@ namespace LMate.WebUI.Controllers
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
+
+        // GET: /User/
+        public async Task<ActionResult> Index()
+        {
+            List<ApplicationUser> userList;
+            using (var repo = new ApplicationDbContext())
+            {
+                userList = await repo.Users.ToListAsync();
+            }
+            return View(userList);
+        }
+
+        // GET: /User/Details/5
+        public async Task<ActionResult> Details(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        //// POST: /User/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Create([Bind(Include = "Id,Name,IRDNumber,Address")] TaxUser taxuser)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.TaxUsers.Add(taxuser);
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(taxuser);
+        //}
+
+        // GET: /User/Edit/5
+        public async Task<ActionResult> Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var userRoleViewModel = new UserRoleViewModel
+            {
+                User = await UserManager.FindByIdAsync(id)
+            };
+            
+            if (userRoleViewModel.User == null)
+            {
+                return HttpNotFound();
+            }
+
+            using (var repo = new ApplicationDbContext())
+            {
+                userRoleViewModel.AvailableRoles = await repo.Roles.ToListAsync();
+
+                var userRoleList = userRoleViewModel.User.Roles.ToList();
+                var query = userRoleList.Select(role => new SelectListItem()
+                {
+                    Selected = false,
+                    Text = role.Role.Name,
+                    Value = role.Role.Name
+                });
+                userRoleViewModel.CurrentRoles = query;
+
+                //foreach (var userRole in userRoleList)
+                //{
+                //    var applicationRole = (ApplicationRole)userRole.Role;
+                //    userRoleViewModel.CurrentRoles.Add(applicationRole);
+                //}
+            }
+            return View(userRoleViewModel);
+        }
+
+        // POST: /User/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //todo not getting to role lists back
+        public async Task<ActionResult> Edit(
+            //[Bind(Include = "Id,Name,IRDNumber,Address")] 
+            UserRoleViewModel viewModel, List<ApplicationRole> CurrentRoles,
+            List<ApplicationRole> AvailableRoles, List<string> CurrentRoleIds) //todo listbox not bass value back
+        {
+            if (ModelState.IsValid)
+            {
+                using (var repo = new ApplicationDbContext())
+                {
+                    repo.Entry(viewModel.User).State = EntityState.Modified;
+                    await repo.SaveChangesAsync();
+                }
+                return RedirectToAction("Index");
+            }
+            return View(viewModel);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

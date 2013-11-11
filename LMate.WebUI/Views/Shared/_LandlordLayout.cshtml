@@ -58,12 +58,34 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script>
-        @RenderSection("scripts", required: false);
+        @RenderSection("scripts", required: false)
+        @RenderSection("pageLevelScripts", required: false)
+        ////not sure why this function has to be in the _layout area not here
+        //function Sortit() {
+        //            var $r = $("#currentRolelist option");
+        //            $r.sort(function (a, b) {
+        //                if (a.text < b.text) return -1;
+        //                if (a.text == b.text) return 0;
+        //                return 1;
+        //            });
+        //            $($r).remove();
+        //            $("#currentRolelist").append($($r));
+        //        }
+        
         $(function () {
             $('#navigation li').removeClass('active');
             $('#navigation li a[href="' + window.location.pathname + '"]').parent().addClass('active');
 
-            @RenderSection("DocumentReady", required: false);
+            //stateful button
+            $(':input[data-loading-text]').click(function() {
+                var btn = $(this);
+                btn.button('loading');
+                setTimeout(function() {
+                    btn.button('reset');
+                }, 3000);
+            });
+
+            @RenderSection("DocumentReady", required: false)
         });
     </script>
 </body>

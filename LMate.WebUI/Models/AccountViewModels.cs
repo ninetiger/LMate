@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace LMate.WebUI.Models
 {
@@ -82,5 +84,17 @@ namespace LMate.WebUI.Models
         [DataType(DataType.Text)]
         [StringLength(255, ErrorMessage = "The {0} must be less than {1} characters long.")]
         public string Description { get; set; }
+    }
+
+    public class UserRoleViewModel
+    {
+        //public List<ApplicationRole> CurrentRoles { get; set; }
+        public IEnumerable<SelectListItem> CurrentRoles { get; set; }
+        public List<string> CurrentRoleIds { get; set; }
+
+        public List<ApplicationRole> AvailableRoles { get; set; }
+
+        public ApplicationUser User { get; set; }
+
     }
 }

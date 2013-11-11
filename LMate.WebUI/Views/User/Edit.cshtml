@@ -1,0 +1,79 @@
+﻿@using LMate.BusinessObjects
+@model LMate.WebUI.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LandlordLayout.cshtml";
+}
+
+@{
+    var depreciationMethondSelectList =
+        new List<SelectListItem>()
+        {
+            new SelectListItem
+            {
+                Selected=false, Text = "Straight line method (SL)", Value = DepreciationMethod.StraightLineMethod.ToString()
+            },
+            new SelectListItem
+            {
+                Selected=false, Text = "Diminishing value method (DV)", Value = DepreciationMethod.DiminishingValueMethod.ToString()
+            }
+        };
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>TaxUser</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName)
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Id, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Id)
+                @Html.ValidationMessageFor(model => model.Id)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <table>
+            <tr>
+                <td>
+                    @Html.ListBox("aaa", depreciationMethondSelectList)
+                </td>
+                <td>
+                    <button title="<==" value="dfdf"></button><br/>
+                    <button title="==>"></button>
+                </td>
+                <td>
+                    @Html.ListBox("aaa", depreciationMethondSelectList)
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

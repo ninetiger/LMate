@@ -90,9 +90,10 @@ namespace LMate.WebUI.Models
     {
         //public List<ApplicationRole> CurrentRoles { get; set; }
         public IEnumerable<SelectListItem> CurrentRoles { get; set; }
-        public List<string> CurrentRoleIds { get; set; }
+        public List<string> CurrentRoleIdList { get; set; }
 
-        public List<ApplicationRole> AvailableRoles { get; set; }
+        public IList<SelectListItem> AvailableRoles { get; set; }
+        public List<string> AvailableRoleIdList { get; set; }
 
         public ApplicationUser User { get; set; }
 

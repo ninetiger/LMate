@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -374,24 +375,31 @@ namespace LMate.WebUI.Controllers
                 return HttpNotFound();
             }
 
+            //currentroles
+            var userRoleList = userRoleViewModel.User.Roles.ToList();
+            var userRoleQuery = userRoleList.Select(role => new SelectListItem()
+            {
+                Selected = false,
+                Text = role.Role.Name,
+                Value = role.Role.Name
+            });
+            userRoleViewModel.CurrentRoles = userRoleQuery;
+
+            //availableRoles
             using (var repo = new ApplicationDbContext())
             {
-                userRoleViewModel.AvailableRoles = await repo.Roles.ToListAsync();
-
-                var userRoleList = userRoleViewModel.User.Roles.ToList();
-                var query = userRoleList.Select(role => new SelectListItem()
+                var roleList = await repo.Roles.ToListAsync();
+                userRoleViewModel.AvailableRoles = new List<SelectListItem>();
+                foreach (var aRole in roleList.Where(aRole => !userRoleList.Exists(x => x.RoleId == aRole.Id)))
                 {
-                    Selected = false,
-                    Text = role.Role.Name,
-                    Value = role.Role.Name
-                });
-                userRoleViewModel.CurrentRoles = query;
+                    userRoleViewModel.AvailableRoles.Add(new SelectListItem
+                    {
+                        Selected = false,
+                        Text = aRole.Name,
+                        Value = aRole.Name
+                    });
+                }
 
-                //foreach (var userRole in userRoleList)
-                //{
-                //    var applicationRole = (ApplicationRole)userRole.Role;
-                //    userRoleViewModel.CurrentRoles.Add(applicationRole);
-                //}
             }
             return View(userRoleViewModel);
         }
@@ -403,20 +411,30 @@ namespace LMate.WebUI.Controllers
         [ValidateAntiForgeryToken]
         //todo not getting to role lists back
         public async Task<ActionResult> Edit(
-            //[Bind(Include = "Id,Name,IRDNumber,Address")] 
-            UserRoleViewModel viewModel, List<ApplicationRole> CurrentRoles,
-            List<ApplicationRole> AvailableRoles, List<string> CurrentRoleIds) //todo listbox not bass value back
+            //[Bind(Include = "Id,Name,IRDNumber,Address")]  //todo need to put bind back
+            UserRoleViewModel viewModel) 
         {
             if (ModelState.IsValid)
             {
                 using (var repo = new ApplicationDbContext())
                 {
+                    string userId = viewModel.User.Id;
+                    var userRoles = await UserManager.GetRolesAsync(userId);
+                    foreach (var userRole in userRoles)
+                    {
+                        await UserManager.RemoveFromRoleAsync(userId, userRole);
+                    }
+                    foreach (var role in viewModel.CurrentRoleIdList)
+                    {
+                        await UserManager.AddToRoleAsync(viewModel.User.Id, role);
+                    }
+
                     repo.Entry(viewModel.User).State = EntityState.Modified;
                     await repo.SaveChangesAsync();
                 }
                 return RedirectToAction("Index");
             }
-            return View(viewModel);
+            return View(viewModel); //todo need to validate modelstate and regenerate viewModel if failed
         }
 
 

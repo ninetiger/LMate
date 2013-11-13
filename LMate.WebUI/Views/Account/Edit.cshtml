@@ -12,51 +12,31 @@
 
     @section DocumentReady
     {
-        $('#addRole').click(function () {
-            var selected = $('#AvailableRoles option:selected');
-            $('#AvailableRoles option:selected').remove();
-            $('#CurrentRoles').append(selected);
-            //Sortit();
-        });
+    $('#addRole').click(function () {
+        var selected = $('#AvailableRoleIdList option:selected');
+        selected.prop('selected', false);
+        $('#AvailableRoleIdList option:selected').remove();
+        $('#CurrentRoleIdList').append(selected);
+        //Sortit();
+    });
 
-        $('#removeRole').click(function () {
-            var selected = $('#CurrentRoles option:selected');
-            $('#CurrentRoles option:selected').remove();
-            $('#AvailableRoles').append(selected);
-        });
+    $('#removeRole').click(function () {
+        var selected = $('#CurrentRoleIdList option:selected');
+        selected.prop('selected', false);
+        $('#CurrentRoleIdList option:selected').remove();
+        $('#AvailableRoleIdList').append(selected);
+    });
 
-        //$('#GenreForm').click(function () {
-        //    alert('in');
-        //    // modifies the 'selected' options on the list 
-        //    // before finally being submitted by the browser
-        //    $('#CurrentRoles option').prop('selected', true);
-        //    $('#AvailableRoles option').prop('selected', true);
-        //});
+    $('#saveUserRole').click(function () {
+        $('#CurrentRoleIdList option').prop('selected', true);
+        $('#AvailableRoles option').prop('selected', true);
+    });
     }
 </script>
 
-@{
-    //var currentRolelist = Model.CurrentRoles.Select(role => new SelectListItem()
-    //{
-    //    Selected = false,
-    //    Text = role.Name,
-    //    Value = role.Name
-    //}).ToList();
-
-    //var availableRolelist =
-    //    (from role in Model.AvailableRoles
-    //     where Model.CurrentRoles.Exists(x => x.Id != role.Id)
-    //     select new SelectListItem()
-    //     {
-    //         Selected = false,
-    //         Text = role.Name,
-    //         Value = role.Name
-    //     }).ToList();
-}
-
 <h2>Edit</h2>
 
-@using (Html.BeginForm(@Model.CurrentRoleIds))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -88,15 +68,7 @@
         <table>
             <tr>
                 <td>
-                    @*@Html.ListBox("currentRolelist", currentRolelist)*@
-                    @*@Html.ListBoxFor(x => x.CurrentRoleIds,
-                        Model.CurrentRoles.Select(role => new SelectListItem()
-                        {
-                            Selected = false,
-                            Text = role.Name,
-                            Value = role.Name
-                        }).ToList())*@
-                    @Html.ListBoxFor(x => x.CurrentRoles, Model.CurrentRoles, new {Multiple = "multiple"});
+                    @Html.ListBoxFor(x => x.CurrentRoleIdList, Model.CurrentRoles, new {style="width:100px;height:150px"})
                 </td>
                 <td>
                     <button type="button" class="btn btn-sm" id="addRole">&lt;==</button>
@@ -105,26 +77,16 @@
                     <button type="button" class="btn btn-sm" id="removeRole">==&gt;</button>
                 </td>
                 <td>
-                    @*@Html.ListBox("availableRolelist", availableRolelist)*@
-                    @Html.ListBoxFor(x => x.AvailableRoles,
-                        (from role in Model.AvailableRoles
-                            //where Model.CurrentRoles.Exists(x => x.Id != role.Id)
-                            select new SelectListItem()
-                            {
-                                Selected = true,
-                                Text = role.Name,
-                                Value = role.Name
-                            }).ToList(),
-                            new {Multiple = "multiple"})
+                    @Html.ListBoxFor(x => x.AvailableRoleIdList, Model.AvailableRoles, new { style = "width:100px;height:150px" })
                 </td>
             </tr>
         </table>
     </div>
-            <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="GenreForm" value="Save" data-loading-text="Saving..." class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="saveUserRole" value="Save" data-loading-text="Saving..." class="btn btn-default" />
         </div>
+    </div>
 }
 
 <div>

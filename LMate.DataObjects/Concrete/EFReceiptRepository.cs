@@ -31,7 +31,7 @@ namespace LMate.DataObjects.Concrete
                     dbEntry.Cost = receipt.Cost;
                     dbEntry.ImageData = receipt.ImageData;
                     dbEntry.ImageMimeType = receipt.ImageMimeType;
-                    dbEntry.Comment = receipt.Comment;
+                    dbEntry.Note = receipt.Note;
                 }
             }
 

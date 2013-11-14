@@ -13,7 +13,7 @@
     <tr>
         <th>ID</th>
         <th>Description</th>
-        <th>DatePurchased</th>
+        <th>PurchaseDate</th>
         <th class="NumericCol">Cost</th>
         <th>Actions</th>
     </tr>
@@ -21,8 +21,8 @@
         <tr>
             <td>@item.Id</td>
             <td>@Html.ActionLink(item.Description, "Edit", new { item.Id })</td>
-            <td>@item.DatePurchased</td>
-            <td class="NumericCol">@item.Cost.ToString("c")</td>
+            <td>@item.PurchaseDate</td>
+            <td class="NumericCol">@item.Price.ToString()</td>
             <td>
                 @using (Html.BeginForm("Delete", "Receipts"))
                 {

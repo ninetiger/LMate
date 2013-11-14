@@ -7,11 +7,11 @@ namespace LMate.BusinessObjects
     {
         public DepreciationBuilding()
         {
-            DatePurchased = DateTime.Now;
+            PurchaseDate = DateTime.Now;
         }
 
         [DisplayName("Date purchased")]
-        public DateTime DatePurchased { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
         [DisplayName("Construction materials and building description")]
         public string ConstructionMaterialsAndBuildingDescription { get; set; }

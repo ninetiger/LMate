@@ -20,8 +20,8 @@ namespace LMate.DataObjects.Tests
             {
                 Id = 0,
                 Description = "desc",
-                DatePurchased = DateTime.Now,
-                Cost = 999
+                PurchaseDate = DateTime.Now,
+                Price = 999
             };
 
             IReceiptRepository receiptRepository = new EFReceiptRepository();

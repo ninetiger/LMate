@@ -42,8 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObject.cs" />
+    <Compile Include="BusinessRules\BusinessRule.cs" />
+    <Compile Include="BusinessRules\ValidateCompare.cs" />
+    <Compile Include="BusinessRules\ValidateCreditcard.cs" />
+    <Compile Include="BusinessRules\ValidateEmail.cs" />
+    <Compile Include="BusinessRules\ValidateId.cs" />
+    <Compile Include="BusinessRules\ValidateIPAddress.cs" />
+    <Compile Include="BusinessRules\ValidateLength.cs" />
+    <Compile Include="BusinessRules\ValidateRange.cs" />
+    <Compile Include="BusinessRules\ValidateRegex.cs" />
+    <Compile Include="BusinessRules\ValidateRequired.cs" />
+    <Compile Include="BusinessRules\ValidationDataType.cs" />
+    <Compile Include="BusinessRules\ValidationOperator.cs" />
     <Compile Include="Depreciation.cs" />
     <Compile Include="DepreciationBuilding.cs" />
+    <Compile Include="Currency.cs" />
     <Compile Include="TaxUser.cs" />
     <Compile Include="Disposal.cs" />
     <Compile Include="Receipt.cs" />

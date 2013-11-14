@@ -40,31 +40,155 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IDepreciationAssetRepository.cs" />
-    <Compile Include="Abstract\IReceiptRepository.cs" />
-    <Compile Include="Abstract\IDepreciationBuildingRepository.cs" />
-    <Compile Include="Abstract\IDisposalRepository.cs" />
-    <Compile Include="Abstract\ITaxUserRepository.cs" />
-    <Compile Include="Abstract\IRentalIncomeDetailRepository.cs" />
-    <Compile Include="Concrete\EFDisposalRepository.cs" />
-    <Compile Include="Concrete\EFDbContext.cs" />
-    <Compile Include="Concrete\EFTaxUserRepository.cs" />
-    <Compile Include="Concrete\EFReceiptRepository.cs" />
-    <Compile Include="Concrete\EFDepreciationAssetRepository.cs" />
-    <Compile Include="Concrete\EFDepreciationBuildingRepository.cs" />
-    <Compile Include="Concrete\EFRentalIncomeDetailRepository.cs" />
+    <Compile Include="Abstract\IDepreciationAssetRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstract\IDepreciationBuildingRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstract\IDisposalRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstract\IReceiptRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstract\IRentalIncomeDetailRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Abstract\ITaxUserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ADO.NET\DbAdapter.cs" />
+    <Compile Include="ADO.NET\Db.cs" />
+    <Compile Include="ADO.NET\SqlServer\SqlServerDaoFactory.cs" />
+    <Compile Include="ADO.NET\SqlServer\SqlServerReceiptDao.cs" />
+    <Compile Include="Concrete\EFDbContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Concrete\EFDepreciationAssetRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Concrete\EFDepreciationBuildingRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Concrete\EFDisposalRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Concrete\EFReceiptRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Concrete\EFRentalIncomeDetailRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Concrete\EFTaxUserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DaoFactories.cs" />
+    <Compile Include="DataAccess.cs" />
+    <Compile Include="EntityFramework\AspNetRoles.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\AspNetUserClaims.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\AspNetUserLogins.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\AspNetUsers.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Currencies.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\DataObjectFactory.cs" />
+    <Compile Include="EntityFramework\DepreciationAssets.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\DepreciationBuildings.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\DepreciationMethond.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Disposals.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\DisposalType.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Implementation\EntityDoaFactory.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityReceiptDao.cs" />
+    <Compile Include="EntityFramework\LMateModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LMateModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\LMateModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\LMateModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LMateModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ModelMapper\DynamicLinq.cs" />
+    <Compile Include="EntityFramework\ModelMapper\Mapper.cs" />
+    <Compile Include="EntityFramework\Receipts.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ReceiptStatus.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ReceiptTypes.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\RentalIncomeDetails.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\TaxUsers.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\UserDelegates.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IDaoFactory.cs" />
+    <Compile Include="IReceiptDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shared\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="EntityFramework\LMateModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LMateModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="EntityFramework\LMateModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LMateModel.edmx</DependentUpon>
+      <LastGenOutput>LMateModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="EntityFramework\LMateModel.edmx.diagram">
+      <DependentUpon>LMateModel.edmx</DependentUpon>
+    </None>
+    <None Include="EntityFramework\LMateModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LMateModel.edmx</DependentUpon>
+      <LastGenOutput>LMateModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -73,6 +197,10 @@
       <Project>{b47e3582-d5c6-486b-811d-d2d46fcacbc6}</Project>
       <Name>LMate.BusinessObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,7 +17,8 @@ namespace LMate.WebUI.Models
     {
         public new IDbSet<ApplicationRole> Roles { get; set; }
 
-        public ApplicationDbContext() : base("DefaultConnection") { }
+        //public ApplicationDbContext() : base("DefaultConnection") { }
+        public ApplicationDbContext() : base("ADO.NET.SqlServer") { }
     }
 
     public class ApplicationRole : IdentityRole

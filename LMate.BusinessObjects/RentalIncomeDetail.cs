@@ -10,74 +10,74 @@ namespace LMate.BusinessObjects
 {
     public class RentalIncomeDetail
     {
-        public RentalIncomeDetail()
-        {
-            TaxUser = new TaxUser();
-            TaxUser.Name = "wahaga:=";
-            TaxUser.IRDNumber = 32424;
+        //public RentalIncomeDetail()
+        //{
+        //    TaxUser = new TaxUser();
+        //    TaxUser.Name = "wahaga:=";
+        //    TaxUser.IRDNumber = 32424;
             
-            RepairsAndMaintenance = new List<Receipt>();
-            RepairsAndMaintenance.Add(new Receipt()
-            {
-                Description = "receipt 222",
-                Cost = (decimal)19.99,
-                Type = ReceiptType.ReparisAndMaintenance,
-                DatePurchased = DateTime.Now
-            });
-            RepairsAndMaintenance.Add(new Receipt()
-            {
-                Description = "receipt 333",
-                Cost = 156.99m,
-                DatePurchased = DateTime.Now
-            });
+        //    RepairsAndMaintenance = new List<Receipt>();
+        //    RepairsAndMaintenance.Add(new Receipt()
+        //    {
+        //        Description = "receipt 222",
+        //        Cost = (decimal)19.99,
+        //        Type = ReceiptType.ReparisAndMaintenance,
+        //        PurchaseDate = DateTime.Now
+        //    });
+        //    RepairsAndMaintenance.Add(new Receipt()
+        //    {
+        //        Description = "receipt 333",
+        //        Cost = 156.99m,
+        //        PurchaseDate = DateTime.Now
+        //    });
 
-            OtherList = new List<Receipt>();
-            OtherList.Add(new Receipt()
-            {
-                Description = "other1",
-                Cost = 15m,
-                Type = ReceiptType.Other,
-                DatePurchased = DateTime.Now
-            });
-            OtherList.Add(new Receipt()
-            {
-                Description = "other 2",
-                Cost = (decimal)12.86,
-                Type = ReceiptType.Insurance,
-                DatePurchased = DateTime.Now
-            });
-            OtherList.Add(new Receipt()
-            {
-                Description = "other 3",
-                Cost = (decimal)12.86,
-                Type = ReceiptType.Other,
-                DatePurchased = DateTime.Now
-            });
-            DepreciationBuilding = new DepreciationBuilding();
-            DepreciationBuilding.DatePurchased = DateTime.Now;
-            DepreciationBuilding.DepreciationClaimed = 20.56m;
-            DepreciationBuilding.DepreciationMethond = DepreciationMethod.DiminishingValueMethod;
+        //    OtherList = new List<Receipt>();
+        //    OtherList.Add(new Receipt()
+        //    {
+        //        Description = "other1",
+        //        Cost = 15m,
+        //        Type = ReceiptType.Other,
+        //        PurchaseDate = DateTime.Now
+        //    });
+        //    OtherList.Add(new Receipt()
+        //    {
+        //        Description = "other 2",
+        //        Cost = (decimal)12.86,
+        //        Type = ReceiptType.Insurance,
+        //        PurchaseDate = DateTime.Now
+        //    });
+        //    OtherList.Add(new Receipt()
+        //    {
+        //        Description = "other 3",
+        //        Cost = (decimal)12.86,
+        //        Type = ReceiptType.Other,
+        //        PurchaseDate = DateTime.Now
+        //    });
+        //    DepreciationBuilding = new DepreciationBuilding();
+        //    DepreciationBuilding.PurchaseDate = DateTime.Now;
+        //    DepreciationBuilding.DepreciationClaimed = 20.56m;
+        //    DepreciationBuilding.DepreciationMethond = DepreciationMethod.DiminishingValueMethod;
 
-            DepreciationAssets = new List<DepreciationAsset>();
-            //DepreciationAssets.Add(new DepreciationAsset()
-            //{
-            //    DepreciationClaimed = 2.99m
-            //});
-            DepreciationAssets.Add(new DepreciationAsset()
-            {
-                Receipt = new Receipt
-                {
-                    Description="wahaha",
-                    DatePurchased = DateTime.Now,
-                    Cost = 800.90m,
-                },
-                OpeningAdjustedTaxValue = 600.86m,
-                RatePercentage = 20,
-                DepreciationMethond = DepreciationMethod.DiminishingValueMethod,
-                DepreciationClaimed = 7.99m,
-                CloseingAdjustedTaxValue = 531.33m,
-            });
-        }
+        //    DepreciationAssets = new List<DepreciationAsset>();
+        //    //DepreciationAssets.Add(new DepreciationAsset()
+        //    //{
+        //    //    DepreciationClaimed = 2.99m
+        //    //});
+        //    DepreciationAssets.Add(new DepreciationAsset()
+        //    {
+        //        Receipt = new Receipt
+        //        {
+        //            Description="wahaha",
+        //            PurchaseDate = DateTime.Now,
+        //            Cost = 800.90m,
+        //        },
+        //        OpeningAdjustedTaxValue = 600.86m,
+        //        RatePercentage = 20,
+        //        DepreciationMethond = DepreciationMethod.DiminishingValueMethod,
+        //        DepreciationClaimed = 7.99m,
+        //        CloseingAdjustedTaxValue = 531.33m,
+        //    });
+        //}
 
         //private void cal()
         //{
@@ -176,11 +176,12 @@ namespace LMate.BusinessObjects
         {
             get
             {
-                return RepairsAndMaintenance != null ?
-                       RepairsAndMaintenance
-                           .Where(x => x.Type == ReceiptType.ReparisAndMaintenance)
-                           .Sum(x => x.Cost)
-                       : 0;
+                //return RepairsAndMaintenance != null ?
+                //       RepairsAndMaintenance
+                //           .Where(x => x.Type == ReceiptType.ReparisAndMaintenance)
+                //           .Sum(x => x.Cost)
+                //       : 0;
+                return 0;
             }
         }
 
@@ -190,11 +191,12 @@ namespace LMate.BusinessObjects
         {
             get
             {
-                return OtherList != null
-                    ? OtherList
-                        .Where(x => x.Type == ReceiptType.Other)
-                        .Sum(x => x.Cost)
-                    : 0;
+                //return OtherList != null
+                //    ? OtherList
+                //        .Where(x => x.Type == ReceiptType.Other)
+                //        .Sum(x => x.Cost)
+                //    : 0;
+                return 0;
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace LMate.DataObjects
+﻿namespace DataObjects
 {
     /// <summary>
     /// Abstract factory interface. Creates data access objects.

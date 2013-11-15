@@ -1,9 +1,9 @@
-﻿using BusinessObjects;
-using LMate.BusinessObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using BusinessObjects;
 
-namespace LMate.DataObjects
+namespace DataObjects
 {
     /// <summary>
     /// Defines methods to access receipts.
@@ -19,6 +19,7 @@ namespace LMate.DataObjects
         /// <param name="receiptId">Unique receipt identifier.</param>
         /// <returns>Receipt.</returns>
         Receipt GetReceipt(int receiptId);
+        Task<Receipt> GetReceiptAsync(int receiptId);
 
         /// <summary>
         /// Gets a sorted list of all receipts from every singal user!!!!
@@ -44,5 +45,6 @@ namespace LMate.DataObjects
         /// </summary>
         /// <param name="receipt">Receipt.</param>
         void DeleteReceipt(Receipt receipt);
+        Task DeleteReceiptAsync(Receipt receipt);
     }
 }

@@ -66,7 +66,6 @@ namespace DataObjects.EntityFramework.ModelMapper
             };
         }
 
-
         ///// <summary>
         ///// Maps order entity to order business object.
         ///// </summary>

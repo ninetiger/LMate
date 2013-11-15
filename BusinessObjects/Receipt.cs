@@ -1,10 +1,13 @@
 ﻿using System;
-using LMate.BusinessObjects;
 
 namespace BusinessObjects
 {
     public class Receipt : BusinessObject
     {
+        public Receipt()
+        {
+            Version = _versionDefault;
+        }
         public int Id { get; set; }
         public string Description { get; set; }
         public DateTime? PurchaseDate { get; set; }

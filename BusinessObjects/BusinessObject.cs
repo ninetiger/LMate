@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BusinessObjects.BusinessRules;
 
-namespace LMate.BusinessObjects
+namespace BusinessObjects
 {
     /// <summary>
     /// Abstract base class for business objects.

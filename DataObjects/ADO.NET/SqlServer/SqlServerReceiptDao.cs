@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using BusinessObjects;
 using LMate.DataObjects;
 using LMate.DataObjects.Shared;
@@ -27,6 +28,16 @@ namespace DataObjects.ADO.NET.SqlServer
 
             object[] parms = { "@Id", receiptId };
             return Db.Read(sql, Make, parms);
+        }
+        public async Task<Receipt> GetReceiptAsync(int receiptId)
+        {
+            string sql =
+                @" SELECT *
+                FROM [Receipts]
+                WHERE Id = @Id";
+
+            object[] parms = { "@Id", receiptId };
+            return await Db.ReadAsync(sql, Make, parms);
         }
 
         /// <summary>
@@ -104,6 +115,7 @@ namespace DataObjects.ADO.NET.SqlServer
             }
         }
 
+
         /// <summary>
         /// Deletes a receipt.
         /// </summary>
@@ -117,6 +129,10 @@ namespace DataObjects.ADO.NET.SqlServer
                 AND Version = @Version";
 
             Db.Update(sql, Take(receipt));
+        }
+        public Task DeleteReceiptAsync(Receipt receipt)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

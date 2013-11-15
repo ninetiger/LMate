@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using System.Threading.Tasks;
 using LMate.DataObjects.Shared;
 
 namespace DataObjects.ADO.NET
@@ -62,6 +63,29 @@ namespace DataObjects.ADO.NET
                     T t = default(T);
                     var reader = command.ExecuteReader();
                     if (reader.Read())
+                        t = make(reader);
+
+                    return t;
+                }
+            }
+        }
+        public static async Task<T> ReadAsync<T>(string sql, Func<IDataReader, T> make, object[] parms = null)
+        {
+            using (var connection = Factory.CreateConnection())
+            {
+                connection.ConnectionString = ConnectionString;
+
+                using (var command = Factory.CreateCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = sql;
+                    command.SetParameters(parms);  // Extension method
+
+                    connection.Open();
+
+                    T t = default(T);
+                    var reader = await command.ExecuteReaderAsync();
+                    if (await reader.ReadAsync())
                         t = make(reader);
 
                     return t;

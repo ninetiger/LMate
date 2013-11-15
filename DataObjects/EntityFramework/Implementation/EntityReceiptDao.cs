@@ -5,6 +5,7 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Threading.Tasks;
 using BusinessObjects;
 using DataObjects.EntityFramework.ModelMapper;
 using LMate.DataObjects;
@@ -25,7 +26,16 @@ namespace DataObjects.EntityFramework.Implementation
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                return Mapper.Map(context.Receipts.FirstOrDefault(c => c.Id == receiptId));
+                var query = context.Receipts.FirstOrDefault(c => c.Id == receiptId);
+                return Mapper.Map(query);
+            }
+        }
+        public async Task<Receipt> GetReceiptAsync(int receiptId)
+        {
+            using (var context = DataObjectFactory.CreateContext())
+            {
+                var query = await context.Receipts.FirstOrDefaultAsync(c => c.Id == receiptId);
+                return Mapper.Map(query);
             }
         }
 
@@ -93,7 +103,7 @@ namespace DataObjects.EntityFramework.Implementation
         /// Insert new or update a receipt based on receipt id
         /// </summary>
         /// <param name="receipt">If the Id is 0, the recored is inserted as new.</param>
-        public async void SaveReceipt(Receipt receipt)
+        public void SaveReceipt(Receipt receipt)
         {
             using (var context = DataObjectFactory.CreateContext())
             {
@@ -105,7 +115,7 @@ namespace DataObjects.EntityFramework.Implementation
                 }
                 else
                 {
-                    entity = await context.Receipts.FindAsync(receipt.Id);
+                    entity = context.Receipts.Find(receipt.Id);
                     if (entity != null)
                     {
                         entity.Id = receipt.Id;
@@ -129,7 +139,7 @@ namespace DataObjects.EntityFramework.Implementation
 
                 try
                 {
-                    await context.SaveChangesAsync();
+                    context.SaveChanges();
                     if (entity != null)
                     {
                         receipt.Version = Convert.ToBase64String(entity.Version); //todo need to test if return version is correct
@@ -151,13 +161,25 @@ namespace DataObjects.EntityFramework.Implementation
                 }
             }
         }
-
+        
         /// <summary>
         /// Deletes a receipt record from the database.
         /// </summary>
         /// <param name="receipt">The receipt to be deleted.</param>
         /// <returns>Number of rows affected.</returns>
-        public async void DeleteReceipt(Receipt receipt)
+        public void DeleteReceipt(Receipt receipt)
+        {
+            using (var context = DataObjectFactory.CreateContext())
+            {
+                var entity = context.Receipts.SingleOrDefault(c => c.Id == receipt.Id);
+                if (entity != null)
+                {
+                    context.Receipts.Remove(entity);
+                    context.SaveChanges();
+                }
+            }
+        }
+        public async Task DeleteReceiptAsync(Receipt receipt)
         {
             using (var context = DataObjectFactory.CreateContext())
             {

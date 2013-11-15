@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using BusinessObjects;
+using LMate.BusinessObjects;
 
-namespace LMate.BusinessObjects
+namespace BusinessObjects
 {
     public class DepreciationAsset : Depreciation
     {

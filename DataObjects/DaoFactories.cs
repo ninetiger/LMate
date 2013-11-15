@@ -1,7 +1,7 @@
 ﻿using DataObjects.ADO.NET.SqlServer;
 using DataObjects.EntityFramework.Implementation;
 
-namespace LMate.DataObjects
+namespace DataObjects
 {
     /// <summary>
     /// Factory of factories. This class is a factory class that creates

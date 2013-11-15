@@ -11,9 +11,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using LMate.WebUI.Models;
+using WebUI.Models;
 
-namespace LMate.WebUI.Controllers
+namespace WebUI.Controllers
 {
     //[Authorize]
     public class AccountController : Controller

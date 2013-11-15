@@ -1,4 +1,4 @@
-﻿using LMate.WebUI.Models;
+﻿using WebUI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace LMate.WebUI.Controllers
+namespace WebUI.Controllers
 {
     public class RoleController : Controller
     {

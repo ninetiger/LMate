@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="77f58a9c8cf54d96bca30a3647b0ff73" Name="Diagram1">
+      <Diagram DiagramId="3a25ec6c8ef64f5aa6b95a6399d99a75" Name="Diagram1">
         <EntityTypeShape EntityType="LMateModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />

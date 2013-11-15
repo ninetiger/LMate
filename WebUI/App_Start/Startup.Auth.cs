@@ -3,7 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
-namespace LMate.WebUI
+namespace WebUI
 {
     public partial class Startup
     {

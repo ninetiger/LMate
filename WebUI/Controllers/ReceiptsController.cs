@@ -1,18 +1,11 @@
-﻿using DataObjects;
-using LMate.BusinessObjects;
+﻿using BusinessObjects;
+using DataObjects;
 using LMate.DataObjects;
-using LMate.DataObjects.Abstract;
-using LMate.DataObjects.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using LMate.DataObjects.EntityFramework;
-using LMate.DataObjects.EntityFramework.Implementation;
 using Microsoft.AspNet.Identity;
+using System.Linq;
+using System.Web.Mvc;
 
-namespace LMate.Controllers
+namespace WebUI.Controllers
 {
     public class ReceiptsController : Controller
     {

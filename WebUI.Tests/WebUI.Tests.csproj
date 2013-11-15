@@ -9,8 +9,8 @@
     <ProjectGuid>{F10D04B4-1627-4874-8C65-83DAF8237379}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LMate.WebUI.Tests</RootNamespace>
-    <AssemblyName>LMate.WebUI.Tests</AssemblyName>
+    <RootNamespace>WebUI.Tests</RootNamespace>
+    <AssemblyName>WebUI.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -92,9 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebUI\LMate.WebUI.csproj">
+    <ProjectReference Include="..\WebUI\WebUI.csproj">
       <Project>{5FB1C760-7487-4DC4-95FA-FD8EAA55B950}</Project>
-      <Name>LMate.WebUI</Name>
+      <Name>WebUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

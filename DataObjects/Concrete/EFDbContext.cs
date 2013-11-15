@@ -1,4 +1,5 @@
-﻿using LMate.BusinessObjects;
+﻿using BusinessObjects;
+using LMate.BusinessObjects;
 using System.Data.Entity;
 
 namespace LMate.DataObjects.Concrete

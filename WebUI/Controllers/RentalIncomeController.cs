@@ -7,7 +7,7 @@ using LMate.BusinessObjects;
 using LMate.DataObjects.Abstract;
 using LMate.DataObjects.Concrete;
 
-namespace LMate.WebUI.Controllers
+namespace WebUI.Controllers
 {
     [Authorize]
     public class RentalIncomeController : Controller

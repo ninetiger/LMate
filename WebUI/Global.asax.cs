@@ -8,10 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using LMate.WebUI.Models;
+using WebUI.Models;
 using Microsoft.AspNet.Identity;
 
-namespace LMate.WebUI
+namespace WebUI
 {
     public class MvcApplication : System.Web.HttpApplication
     {

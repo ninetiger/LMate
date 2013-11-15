@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.Common;
 
-namespace LMate.DataObjects.ADO.NET
+namespace DataObjects.ADO.NET
 {
     //
     // Here is some skeleton code demonstrating how you could manange multiple database connections.

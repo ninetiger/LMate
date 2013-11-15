@@ -1,5 +1,4 @@
-﻿using LMate.DataObjects.EntityFramework;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace DataObjects.EntityFramework
 {

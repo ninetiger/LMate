@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace LMate.WebUI.Models
+namespace WebUI.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

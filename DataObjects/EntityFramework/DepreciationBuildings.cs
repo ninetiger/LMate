@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LMate.DataObjects.EntityFramework
+namespace DataObjects.EntityFramework
 {
     using System;
     using System.Collections.Generic;

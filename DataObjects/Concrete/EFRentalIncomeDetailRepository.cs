@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessObjects;
 using LMate.BusinessObjects;
 using LMate.DataObjects.Abstract;
 

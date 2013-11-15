@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LMate.WebUI</RootNamespace>
-    <AssemblyName>LMate.WebUI</AssemblyName>
+    <RootNamespace>WebUI</RootNamespace>
+    <AssemblyName>WebUI</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -277,6 +277,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -322,19 +323,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessObjects\LMate.BusinessObjects.csproj">
+    <ProjectReference Include="..\BusinessObjects\BusinessObjects.csproj">
       <Project>{b47e3582-d5c6-486b-811d-d2d46fcacbc6}</Project>
-      <Name>LMate.BusinessObjects</Name>
+      <Name>BusinessObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataObjects\LMate.DataObjects.csproj">
+    <ProjectReference Include="..\DataObjects\DataObjects.csproj">
       <Project>{f3e617f8-d76a-4ed4-b807-775e2ff8fcb9}</Project>
-      <Name>LMate.DataObjects</Name>
+      <Name>DataObjects</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,10 +1,11 @@
-﻿using LMate.BusinessObjects;
-using LMate.DataObjects.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using BusinessObjects;
+using LMate.DataObjects;
+using LMate.DataObjects.Shared;
 
-namespace LMate.DataObjects.ADO.NET.SqlServer
+namespace DataObjects.ADO.NET.SqlServer
 {
     //todo the select should be specific to each field for security rather than select *
     /// <summary>

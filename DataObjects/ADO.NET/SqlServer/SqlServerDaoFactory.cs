@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LMate.DataObjects;
 
-namespace LMate.DataObjects.ADO.NET.SqlServer
+namespace DataObjects.ADO.NET.SqlServer
 {
     /// <summary>
     /// Sql Server specific factory that creates Sql Server specific data access objects.

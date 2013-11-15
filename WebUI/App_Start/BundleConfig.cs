@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace LMate.WebUI
+namespace WebUI
 {
     public class BundleConfig
     {

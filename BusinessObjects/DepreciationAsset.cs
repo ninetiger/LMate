@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using BusinessObjects;
 
 namespace LMate.BusinessObjects
 {

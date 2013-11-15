@@ -1,11 +1,11 @@
-﻿using LMate.DataObjects.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using LMate.DataObjects.Shared;
 
-namespace LMate.DataObjects.ADO.NET
+namespace DataObjects.ADO.NET
 {
     /// <summary>
     /// Manages all lower level ADO.NET data base access.

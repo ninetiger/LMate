@@ -1,4 +1,6 @@
-﻿namespace LMate.DataObjects.EntityFramework.Implementation
+﻿using LMate.DataObjects;
+
+namespace DataObjects.EntityFramework.Implementation
 {
 
     /// <summary>

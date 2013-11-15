@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using LMate.BusinessObjects;
 
-namespace LMate.DataObjects.Abstract
+namespace DataObjects.Abstract
 {
     public interface IDepreciationAssetRepository
     {

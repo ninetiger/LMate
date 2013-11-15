@@ -1,15 +1,15 @@
-﻿using DataObjects.EntityFramework;
-using LMate.BusinessObjects;
-using LMate.DataObjects.EntityFramework.ModelMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
+using BusinessObjects;
+using DataObjects.EntityFramework.ModelMapper;
+using LMate.DataObjects;
 
-namespace LMate.DataObjects.EntityFramework.Implementation
+namespace DataObjects.EntityFramework.Implementation
 {
     /// <summary>
     /// Entity Framework implementation of the IReceiptDao interface.

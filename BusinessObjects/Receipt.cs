@@ -1,7 +1,7 @@
 ﻿using System;
-using BusinessObjects.BusinessRules;
+using LMate.BusinessObjects;
 
-namespace LMate.BusinessObjects
+namespace BusinessObjects
 {
     public class Receipt : BusinessObject
     {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Web.Mvc;
 
-namespace LMate.BusinessObjects
+namespace BusinessObjects
 {
     public class RentalIncome
     {

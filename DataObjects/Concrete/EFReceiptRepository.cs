@@ -1,4 +1,5 @@
-﻿using LMate.BusinessObjects;
+﻿using BusinessObjects;
+using LMate.BusinessObjects;
 using LMate.DataObjects.Abstract;
 using System.Data.Entity.Validation;
 using System.Diagnostics;

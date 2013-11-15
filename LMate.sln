@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMate.BusinessObjects", "BusinessObjects\LMate.BusinessObjects.csproj", "{B47E3582-D5C6-486B-811D-D2D46FCACBC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObjects", "BusinessObjects\BusinessObjects.csproj", "{B47E3582-D5C6-486B-811D-D2D46FCACBC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMate.DataObjects", "DataObjects\LMate.DataObjects.csproj", "{F3E617F8-D76A-4ED4-B807-775E2FF8FCB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataObjects", "DataObjects\DataObjects.csproj", "{F3E617F8-D76A-4ED4-B807-775E2FF8FCB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMate.DataObjects.Tests", "DataObjects.Tests\LMate.DataObjects.Tests.csproj", "{5E8E4BAB-E99A-4732-B869-6C2D051D60E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataObjects.Tests", "DataObjects.Tests\DataObjects.Tests.csproj", "{5E8E4BAB-E99A-4732-B869-6C2D051D60E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMate.WebUI", "WebUI\LMate.WebUI.csproj", "{5FB1C760-7487-4DC4-95FA-FD8EAA55B950}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{5FB1C760-7487-4DC4-95FA-FD8EAA55B950}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMate.WebUI.Tests", "WebUI.Tests\LMate.WebUI.Tests.csproj", "{F10D04B4-1627-4874-8C65-83DAF8237379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI.Tests", "WebUI.Tests\WebUI.Tests.csproj", "{F10D04B4-1627-4874-8C65-83DAF8237379}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

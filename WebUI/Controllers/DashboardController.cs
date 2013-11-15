@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace LMate.WebUI.Controllers
+namespace WebUI.Controllers
 {
     public class DashboardController : Controller
     {

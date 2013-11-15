@@ -1,4 +1,5 @@
-﻿using LMate.DataObjects.ADO.NET.SqlServer;
+﻿using DataObjects.ADO.NET.SqlServer;
+using DataObjects.EntityFramework.Implementation;
 
 namespace LMate.DataObjects
 {
@@ -27,7 +28,7 @@ namespace LMate.DataObjects
             switch (dataProvider)
             {
                 case "EntityFramework.SqlExpress": 
-                case "EntityFramework.SqlServer": return new EntityFramework.Implementation.EntityDaoFactory();
+                case "EntityFramework.SqlServer": return new EntityDaoFactory();
                 
                 //case "ADO.NET.SqlExpress":
                 //case "ADO.NET.LocalDB":

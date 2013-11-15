@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LMate.WebUI.Models
+namespace WebUI.Models
 {
     //public class UserRoleViewModel
     //{

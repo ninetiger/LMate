@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LMate.WebUI;
-using LMate.WebUI.Controllers;
+using WebUI;
+using WebUI.Controllers;
 
-namespace LMate.WebUI.Tests.Controllers
+namespace WebUI.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTest

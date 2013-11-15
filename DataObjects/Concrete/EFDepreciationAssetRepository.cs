@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DataObjects.Abstract;
 using LMate.BusinessObjects;
 using LMate.DataObjects.Abstract;
 

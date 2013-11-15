@@ -1,7 +1,7 @@
-﻿using LMate.BusinessObjects;
+﻿using BusinessObjects;
 using LMate.DataObjects.Shared;
 
-namespace LMate.DataObjects.EntityFramework.ModelMapper
+namespace DataObjects.EntityFramework.ModelMapper
 {
     /// <summary>
     /// Maps Entity Framework entities to business objects and vice versa.

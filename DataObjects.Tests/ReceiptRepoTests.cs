@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BusinessObjects;
 using LMate.BusinessObjects;
 using LMate.DataObjects.Abstract;
 using LMate.DataObjects.Concrete;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LMate.DataObjects.Tests
+namespace DataObjects.Tests
 {
     [TestClass]
     public class ReceiptRepoTests

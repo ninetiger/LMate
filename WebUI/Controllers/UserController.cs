@@ -9,11 +9,11 @@ using System.Web;
 using System.Web.Mvc;
 using LMate.BusinessObjects;
 using LMate.DataObjects.Concrete;
-using LMate.WebUI.Models;
+using WebUI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace LMate.WebUI.Controllers
+namespace WebUI.Controllers
 {
     public class UserController : Controller
     {

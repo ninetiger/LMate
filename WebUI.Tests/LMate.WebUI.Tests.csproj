@@ -92,7 +92,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LMate.WebUI\LMate.WebUI.csproj">
+    <ProjectReference Include="..\WebUI\LMate.WebUI.csproj">
       <Project>{5FB1C760-7487-4DC4-95FA-FD8EAA55B950}</Project>
       <Name>LMate.WebUI</Name>
     </ProjectReference>

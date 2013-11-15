@@ -328,11 +328,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LMate.BusinessObjects\LMate.BusinessObjects.csproj">
+    <ProjectReference Include="..\BusinessObjects\LMate.BusinessObjects.csproj">
       <Project>{b47e3582-d5c6-486b-811d-d2d46fcacbc6}</Project>
       <Name>LMate.BusinessObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LMate.DataObjects\LMate.DataObjects.csproj">
+    <ProjectReference Include="..\DataObjects\LMate.DataObjects.csproj">
       <Project>{f3e617f8-d76a-4ed4-b807-775e2ff8fcb9}</Project>
       <Name>LMate.DataObjects</Name>
     </ProjectReference>

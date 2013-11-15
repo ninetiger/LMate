@@ -193,12 +193,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LMate.BusinessObjects\LMate.BusinessObjects.csproj">
+    <ProjectReference Include="..\BusinessObjects\LMate.BusinessObjects.csproj">
       <Project>{b47e3582-d5c6-486b-811d-d2d46fcacbc6}</Project>
       <Name>LMate.BusinessObjects</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

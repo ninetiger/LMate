@@ -23,6 +23,7 @@ namespace DataObjects.EntityFramework
             this.TaxUsers = new HashSet<TaxUsers>();
             this.UserDelegates1 = new HashSet<UserDelegates>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
+            this.ReceiptTypes = new HashSet<ReceiptTypes>();
         }
     
         public string Id { get; set; }
@@ -39,5 +40,6 @@ namespace DataObjects.EntityFramework
         public virtual UserDelegates UserDelegates { get; set; }
         public virtual ICollection<UserDelegates> UserDelegates1 { get; set; }
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+        public virtual ICollection<ReceiptTypes> ReceiptTypes { get; set; }
     }
 }

@@ -36,36 +36,9 @@ namespace DataObjects
             get { return Factory.ReceiptDao; }
         }
 
-        ///// <summary>
-        ///// Gets a provider-specific order data access object.
-        ///// </summary>
-        //public static IOrderDao OrderDao
-        //{
-        //    get { return factory.OrderDao; }
-        //}
-
-        ///// <summary>
-        ///// Gets a provider-specific order detail data access object.
-        ///// </summary>
-        //public static IOrderDetailDao OrderDetailDao
-        //{
-        //    get { return factory.OrderDetailDao; }
-        //}
-
-        ///// <summary>
-        ///// Gets a provider-specific product data access object.
-        ///// </summary>
-        //public static IProductDao ProductDao
-        //{
-        //    get { return factory.ProductDao; }
-        //}
-
-        ///// <summary>
-        ///// Gets a provider-specific category data access object.
-        ///// </summary>
-        //public static ICategoryDao CategoryDao
-        //{
-        //    get { return factory.CategoryDao; }
-        //}
+        public static IReceiptTypeDao ReceiptTypeDao
+        {
+            get { return Factory.ReceiptTypeDao; }
+        }
     }
 }

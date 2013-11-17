@@ -21,7 +21,9 @@ namespace DataObjects.EntityFramework
     
         public int Id { get; set; }
         public string Type { get; set; }
+        public string User_Id { get; set; }
     
         public virtual ICollection<Receipts> Receipts { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

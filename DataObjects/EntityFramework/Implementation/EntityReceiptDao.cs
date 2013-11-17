@@ -68,10 +68,10 @@ namespace DataObjects.EntityFramework.Implementation
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var list = new List<Receipt>();
                 var entities = context.Receipts.AsQueryable().OrderBy(sortExpression).Where(c => c.User_Id == userId);
                 //return entities.Select(receipt => Mapper.Map(receipt)).ToList();//todo change to asyn list later
 
+                var list = new List<Receipt>();
                 foreach (var receipt in entities)
                     list.Add(Mapper.Map(receipt));
 

@@ -39,6 +39,7 @@
         <AssociationConnector Association="LMateModel.FK_Receipts_ReceiptTypes" ManuallyRouted="false" />
         <AssociationConnector Association="LMateModel.FK_RentalIncomeDetails_TaxUsers" ManuallyRouted="false" />
         <AssociationConnector Association="LMateModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="LMateModel.FK_ReceiptTypes_AspNetUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

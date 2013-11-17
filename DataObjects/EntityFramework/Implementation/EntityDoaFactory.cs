@@ -1,4 +1,7 @@
-﻿using LMate.DataObjects;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BusinessObjects;
+using LMate.DataObjects;
 
 namespace DataObjects.EntityFramework.Implementation
 {
@@ -19,36 +22,10 @@ namespace DataObjects.EntityFramework.Implementation
             get { return new EntityReceiptDao(); }
         }
 
-        ///// <summary>
-        ///// Gets a Entity Framework specific order data access object.
-        ///// </summary>
-        //public IOrderDao OrderDao
-        //{
-        //    get { return new EntityOrderDao(); }
-        //}
-
-        ///// <summary>
-        ///// Gets a Entity Framework specific order detail data access object.
-        ///// </summary>
-        //public IOrderDetailDao OrderDetailDao
-        //{
-        //    get { return new EntityOrderDetailDao(); }
-        //}
-
-        ///// <summary>
-        ///// Gets a Entity Framework specific product data access object.
-        ///// </summary>
-        //public IProductDao ProductDao
-        //{
-        //    get { return new EntityProductDao(); }
-        //}
-
-        ///// <summary>
-        ///// Gets a Entity Framework specific category data access object.
-        ///// </summary>
-        //public ICategoryDao CategoryDao
-        //{
-        //    get { return new EntityCategoryDao(); }
-        //}
+        public IReceiptTypeDao ReceiptTypeDao
+        {
+            get { return new EntityReceiptTypeDao(); }
+        }
     }
+
 }

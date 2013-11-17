@@ -13,24 +13,6 @@
         /// </summary>
         IReceiptDao ReceiptDao { get; }
 
-        ///// <summary>
-        ///// Gets an order data access object.
-        ///// </summary>
-        //IOrderDao OrderDao { get; }
-
-        ///// <summary>
-        ///// Gets an order detail data access object.
-        ///// </summary>
-        //IOrderDetailDao OrderDetailDao { get; }
-
-        ///// <summary>
-        ///// Gets a product data access object.
-        ///// </summary>
-        //IProductDao ProductDao { get; }
-
-        ///// <summary>
-        ///// Gets a category data access object.
-        ///// </summary>
-        //ICategoryDao CategoryDao { get; }
+        IReceiptTypeDao ReceiptTypeDao { get; }
     }
 }

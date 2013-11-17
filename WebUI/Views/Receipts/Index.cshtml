@@ -39,32 +39,34 @@
         </tbody>
     </table>*@
 <br />
-<table style="width: 100%; max-width: 600px">
-    <thead>
+<div class="center-block">
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Purchase Date</th>
+                <th>Price</th>
+                <th>Vendor</th>
+                <th>Receipt Type</th>
+                <th>Is Bulk</th>
+                <th>Has Image</th>
+            </tr>
+        </thead>
         <tr>
-            <th>Description</th>
-            <th>Purchase Date</th>
-            <th>Price</th>
-            <th>Vendor</th>
-            <th>Receipt Type</th>
-            <th>Is Bulk</th>
-            <th>Has Image</th>
+            <td><input id="Receipts_Desc" /></td>
+            <td><input id="Receipts_PurchaseDate" /></td>
+            <td><input id="Receipts_Price" /></td>
+            <td><input id="Receipts_Vendor" /></td>
+            <td><input id="Receipts_ReceiptType" /></td>
+            <td><input id="Receipts_IsBulk" /></td>
+            <td><input id="Receipts_HasImage" /></td>
         </tr>
-    </thead>
-    <tr>
-        <td><input id="Receipts_Desc" /></td>
-        <td><input id="Receipts_PurchaseDate" /></td>
-        <td><input id="Receipts_Price" /></td>
-        <td><input id="Receipts_Vendor" /></td>
-        <td><input id="Receipts_ReceiptType" /></td>
-        <td><input id="Receipts_IsBulk" /></td>
-        <td><input id="Receipts_HasImage" /></td>
-    </tr>
-</table>
+    </table>
+</div>
 <table id="dataTable">
     <thead>
         <tr>
-            <th><input id="selectAllReceipts" type="checkbox"/></th>
+            <th><input id="selectAllReceipts" type="checkbox" /></th>
             <th>Description</th>
             <th>Purchase Date</th>
             <th>Price</th>

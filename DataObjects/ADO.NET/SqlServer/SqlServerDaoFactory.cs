@@ -11,29 +11,13 @@ namespace DataObjects.ADO.NET.SqlServer
     public class SqlServerDaoFactory : IDaoFactory
     {
         /// <summary>
-        /// Gets a Sql server specific customer data access object.
+        /// Gets a Sql server specific receipt data access object.
         /// </summary>
         public IReceiptDao ReceiptDao { get { return new SqlServerReceiptDao(); } }
 
-        ///// <summary>
-        ///// Gets a Sql server specific order data access object.
-        ///// </summary>
-        //public IOrderDao OrderDao { get { return new SqlServerOrderDao(); } }
-
-        ///// <summary>
-        ///// Gets a Sql Server specific order detail data access object.
-        ///// </summary>
-        //public IOrderDetailDao OrderDetailDao { get { return new SqlServerOrderDetailDao(); } }
-
-
-        ///// <summary>
-        ///// Gets a Sql server specific product data access object.
-        ///// </summary>
-        //public IProductDao ProductDao { get { return new SqlServerProductDao(); } }
-
-        ///// <summary>
-        ///// Gets a Sql server specific category data access object.
-        ///// </summary>
-        //public ICategoryDao CategoryDao { get { return new SqlServerCategoryDao(); } }
+        public IReceiptTypeDao ReceiptTypeDao
+        {
+            get { throw new System.NotImplementedException(); }
+        }
     }
 }

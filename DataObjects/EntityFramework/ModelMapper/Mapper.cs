@@ -33,22 +33,11 @@ namespace DataObjects.EntityFramework.ModelMapper
                 ReceiptStatusId = entity.ReceiptStatus_Id,
                 CurrencyId = entity.Currency_Id,
                 UserId = entity.User_Id,
-                Version = entity.Version.AsBase64String()
+                Version = entity.Version.AsBase64String(),
+
+                
             };
         }
-        //internal static ReceiptBrief MapBrief(Receipts entity)
-        //{
-        //    return new ReceiptBrief
-        //    {
-        //        Id = entity.Id,
-        //        Description = entity.Description,
-        //        PurchaseDate = entity.PurchaseDate,
-        //        Price = entity.Price,
-        //        Vendor = entity.Vendor,
-        //        IsBulk = entity.IsBulk,
-        //    };
-        //}
-
 
         /// <summary>
         /// Maps receipt business object to receipt entity.
@@ -75,6 +64,26 @@ namespace DataObjects.EntityFramework.ModelMapper
                 ReceiptStatus_Id = receipt.ReceiptStatusId,
                 Currency_Id = receipt.CurrencyId,
                 User_Id = receipt.UserId,
+            };
+        }
+
+
+        internal static ReceiptType Map(ReceiptTypes entity)
+        {
+            return new ReceiptType
+            {
+                Id = entity.Id,
+                Type = entity.Type,
+                UserId = entity.User_Id
+            };
+        }
+        internal static ReceiptTypes Map(ReceiptType receiptType)
+        {
+            return new ReceiptTypes
+            {
+                Id = receiptType.Id,
+                Type = receiptType.Type,
+                User_Id = receiptType.UserId,
             };
         }
 

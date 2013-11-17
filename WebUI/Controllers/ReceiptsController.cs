@@ -1,5 +1,6 @@
 ﻿using BusinessObjects;
 using DataObjects;
+using DataObjects.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Mvc.JQuery.Datatables;
 using System.Collections.Generic;
@@ -8,18 +9,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebUI.Models;
+using WebUI.Repositories;
 
 namespace WebUI.Controllers
 {
     public class ReceiptsController : Controller
     {
-        private static readonly IReceiptDao ReceiptDao = DataAccess.ReceiptDao;
+
+        private readonly IReceiptRepository _receiptRepository;
+
+        //todo need DI later
+        public ReceiptsController()
+        {
+            _receiptRepository = new ReceiptRepository();
+        }
+
+        public ReceiptsController(IReceiptRepository receiptRepository)
+        {
+            _receiptRepository = receiptRepository;
+        }
 
         public ActionResult Index()
         {
-            string userID = User.Identity.GetUserId();
-            var recieptList = ReceiptDao.GetReceiptsByUser(userID);
-            return View(recieptList);
+            return View();
         }
 
         public JsonResult AutoCompleteSearch(string id, string searchString)
@@ -33,7 +46,7 @@ namespace WebUI.Controllers
         public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param) //todo copy DataTablesParam in and remove mvc.jquery.datatables lib
         {
             string userID = User.Identity.GetUserId();
-            var recieptBriefList = await ReceiptDao.GetReceiptBriefsByUserAsync(userID);
+            var recieptBriefList = await _receiptRepository.GetReceiptBriefsByUserAsync(userID);
             List<List<string>> json = GenerateJsonContent(recieptBriefList);
              var jsonString = Json(new
             {
@@ -49,11 +62,10 @@ namespace WebUI.Controllers
 
         private static List<List<string>> GenerateJsonContent(IEnumerable<ReceiptBrief> data)
         {
-            List<List<string>> list = new List<List<string>>();
+            var list = new List<List<string>>();
             foreach (var receiptBrief in data)
             {
-                List<string> inner = new List<string>();
-                inner = new List<string>()
+                List<string> inner = new List<string>()
                 {
                     receiptBrief.Id.ToString(CultureInfo.InvariantCulture),
                     receiptBrief.Description,
@@ -71,15 +83,15 @@ namespace WebUI.Controllers
             return list;
         }
 
-
-        public ViewResult Edit(int id)
+        public async Task<ViewResult> Edit(int id)
         {
-            var receipt = ReceiptDao.GetReceipt(id);
-            return View(receipt);
+            string userID = User.Identity.GetUserId();
+            var viewModel = await _receiptRepository.GetReceiptEditAsync(id, userID);
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(Receipt receipt, HttpPostedFileBase image)
+        public async Task<ActionResult> Edit(Receipt receipt, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +106,7 @@ namespace WebUI.Controllers
                 {
                     receipt.UserId = User.Identity.GetUserId();
                 }
-                ReceiptDao.SaveReceipt(receipt);
+                await _receiptRepository.SaveReceiptAsync(receipt);
 
                 //This is a key/value dictionary similar to the session data and view bag features we have used previously.
                 //The key difference from session data is that temp data is deleted at the end of the HTTP request.
@@ -102,29 +114,31 @@ namespace WebUI.Controllers
                 return RedirectToAction("Index");
             }
 
-            // there is something wrong with the data values
-            return View(receipt);
+            var receiptEditViewModel = await _receiptRepository.GetReceiptEditPostAsync(User.Identity.GetUserId(), receipt);
+            return View(receiptEditViewModel);
         }
 
-        public ViewResult Create()
+        public async Task<ViewResult> Create()
         {
-            return View("Edit", new Receipt());
+            string userID = User.Identity.GetUserId();
+            var viewModel = await _receiptRepository.GetReceiptEditAsync(0, userID);
+            return View("Edit", viewModel);
         }
 
         //[HttpPost]
         public async Task<RedirectToRouteResult> Delete(ReceiptBrief receiptBrief)
         {
-            await ReceiptDao.DeleteReceiptAsync(receiptBrief);
+            await _receiptRepository.DeleteReceiptAsync(receiptBrief);
             TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);
             return RedirectToAction("Index");
         }
 
-        public FileContentResult GetImage(int id)
+        public async Task<FileContentResult> GetImage(int id)
         {
             //var userId = User.Identity.GetUserId();
             //var receipt = ReceiptDao.GetReceiptsByUser(userId).FirstOrDefault(r => r.Id == id);
 
-            var receipt = ReceiptDao.GetReceipt(id);
+            var receipt = await _receiptRepository.GetReceiptAsync(id);
             if (receipt != null)
             {
                 return File(receipt.ImageData, receipt.ImageMimeType);

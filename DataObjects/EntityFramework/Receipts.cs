@@ -33,7 +33,7 @@ namespace DataObjects.EntityFramework
         public Nullable<bool> IsBulk { get; set; }
         public string Note { get; set; }
         public Nullable<int> ReceiptType_Id { get; set; }
-        public Nullable<int> ReceiptStatus_Id { get; set; }
+        public Nullable<int> ReceiptStatus_Id { get; set; } //todo should be in receiptHistory table, can be set when calulate deprication in rentIncome 
         public Nullable<int> Currency_Id { get; set; }
         public string User_Id { get; set; }
         public byte[] Version { get; set; }

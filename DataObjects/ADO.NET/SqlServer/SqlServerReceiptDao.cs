@@ -114,7 +114,10 @@ namespace DataObjects.ADO.NET.SqlServer
                 Db.Update(sql, Take(receipt));
             }
         }
-
+        public async Task SaveReceiptAsync(Receipt receipt)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Deletes a receipt.

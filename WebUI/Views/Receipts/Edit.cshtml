@@ -1,26 +1,16 @@
-﻿@using System.Activities
-@using BusinessObjects
-@using DataObjects
-@using Microsoft.AspNet.Identity
-@model BusinessObjects.Receipt
+﻿@model WebUI.Models.ReceiptEditViewModel
 
 @{
-    ViewBag.Title = "Edit" + @Model.Description;
+    var receipt = @Model.Receipt;
+}
+
+@{
+    ViewBag.Title = "Edit" + @Model.Receipt.Description;
     Layout = "~/Views/Shared/_LandlordLayout.cshtml";
 }
 
-@{
-    var listQuery = DataAccess.ReceiptTypeDao.GetReceiptTypesByUser(User.Identity.GetUserId());
-    var receiptTypeList = listQuery.Select(x => new SelectListItem()
-    {
-        Selected = false,
-        Text = x.Type,
-        Value = x.Id.ToString()
-    }).ToList();
-}
-
 <div class="page-header">
-    <h2>Edit Receipt @Model.Description</h2>
+    <h2>Edit Receipt @Model.Receipt.Description</h2>
 </div>
 
 <div class="panel panel-default">
@@ -30,40 +20,40 @@
     <div class="panel-body">
         @using (Html.BeginForm("Edit", "Receipts", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            @Html.LabelFor(x => x.Description)
-            @Html.TextBoxFor(x => x.Description)
+            @Html.LabelFor(x => x.Receipt.Description)
+            @Html.TextBoxFor(x => x.Receipt.Description)
 
-            @Html.LabelFor(x => x.PurchaseDate)
-            @Html.TextBoxFor(x => x.PurchaseDate)
+            @Html.LabelFor(x => x.Receipt.PurchaseDate)
+            @Html.TextBoxFor(x => x.Receipt.PurchaseDate)
 
-            @Html.LabelFor(x => x.Price)
-            @Html.TextBoxFor(x => x.Price)
+            @Html.LabelFor(x => x.Receipt.Price)
+            @Html.TextBoxFor(x => x.Receipt.Price)
 
-            @Html.LabelFor(x => x.Vendor)
-            @Html.TextBoxFor(x => x.Vendor)
+            @Html.LabelFor(x => x.Receipt.Vendor)
+            @Html.TextBoxFor(x => x.Receipt.Vendor)
 
-            @Html.LabelFor(x => x.GstRate)
-            @Html.TextBoxFor(x => x.GstRate)
+            @Html.LabelFor(x => x.Receipt.GstRate)
+            @Html.TextBoxFor(x => x.Receipt.GstRate)
 
-            @Html.LabelFor(x => x.IsBulk)
-            @Html.TextBoxFor(x => x.IsBulk)
+            @Html.LabelFor(x => x.Receipt.IsBulk)
+            @Html.TextBoxFor(x => x.Receipt.IsBulk)
 
-            @Html.LabelFor(x => x.Note)
-            @Html.TextBoxFor(x => x.Note)
+            @Html.LabelFor(x => x.Receipt.Note)
+            @Html.TextBoxFor(x => x.Receipt.Note)
 
-            @Html.LabelFor(x => x.ReceiptTypeId)
-            @Html.DropDownListFor(x => x.ReceiptTypeId, receiptTypeList, string.Empty)
+            @Html.LabelFor(x => x.Receipt.ReceiptTypeId)
+            @Html.DropDownListFor(x => x.Receipt.ReceiptTypeId, Model.ReceiptTypeSelectList, string.Empty)
 
             <div class="editor-label">Image</div>
             <div class="editor-field">
-                @if (Model.ImageData == null)
+                @if (receipt.ImageData == null)
                 {
                     @:None
                 }
                 else
                 {
                     <img width="100%" height="100%"
-                         src="@Url.Action("GetImage", "Receipts", new { Model.Id })" />
+                         src="@Url.Action("GetImage", "Receipts", new { receipt.Id })" />
                 }
                 <div>Upload new receipt image: <input type="file" name="Image" /></div>
             </div>

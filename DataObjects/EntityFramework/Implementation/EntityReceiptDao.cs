@@ -34,6 +34,7 @@ namespace DataObjects.EntityFramework.Implementation
         {
             using (var context = DataObjectFactory.CreateContext())
             {
+                //todo need to test receiptId == 0, -1, should return null
                 var query = await context.Receipts.FirstOrDefaultAsync(c => c.Id == receiptId);
                 return Mapper.Map(query);
             }
@@ -207,7 +208,65 @@ namespace DataObjects.EntityFramework.Implementation
                 }
             }
         }
-        
+        public async Task SaveReceiptAsync(Receipt receipt)
+        {
+            using (var context = DataObjectFactory.CreateContext())
+            {
+                Receipts entity;
+                if (receipt.Id == 0)
+                {
+                    entity = Mapper.Map(receipt);
+                    context.Receipts.Add(entity);
+                }
+                else
+                {
+                    entity = await context.Receipts.FindAsync(receipt.Id);
+                    if (entity != null)
+                    {
+                        entity.Id = receipt.Id;
+                        entity.Description = receipt.Description;
+                        entity.PurchaseDate = receipt.PurchaseDate;
+                        entity.CreatedBy = receipt.CreatedBy;
+                        entity.Price = receipt.Price;
+                        entity.ImageData = receipt.ImageData;
+                        entity.ImageMimeType = receipt.ImageMimeType;
+                        entity.Vendor = receipt.Vendor;
+                        entity.GstRate = receipt.GstRate;
+                        entity.Tax = receipt.Tax;
+                        entity.IsBulk = receipt.IsBulk;
+                        entity.Note = receipt.Note;
+                        entity.ReceiptType_Id = receipt.ReceiptTypeId;
+                        entity.ReceiptStatus_Id = receipt.ReceiptStatusId;
+                        entity.Currency_Id = receipt.CurrencyId;
+                        entity.User_Id = receipt.UserId;
+                    }
+                }
+
+                try
+                {
+                    await context.SaveChangesAsync();
+                    if (entity != null)
+                    {
+                        receipt.Version = Convert.ToBase64String(entity.Version); //todo need to test if return version is correct
+                    }
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Debug.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                    throw;
+                }
+            }
+        }
+ 
         /// <summary>
         /// Deletes a receipt record from the database.
         /// </summary>

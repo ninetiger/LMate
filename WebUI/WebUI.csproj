@@ -89,6 +89,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Mvc.JQuery.Datatables">
       <HintPath>..\packages\Mvc.JQuery.Datatables.1.2.90\lib\net40\Mvc.JQuery.Datatables.dll</HintPath>
     </Reference>
@@ -184,9 +185,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\UserRoleViewModel.cs" />
+    <Compile Include="Models\ReceiptEditViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IReceiptRepository.cs" />
+    <Compile Include="Repositories\ReceiptRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

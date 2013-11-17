@@ -147,6 +147,8 @@
     </Compile>
     <Compile Include="EntityFramework\ModelMapper\DynamicLinq.cs" />
     <Compile Include="EntityFramework\ModelMapper\Mapper.cs" />
+    <Compile Include="EntityFramework\oneContextOneDbSet\Repository.cs" />
+    <Compile Include="EntityFramework\oneContextOneDbSet\UnitOfWork.cs" />
     <Compile Include="EntityFramework\Receipts.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>

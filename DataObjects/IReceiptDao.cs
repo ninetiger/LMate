@@ -43,6 +43,7 @@ namespace DataObjects
         List<Receipt> GetReceiptsByDate(DateTime dateFrom, DateTime dateThru);
             
         void SaveReceipt(Receipt receipt);
+        Task SaveReceiptAsync(Receipt receipt);
 
         /// <summary>
         /// Deletes a receipt

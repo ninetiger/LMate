@@ -58,6 +58,7 @@
     <Compile Include="Depreciation.cs" />
     <Compile Include="DepreciationBuilding.cs" />
     <Compile Include="Currency.cs" />
+    <Compile Include="ReceiptBrief.cs" />
     <Compile Include="TaxUser.cs" />
     <Compile Include="Disposal.cs" />
     <Compile Include="Receipt.cs" />

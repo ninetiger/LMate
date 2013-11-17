@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
-using System.Web;
-using BusinessObjects;
+﻿using BusinessObjects;
 using DataObjects;
 using Microsoft.AspNet.Identity;
+using Mvc.JQuery.Datatables;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace WebUI.Controllers
@@ -15,10 +18,59 @@ namespace WebUI.Controllers
         public ActionResult Index()
         {
             string userID = User.Identity.GetUserId();
-
-            var model = ReceiptDao.GetReceiptsByUser(userID);
-            return View(model);
+            var recieptList = ReceiptDao.GetReceiptsByUser(userID);
+            return View(recieptList);
         }
+
+        public JsonResult AutoCompleteSearch(string id, string searchString)
+        {
+            List<string> list = new List<string>() {"aaa", "bbb", "abc"};
+            return Json(new {list}, JsonRequestBehavior.AllowGet);
+        }
+
+        //[HttpPost]
+        //todo check json attributes eg hannel json exception
+        public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param) //todo copy DataTablesParam in and remove mvc.jquery.datatables lib
+        {
+            string userID = User.Identity.GetUserId();
+            var recieptBriefList = await ReceiptDao.GetReceiptBriefsByUserAsync(userID);
+            List<List<string>> json = GenerateJsonContent(recieptBriefList);
+             var jsonString = Json(new
+            {
+                sEcho = param.sEcho,
+                iTotalRecords = recieptBriefList.Count(),
+                iTotalDisplayRecords = 3,
+                aaData = json
+            },
+            JsonRequestBehavior.AllowGet);
+
+            return jsonString;
+        }
+
+        private static List<List<string>> GenerateJsonContent(IEnumerable<ReceiptBrief> data)
+        {
+            List<List<string>> list = new List<List<string>>();
+            foreach (var receiptBrief in data)
+            {
+                List<string> inner = new List<string>();
+                inner = new List<string>()
+                {
+                    receiptBrief.Id.ToString(CultureInfo.InvariantCulture),
+                    receiptBrief.Description,
+                    receiptBrief.PurchaseDate.ToString(),
+                    receiptBrief.Price.ToString(),
+                    receiptBrief.Vendor,
+                    receiptBrief.ReceiptType,
+                    receiptBrief.IsBulk.ToString(),
+                    receiptBrief.HasImage,
+                    string.Empty
+                };
+                list.Add(inner);
+            }
+
+            return list;
+        }
+
 
         public ViewResult Edit(int id)
         {
@@ -59,11 +111,11 @@ namespace WebUI.Controllers
             return View("Edit", new Receipt());
         }
 
-        [HttpPost]
-        public async Task<RedirectToRouteResult> Delete(Receipt receipt)
+        //[HttpPost]
+        public async Task<RedirectToRouteResult> Delete(ReceiptBrief receiptBrief)
         {
-            await ReceiptDao.DeleteReceiptAsync(receipt);
-            TempData["message"] = string.Format("{0} was deleted", receipt.Description);
+            await ReceiptDao.DeleteReceiptAsync(receiptBrief);
+            TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);
             return RedirectToAction("Index");
         }
 
@@ -80,5 +132,7 @@ namespace WebUI.Controllers
 
             return null;
         }
+
+
     }
 }

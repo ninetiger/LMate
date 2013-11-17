@@ -4,13 +4,14 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @*<meta name="description" content="">
-        <meta name="author" content="">*@
+    <meta name="description" content="">
+    <meta name="author" content="">
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <title>@ViewBag.Title</title>
 
     @Styles.Render("~/Content/css")
+    @RenderSection("Contents", required: false)
     @Scripts.Render("~/bundles/modernizr")
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -57,9 +58,8 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("Scripts", required: false)
     <script>
-        @RenderSection("scripts", required: false)
-        @RenderSection("pageLevelScripts", required: false)
         ////not sure why this function has to be in the _layout area not here
         //function Sortit() {
         //            var $r = $("#currentRolelist option");
@@ -71,21 +71,22 @@
         //            $($r).remove();
         //            $("#currentRolelist").append($($r));
         //        }
-        
+
         $(function () {
             $('#navigation li').removeClass('active');
             $('#navigation li a[href="' + window.location.pathname + '"]').parent().addClass('active');
 
             //stateful button
-            $(':input[data-loading-text]').click(function() {
+            $(':input[data-loading-text]').click(function () {
                 var btn = $(this);
                 btn.button('loading');
-                setTimeout(function() {
+                setTimeout(function () {
                     btn.button('reset');
                 }, 3000);
             });
 
             @RenderSection("DocumentReady", required: false)
+            
         });
     </script>
 </body>

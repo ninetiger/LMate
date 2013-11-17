@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
 
@@ -28,7 +29,10 @@ namespace DataObjects
         /// <returns>Sorted list of receipts.</returns>
         List<Receipt> GetAllReceipts(string sortExpression = "Id ASC");
 
-        List<Receipt> GetReceiptsByUser(string userId, string sortExpression = "Id ASC");
+        IQueryable<Receipt> GetReceiptsByUser(string userId, string sortExpression = "Id ASC");
+        
+        IQueryable<ReceiptBrief> GetReceiptBriefsByUser(string userId, string sortExpression = "Id ASC");
+        Task<IQueryable<ReceiptBrief>> GetReceiptBriefsByUserAsync(string userId, string sortExpression = "Id ASC");
 
         /// <summary>
         /// Gets a list of receipts placed within a date range.
@@ -44,7 +48,9 @@ namespace DataObjects
         /// Deletes a receipt
         /// </summary>
         /// <param name="receipt">Receipt.</param>
-        void DeleteReceipt(Receipt receipt);
-        Task DeleteReceiptAsync(Receipt receipt);
+        void DeleteReceipt(ReceiptBrief receipt);
+        Task DeleteReceiptAsync(ReceiptBrief receipt);
+
+        //IEnumerable<string> AutoCompletSearch(string tagId, string searchString);
     }
 }

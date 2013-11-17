@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
-using LMate.DataObjects.Shared;
+using DataObjects.Shared;
 
 namespace DataObjects.ADO.NET
 {

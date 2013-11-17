@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
-using LMate.DataObjects;
-using LMate.DataObjects.Shared;
+using DataObjects.Shared;
 
 namespace DataObjects.ADO.NET.SqlServer
 {
@@ -60,13 +60,13 @@ namespace DataObjects.ADO.NET.SqlServer
         /// <param name="userId"></param>
         /// <param name="sortExpression">The required sort order.</param>
         /// <returns>List of receipts.</returns>
-        public List<Receipt> GetReceiptsByUser(string userId, string sortExpression)
+        public IQueryable<Receipt> GetReceiptsByUser(string userId, string sortExpression)
         {
             string sql =
                 @"SELECT * FROM [Receipts] WHERE User_Id = @userId".OrderBy(sortExpression);
 
             object[] parms = { "@UserId", userId };
-            return Db.ReadList(sql, Make, parms);
+            return Db.ReadList(sql, Make, parms).AsQueryable();
         }
 
         /// <summary>
@@ -121,16 +121,17 @@ namespace DataObjects.ADO.NET.SqlServer
         /// </summary>
         /// <param name="receipt">Receipt.</param>
         /// <returns>Number of receipt records deleted.</returns>
-        public void DeleteReceipt(Receipt receipt)
+        public void DeleteReceipt(ReceiptBrief receipt)
         {
-            string sql =
-            @"DELETE FROM [Receipts]
-               WHERE Id = @Id 
-                AND Version = @Version";
+//            string sql =
+//            @"DELETE FROM [Receipts]
+//               WHERE Id = @Id 
+//                AND Version = @Version";
 
-            Db.Update(sql, Take(receipt));
+//            Db.Update(sql, Take(receipt));
+            throw new NotImplementedException();
         }
-        public Task DeleteReceiptAsync(Receipt receipt)
+        public Task DeleteReceiptAsync(ReceiptBrief receipt)
         {
             throw new NotImplementedException();
         }
@@ -165,6 +166,17 @@ namespace DataObjects.ADO.NET.SqlServer
 			    "@User_Id", receipt.UserId,
 			    "@Version", receipt.Version.AsByteArray()
             };
+        }
+
+
+        public IQueryable<ReceiptBrief> GetReceiptBriefsByUser(string userId, string sortExpression = "Id ASC")
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IQueryable<ReceiptBrief>> GetReceiptBriefsByUserAsync(string userId, string sortExpression = "Id ASC")
+        {
+            throw new NotImplementedException();
         }
     }
 }

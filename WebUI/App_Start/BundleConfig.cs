@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace WebUI
+namespace WebUI.App_Start
 {
     public class BundleConfig
     {
@@ -10,7 +10,7 @@ namespace WebUI
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jquery-ui-min").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -25,17 +25,33 @@ namespace WebUI
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                        "~/Scripts/DataTables-1.9.4/media/js/*.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/receipts_index").Include(
+                         "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/DataTables-1.9.4/media/js/*.js", //todo need to be specific rather then *
+                         "~/Scripts/LMate/Receipts_Index.js"
+                        ));   
+
+            //========== style ===========//
             bundles.Add(new StyleBundle("~/Content/css").Include(
                                             "~/Content/bootstrap.css",
-                                            "~/Content/landlord.css"
-                      ));
+                                            "~/Content/landlord.css"));
 
             bundles.Add(new StyleBundle("~/Content/frontpage").Include(
                                             "~/Content/bootstrap.css",
                                             "~/Content/site.css",
                                             "~/Content/mobile.css",
-                                            "~/Content/login.css"
-          ));
+                                            "~/Content/login.css"));
+
+            bundles.Add(new ScriptBundle("~/Content/datatables/css").Include(
+                        "~/Content/DataTables-1.9.4/media/css/*.css"));
+
+            bundles.Add(new ScriptBundle("~/Content/receipts_index").Include(
+                      "~/Content/DataTables-1.9.4/media/css/*.css",//todo need to be specific rather then *
+                      "~/Content/themes/base/jquery-ui.css"));
+
         }
     }
 }

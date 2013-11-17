@@ -64,7 +64,7 @@ namespace DataObjects.EntityFramework.Implementation
         /// <param name="userId"></param>
         /// <param name="sortExpression">The required sort order.</param>
         /// <returns>List of receipts.</returns>
-        public List<Receipt> GetReceiptsByUser(string userId, string sortExpression)
+        public IQueryable<Receipt> GetReceiptsByUser(string userId, string sortExpression)
         {
             using (var context = DataObjectFactory.CreateContext())
             {
@@ -75,7 +75,53 @@ namespace DataObjects.EntityFramework.Implementation
                 foreach (var receipt in entities)
                     list.Add(Mapper.Map(receipt));
 
-                return list;
+                return list.AsQueryable();
+            }
+        }
+
+        public IQueryable<ReceiptBrief> GetReceiptBriefsByUser(string userId, string sortExpression = "Id ASC")
+        {
+            using (var context = DataObjectFactory.CreateContext())
+            {
+                var entities = context.Receipts.AsQueryable()
+                    .OrderBy(sortExpression)
+                    .Where(c => c.User_Id == userId)
+                    .Select(entity => new ReceiptBrief
+                    {
+                        Id = entity.Id,
+                        Description = entity.Description,
+                        PurchaseDate = entity.PurchaseDate,
+                        Price = entity.Price,
+                        Vendor = entity.Vendor,
+                        IsBulk = entity.IsBulk,
+                        HasImage = entity.ImageData != null ? "Yes" : "No",
+                        ReceiptType = entity.ReceiptTypes.Type
+                    });
+
+                return entities.ToList().AsQueryable();
+            }
+        }
+
+        public async Task<IQueryable<ReceiptBrief>> GetReceiptBriefsByUserAsync(string userId, string sortExpression = "Id ASC")
+        {
+            using (var context = DataObjectFactory.CreateContext())
+            {
+                var entities = await context.Receipts.AsQueryable()
+                    .OrderBy(sortExpression)
+                    .Where(c => c.User_Id == userId)
+                    .Select(entity => new ReceiptBrief
+                    {
+                        Id = entity.Id,
+                        Description = entity.Description,
+                        PurchaseDate = entity.PurchaseDate,
+                        Price = entity.Price,
+                        Vendor = entity.Vendor,
+                        IsBulk = entity.IsBulk,
+                        HasImage = entity.ImageData != null ? "Yes" : "No",
+                        ReceiptType = entity.ReceiptTypes.Type
+                    }).ToListAsync();
+
+                return entities.AsQueryable();
             }
         }
 
@@ -167,7 +213,7 @@ namespace DataObjects.EntityFramework.Implementation
         /// </summary>
         /// <param name="receipt">The receipt to be deleted.</param>
         /// <returns>Number of rows affected.</returns>
-        public void DeleteReceipt(Receipt receipt)
+        public void DeleteReceipt(ReceiptBrief receipt)
         {
             using (var context = DataObjectFactory.CreateContext())
             {
@@ -179,7 +225,7 @@ namespace DataObjects.EntityFramework.Implementation
                 }
             }
         }
-        public async Task DeleteReceiptAsync(Receipt receipt)
+        public async Task DeleteReceiptAsync(ReceiptBrief receipt)
         {
             using (var context = DataObjectFactory.CreateContext())
             {

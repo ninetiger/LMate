@@ -9,27 +9,93 @@
 
 <p>@Html.ActionLink("Add a new receipt", "Create")</p>
 
-<table class="Grid">
-    <tr>
-        <th>ID</th>
-        <th>Description</th>
-        <th>PurchaseDate</th>
-        <th class="NumericCol">Cost</th>
-        <th>Actions</th>
-    </tr>
-    @foreach (var item in Model) {
+@*<table id="dt_example" class="Grid" style="width: 100%; max-width: ">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>PurchaseDate</th>
+                <th class="NumericCol">Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@Html.ActionLink(item.Description, "Edit", new { item.Id })</td>
+                    <td>@item.PurchaseDate</td>
+                    <td class="NumericCol">@item.Price.ToString()</td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Receipts"))
+                        {
+                            @Html.Hidden("Id", item.Id)
+                            <input type="submit" value="Delete" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>*@
+<br />
+<table>
+    <thead>
         <tr>
-            <td>@item.Id</td>
-            <td>@Html.ActionLink(item.Description, "Edit", new { item.Id })</td>
-            <td>@item.PurchaseDate</td>
-            <td class="NumericCol">@item.Price.ToString()</td>
-            <td>
-                @using (Html.BeginForm("Delete", "Receipts"))
-                {
-                    @Html.Hidden("Id", item.Id)
-                        <input type="submit" value="Delete"/>
-                }
-            </td>
+            <th style="display:none">ID</th>
+            <th>Description</th>
+            <th>Purchase Date</th>
+            <th>Price</th>
+            <th>Vendor</th>
+            <th>Receipt Type</th>
+            <th>Is Bulk</th>
+            <th>Has Image</th>
+            <th>Actions</th>
         </tr>
-    }
+    </thead>
+    <tr>
+        <td style="display:none"><input id="ID" /></td>
+        <td><input id="Receipts_Desc" /></td>
+        <td><input id="Receipts_PurchaseDate" /></td>
+        <td><input id="Receipts_Price" /></td>
+        <td><input id="Receipts_Vendor" /></td>
+        <td><input id="Receipts_ReceiptType" /></td>
+        <td><input id="Receipts_IsBulk" /></td>
+        <td><input id="Receipts_HasImage" /></td>
+        <td><input id="Receipts_Actions" /></td>
+    </tr>
 </table>
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th style="display:none">ID</th>
+            <th>Description</th>
+            <th>Purchase Date</th>
+            <th>Price</th>
+            <th>Vendor</th>
+            <th>Receipt Type</th>
+            <th>Is Bulk</th>
+            <th>Has Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<div>
+    @*@Html.Partial("Index", Html.DataTableVm("id", (ReceiptsController h) => h.GetUsers(null)))*@
+</div>
+
+@section Contents
+{
+    @Styles.Render("~/Content/receipts_index")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/receipts_index")
+}
+
+@section DocumentReady
+{
+    ReceiptsDataTable();
+
+    AutoComplete();
+}

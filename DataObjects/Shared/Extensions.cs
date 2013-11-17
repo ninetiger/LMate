@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 
-namespace LMate.DataObjects.Shared
+namespace DataObjects.Shared
 {
     /// <summary>
     /// Useful set of Extension methods for Data Access purposes.

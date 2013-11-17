@@ -1,5 +1,5 @@
 ﻿using BusinessObjects;
-using LMate.DataObjects.Shared;
+using DataObjects.Shared;
 
 namespace DataObjects.EntityFramework.ModelMapper
 {
@@ -36,6 +36,18 @@ namespace DataObjects.EntityFramework.ModelMapper
                 Version = entity.Version.AsBase64String()
             };
         }
+        //internal static ReceiptBrief MapBrief(Receipts entity)
+        //{
+        //    return new ReceiptBrief
+        //    {
+        //        Id = entity.Id,
+        //        Description = entity.Description,
+        //        PurchaseDate = entity.PurchaseDate,
+        //        Price = entity.Price,
+        //        Vendor = entity.Vendor,
+        //        IsBulk = entity.IsBulk,
+        //    };
+        //}
 
 
         /// <summary>

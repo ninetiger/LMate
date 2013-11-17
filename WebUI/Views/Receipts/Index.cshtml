@@ -39,10 +39,9 @@
         </tbody>
     </table>*@
 <br />
-<table>
+<table style="width: 100%; max-width: 600px">
     <thead>
         <tr>
-            <th style="display:none">ID</th>
             <th>Description</th>
             <th>Purchase Date</th>
             <th>Price</th>
@@ -50,11 +49,9 @@
             <th>Receipt Type</th>
             <th>Is Bulk</th>
             <th>Has Image</th>
-            <th>Actions</th>
         </tr>
     </thead>
     <tr>
-        <td style="display:none"><input id="ID" /></td>
         <td><input id="Receipts_Desc" /></td>
         <td><input id="Receipts_PurchaseDate" /></td>
         <td><input id="Receipts_Price" /></td>
@@ -62,13 +59,12 @@
         <td><input id="Receipts_ReceiptType" /></td>
         <td><input id="Receipts_IsBulk" /></td>
         <td><input id="Receipts_HasImage" /></td>
-        <td><input id="Receipts_Actions" /></td>
     </tr>
 </table>
 <table id="dataTable">
     <thead>
         <tr>
-            <th style="display:none">ID</th>
+            <th><input id="selectAllReceipts" type="checkbox"/></th>
             <th>Description</th>
             <th>Purchase Date</th>
             <th>Price</th>

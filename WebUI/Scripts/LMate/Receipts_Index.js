@@ -16,7 +16,7 @@
         , "bProcessing": true
         , "sPaginationType": "full_numbers"
         , 'aoColumns': [
-                { 'sName': 'ID', 'bVisible': false },
+                { 'sName': 'ID', 'bVisible': true, 'bSortable': false },
                 { 'sName': 'Description' },
                 { 'sName': 'PurchaseDate' },
                 { 'sName': 'Price' },
@@ -24,17 +24,20 @@
                 { 'sName': 'ReceiptType' },
                 { 'sName': 'IsBulk' },
                 { 'sName': 'HasImage' },
-                { 'sName': 'Actions' }
+                { 'sName': 'Actions', 'bSortable': false }
         ]
         , 'fnRowCallback': function (nRow, aData) {
             var path = location.pathname.split('/');
             //var appRoot = location.protocol + '//' + location.host + '/' + path[1];
 
-            $('td:eq(7)', nRow)
+
+            $('td:eq(0)', nRow)
+                .html('<input id="selectAllReceipts" type="checkbox" value="' + aData[0] + '"/>');
+
+            $('td:eq(8)', nRow)
                 .html('<a href="Receipts/Delete/?Id=' + aData[0] + '&Description=' +
                     aData[1] + '"><span class="glyphicon glyphicon-trash" style="font-size:16px"></span></a>'
-            + '<a href="Receipts/Edit/?Id=' + aData[0] + '"><span class="glyphicon glyphicon-edit" style="font-size:16px"></span></a>'
-        );
+            + '<a href="Receipts/Edit/?Id=' + aData[0] + '"><span class="glyphicon glyphicon-edit" style="font-size:16px"></span></a>');
             return nRow;
         }
         //, "fnDrawCallback": function () {

@@ -32,7 +32,9 @@ namespace BusinessObjects
         public decimal? Price { get; set; }
 
         public byte[] ImageData { get; set; }
+        [DisplayName("Upload new receipt image")]
         public string ImageMimeType { get; set; }
+
         public string Vendor { get; set; }
 
         [DisplayName("Gst Rate")]

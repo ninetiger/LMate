@@ -62,7 +62,7 @@
         <table>
             <tr>
                 <td>
-                    @Html.ListBoxFor(x => x.CurrentRoleIdList, Model.CurrentRoles, new {style="width:100px;height:150px"})
+                    @Html.ListBoxFor(x => x.CurrentRoleIdList, Model.CurrentRoles, new {@class="form-control", style="width:100px;height:150px"})
                 </td>
                 <td>
                     <button type="button" class="btn btn-sm" id="addRole">&lt;==</button>
@@ -71,7 +71,7 @@
                     <button type="button" class="btn btn-sm" id="removeRole">==&gt;</button>
                 </td>
                 <td>
-                    @Html.ListBoxFor(x => x.AvailableRoleIdList, Model.AvailableRoles, new { style = "width:100px;height:150px" })
+                    @Html.ListBoxFor(x => x.AvailableRoleIdList, Model.AvailableRoles, new { @class = "form-control", style = "width:100px;height:150px" })
                 </td>
             </tr>
         </table>

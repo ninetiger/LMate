@@ -9,34 +9,34 @@ using DataObjects.EntityFramework.ModelMapper;
 
 namespace DataObjects.EntityFramework.Implementation
 {
-    public class EntityReceiptTypeDao : IReceiptTypeDao
+    public class EntityAccountTypeDao : IAccountTypeDao
     {
-        public ReceiptType GetReceiptType(int id)
+        public AccountType GetAccountType(int id)
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var query = context.ReceiptTypes.FirstOrDefault(c => c.Id == id);
+                var query = context.AccountTypes.FirstOrDefault(c => c.Id == id);
                 return Mapper.Map(query);
             }
         }
-        public async Task<ReceiptType> GetReceiptTypeAsync(int id)
+        public async Task<AccountType> GetAccountTypeAsync(int id)
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var query = await context.ReceiptTypes.FirstOrDefaultAsync(c => c.Id == id);
+                var query = await context.AccountTypes.FirstOrDefaultAsync(c => c.Id == id);
                 return Mapper.Map(query);
             }
         }
 
-        public IQueryable<ReceiptType> GetReceiptTypesByUser(string userId, string sortExpression = "Id ASC")
+        public IQueryable<AccountType> GetAccountTypesByUser(string userId, string sortExpression = "Id ASC")
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var entities = context.ReceiptTypes.AsQueryable()
+                var entities = context.AccountTypes.AsQueryable()
                                 .OrderBy(sortExpression)
                                 .Where(c => c.User_Id == userId || c.User_Id == null);
 
-                var list = new List<ReceiptType>();
+                var list = new List<AccountType>();
                 foreach (var receipt in entities)
                     list.Add(Mapper.Map(receipt));
 
@@ -44,11 +44,11 @@ namespace DataObjects.EntityFramework.Implementation
             }
         }
 
-        public async Task<IQueryable<ReceiptType>> GetReceiptTypesByUserAsync(string userId, string sortExpression = "Id ASC")
+        public async Task<IQueryable<AccountType>> GetAccountTypesByUserAsync(string userId, string sortExpression = "Id ASC")
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var entities = context.ReceiptTypes.AsQueryable()
+                var entities = context.AccountTypes.AsQueryable()
                                 .OrderBy(sortExpression)
                                 .Where(c => c.User_Id == userId || c.User_Id == null);
 

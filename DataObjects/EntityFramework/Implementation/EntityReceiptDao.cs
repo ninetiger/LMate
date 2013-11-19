@@ -50,7 +50,7 @@ namespace DataObjects.EntityFramework.Implementation
             using (var context = DataObjectFactory.CreateContext())
             {
                 var list = new List<Receipt>();
-
+                //todo remove .asqueryable() no need
                 var receiptEntities = context.Receipts.AsQueryable().OrderBy(sortExpression).ToList(); //todo change to asyn list later
                 foreach (var receipt in receiptEntities)
                     list.Add(Mapper.Map(receipt));
@@ -84,7 +84,7 @@ namespace DataObjects.EntityFramework.Implementation
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var entities = context.Receipts.AsQueryable()
+                var entities = context.Receipts
                     .OrderBy(sortExpression)
                     .Where(c => c.User_Id == userId)
                     .Select(entity => new ReceiptBrief
@@ -93,10 +93,8 @@ namespace DataObjects.EntityFramework.Implementation
                         Description = entity.Description,
                         PurchaseDate = entity.PurchaseDate,
                         Price = entity.Price,
-                        Vendor = entity.Vendor,
+                        Vendor = entity.Vendors.Vendor,
                         IsBulk = entity.IsBulk,
-                        HasImage = entity.ImageData != null ? "Yes" : "No",
-                        ReceiptType = entity.ReceiptTypes.Type
                     });
 
                 return entities.ToList().AsQueryable();
@@ -105,25 +103,26 @@ namespace DataObjects.EntityFramework.Implementation
 
         public async Task<IQueryable<ReceiptBrief>> GetReceiptBriefsByUserAsync(string userId, string sortExpression = "Id ASC")
         {
-            using (var context = DataObjectFactory.CreateContext())
-            {
-                var entities = await context.Receipts.AsQueryable()
-                    .OrderBy(sortExpression)
-                    .Where(c => c.User_Id == userId)
-                    .Select(entity => new ReceiptBrief
-                    {
-                        Id = entity.Id,
-                        Description = entity.Description,
-                        PurchaseDate = entity.PurchaseDate,
-                        Price = entity.Price,
-                        Vendor = entity.Vendor,
-                        IsBulk = entity.IsBulk,
-                        HasImage = entity.ImageData != null ? "Yes" : "No",
-                        ReceiptType = entity.ReceiptTypes.Type
-                    }).ToListAsync();
+           
+                using (var context = DataObjectFactory.CreateContext())
+                {
+                    var entities = await context.Receipts
+                        .OrderBy(sortExpression)
+                        .Where(c => c.User_Id == userId)
+                        .Select(entity => new ReceiptBrief
+                        {
+                            Id = entity.Id,
+                            Description = entity.Description,
+                            PurchaseDate = entity.PurchaseDate,
+                            Price = entity.Price,
+                            Vendor = entity.Vendors.Vendor,
+                            IsBulk = entity.IsBulk,
+                            HasImage = "nn"
+                        }).ToListAsync();
 
-                return entities.AsQueryable();
-            }
+                    return entities.AsQueryable();
+                }
+         
         }
 
         /// <summary>
@@ -167,19 +166,20 @@ namespace DataObjects.EntityFramework.Implementation
                     {
                         entity.Id = receipt.Id;
                         entity.Description = receipt.Description;
+                        entity.Reference = receipt.Reference;
+                        entity.IsBulk = receipt.IsBulk;
                         entity.PurchaseDate = receipt.PurchaseDate;
-                        entity.CreatedBy = receipt.CreatedBy;
                         entity.Price = receipt.Price;
-                        entity.ImageData = receipt.ImageData;
-                        entity.ImageMimeType = receipt.ImageMimeType;
-                        entity.Vendor = receipt.Vendor;
+                        entity.IsIncludeTax = receipt.IsIncludeTax;
+                        entity.IsTaxExclusive = receipt.IsTaxExclusive;
                         entity.GstRate = receipt.GstRate;
                         entity.Tax = receipt.Tax;
-                        entity.IsBulk = receipt.IsBulk;
                         entity.Note = receipt.Note;
-                        entity.ReceiptType_Id = receipt.ReceiptTypeId;
+                        entity.Vendor_Id = receipt.VendorId;
+                        entity.ReceiptCategory_Id = receipt.ReceiptCategoryId;
                         entity.ReceiptStatus_Id = receipt.ReceiptStatusId;
                         entity.Currency_Id = receipt.CurrencyId;
+                        entity.AccountType_Id = receipt.AccountTypeId;
                         entity.User_Id = receipt.UserId;
                     }
                 }
@@ -224,20 +224,21 @@ namespace DataObjects.EntityFramework.Implementation
                     if (entity != null)
                     {
                         entity.Id = receipt.Id;
-                        entity.Description = receipt.Description;
-                        entity.PurchaseDate = receipt.PurchaseDate;
-                        entity.CreatedBy = receipt.CreatedBy;
-                        entity.Price = receipt.Price;
-                        entity.ImageData = receipt.ImageData;
-                        entity.ImageMimeType = receipt.ImageMimeType;
-                        entity.Vendor = receipt.Vendor;
-                        entity.GstRate = receipt.GstRate;
-                        entity.Tax = receipt.Tax;
-                        entity.IsBulk = receipt.IsBulk;
-                        entity.Note = receipt.Note;
-                        entity.ReceiptType_Id = receipt.ReceiptTypeId;
-                        entity.ReceiptStatus_Id = receipt.ReceiptStatusId;
-                        entity.Currency_Id = receipt.CurrencyId;
+                entity.Description = receipt.Description;
+                entity.Reference = receipt.Reference;
+                entity.IsBulk = receipt.IsBulk;
+                entity.PurchaseDate = receipt.PurchaseDate;
+                entity.Price = receipt.Price;
+                 entity.IsIncludeTax=receipt.IsIncludeTax;
+                entity.IsTaxExclusive = receipt.IsTaxExclusive;
+                entity.GstRate = receipt.GstRate;
+                entity.Tax = receipt.Tax;
+                entity.Note = receipt.Note;
+                entity.Vendor_Id = receipt.VendorId;
+                entity.ReceiptCategory_Id = receipt.ReceiptCategoryId;
+                entity.ReceiptStatus_Id = receipt.ReceiptStatusId;
+                entity.Currency_Id = receipt.CurrencyId;
+                entity.AccountType_Id = receipt.AccountTypeId;
                         entity.User_Id = receipt.UserId;
                     }
                 }
@@ -266,7 +267,7 @@ namespace DataObjects.EntityFramework.Implementation
                 }
             }
         }
- 
+
         /// <summary>
         /// Deletes a receipt record from the database.
         /// </summary>

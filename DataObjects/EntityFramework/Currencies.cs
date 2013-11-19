@@ -14,14 +14,7 @@ namespace DataObjects.EntityFramework
     
     public partial class Currencies
     {
-        public Currencies()
-        {
-            this.Receipts = new HashSet<Receipts>();
-        }
-    
         public int Id { get; set; }
-        public string Currency { get; set; }
-    
-        public virtual ICollection<Receipts> Receipts { get; set; }
+        public string Name { get; set; }
     }
 }

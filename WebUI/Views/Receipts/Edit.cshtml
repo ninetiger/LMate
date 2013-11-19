@@ -28,7 +28,7 @@
                     @Html.LabelFor(x => x.Receipt.PurchaseDate)
                 </div>
                 <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.Receipt.Vendor)
+                    @Html.LabelFor(x => x.Receipt.VendorId)
                 </div>
             </div>
             <div class="row">
@@ -39,7 +39,7 @@
                     @Html.TextBoxFor(x => x.Receipt.PurchaseDate, new { @class = "form-control input-sm" })
                 </div>
                 <div class="col-xs-6 col-sm-4">
-                    @Html.TextBoxFor(x => x.Receipt.Vendor,  new { @class = "form-control input-sm" })
+                    @Html.TextBoxFor(x => x.Receipt.VendorId, new { @class = "form-control input-sm" })
                 </div>
             </div>
           <br/>
@@ -51,7 +51,7 @@
                     @Html.LabelFor(x => x.Receipt.GstRate)
                 </div>
                 <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.Receipt.ReceiptTypeId)
+                    @Html.LabelFor(x => x.Receipt.AccountTypeId)
                 </div>
             </div>
             <div class="row">
@@ -62,20 +62,20 @@
                     @Html.TextBoxFor(x => x.Receipt.GstRate, new { @class = "form-control input-sm" })
                 </div>
                 <div class="col-xs-6 col-sm-4">
-                    @Html.DropDownListFor(x => x.Receipt.ReceiptTypeId, Model.ReceiptTypeSelectList, string.Empty, new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.Receipt.AccountTypeId, Model.AccountTypeSelectList, string.Empty, new { @class = "form-control" })
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
                     @Html.LabelFor(x => x.Receipt.IsBulk)
-                    @Html.TextAreaFor(x => x.Receipt.IsBulk)
+                    @Html.CheckBoxFor(x => x.Receipt.IsBulk)
                 </div>
             </div>
             <br/>
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
-                    @Html.Label("Image")
+                    @*@Html.Label("Image")
                     @if (receipt.ImageData == null)
                     {
                         @:None
@@ -84,7 +84,7 @@
                     {
                         <img width="100%" height="100%" class="img-rounded"
                              src="@Url.Action("GetImage", "Receipts", new { receipt.Id })" />
-                    }
+                    }*@
                 </div>
             </div>
          <br/>

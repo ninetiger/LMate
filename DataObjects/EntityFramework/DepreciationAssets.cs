@@ -16,7 +16,7 @@ namespace DataObjects.EntityFramework
     {
         public int Id { get; set; }
         public decimal OpeningAdjustedTaxValue { get; set; }
-        public int DepreciationMethodId { get; set; }
+        public int DepreciationMethod_Id { get; set; }
         public decimal RatePercentage { get; set; }
         public decimal DepreciationClaimed { get; set; }
         public decimal CloseingAdjustedTaxValue { get; set; }
@@ -26,7 +26,8 @@ namespace DataObjects.EntityFramework
         public int RentalIncomeDetail_Id { get; set; }
         public int Receipt_Id { get; set; }
     
-        public virtual DepreciationMethond DepreciationMethond { get; set; }
+        public virtual DepreciationMethonds DepreciationMethonds { get; set; }
         public virtual Receipts Receipts { get; set; }
+        public virtual RentalIncomeDetails RentalIncomeDetails { get; set; }
     }
 }

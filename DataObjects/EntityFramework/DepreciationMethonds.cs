@@ -12,16 +12,18 @@ namespace DataObjects.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class DisposalType
+    public partial class DepreciationMethonds
     {
-        public DisposalType()
+        public DepreciationMethonds()
         {
-            this.Disposals = new HashSet<Disposals>();
+            this.DepreciationAssets = new HashSet<DepreciationAssets>();
+            this.DepreciationBuildings = new HashSet<DepreciationBuildings>();
         }
     
         public int Id { get; set; }
-        public string Type { get; set; }
+        public string Methond { get; set; }
     
-        public virtual ICollection<Disposals> Disposals { get; set; }
+        public virtual ICollection<DepreciationAssets> DepreciationAssets { get; set; }
+        public virtual ICollection<DepreciationBuildings> DepreciationBuildings { get; set; }
     }
 }

@@ -12,18 +12,19 @@ namespace DataObjects.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class DepreciationMethond
+    public partial class Vendors
     {
-        public DepreciationMethond()
+        public Vendors()
         {
-            this.DepreciationAssets = new HashSet<DepreciationAssets>();
-            this.DepreciationBuildings = new HashSet<DepreciationBuildings>();
+            this.Receipts = new HashSet<Receipts>();
         }
     
-        public int Id { get; set; }
-        public string Methond { get; set; }
+        public string Id { get; set; }
+        public string Vendor { get; set; }
+        public string User_Id { get; set; }
+        public byte[] Version { get; set; }
     
-        public virtual ICollection<DepreciationAssets> DepreciationAssets { get; set; }
-        public virtual ICollection<DepreciationBuildings> DepreciationBuildings { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual ICollection<Receipts> Receipts { get; set; }
     }
 }

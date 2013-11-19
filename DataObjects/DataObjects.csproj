@@ -96,6 +96,9 @@
     </Compile>
     <Compile Include="DaoFactories.cs" />
     <Compile Include="DataAccess.cs" />
+    <Compile Include="EntityFramework\AccountTypes.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\AspNetRoles.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
@@ -118,18 +121,18 @@
     <Compile Include="EntityFramework\DepreciationBuildings.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\DepreciationMethond.cs">
+    <Compile Include="EntityFramework\DepreciationMethonds.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\Disposals.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\DisposalType.cs">
+    <Compile Include="EntityFramework\DisposalTypes.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\Implementation\EntityDoaFactory.cs" />
     <Compile Include="EntityFramework\Implementation\EntityReceiptDao.cs" />
-    <Compile Include="EntityFramework\Implementation\EntityReceiptTypeDao.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityAccountTypeDao.cs" />
     <Compile Include="EntityFramework\LMateModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,13 +152,19 @@
     <Compile Include="EntityFramework\ModelMapper\Mapper.cs" />
     <Compile Include="EntityFramework\oneContextOneDbSet\Repository.cs" />
     <Compile Include="EntityFramework\oneContextOneDbSet\UnitOfWork.cs" />
+    <Compile Include="EntityFramework\ReceiptCategories.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ReceiptChangeHistories.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\ReceiptImages.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\Receipts.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\ReceiptStatus.cs">
-      <DependentUpon>LMateModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntityFramework\ReceiptTypes.cs">
+    <Compile Include="EntityFramework\ReceiptStatuses.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\RentalIncomeDetails.cs">
@@ -167,8 +176,11 @@
     <Compile Include="EntityFramework\UserDelegates.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\Vendors.cs">
+      <DependentUpon>LMateModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="IDaoFactory.cs" />
-    <Compile Include="IReceiptTypeDao.cs" />
+    <Compile Include="IAccountTypeDao.cs" />
     <Compile Include="IReceiptDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Extensions.cs" />

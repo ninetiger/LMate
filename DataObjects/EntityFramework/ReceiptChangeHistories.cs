@@ -12,18 +12,14 @@ namespace DataObjects.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class ReceiptTypes
+    public partial class ReceiptChangeHistories
     {
-        public ReceiptTypes()
-        {
-            this.Receipts = new HashSet<Receipts>();
-        }
+        public string Id { get; set; }
+        public string Updater_Id { get; set; }
+        public System.DateTime Date { get; set; }
+        public string Changes { get; set; }
+        public string Details { get; set; }
     
-        public int Id { get; set; }
-        public string Type { get; set; }
-        public string User_Id { get; set; }
-    
-        public virtual ICollection<Receipts> Receipts { get; set; }
         public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

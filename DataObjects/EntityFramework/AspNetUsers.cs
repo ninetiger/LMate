@@ -16,14 +16,17 @@ namespace DataObjects.EntityFramework
     {
         public AspNetUsers()
         {
+            this.AccountTypes = new HashSet<AccountTypes>();
             this.AspNetUserClaims = new HashSet<AspNetUserClaims>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.Receipts = new HashSet<Receipts>();
+            this.ReceiptCategories = new HashSet<ReceiptCategories>();
             this.RentalIncomeDetails = new HashSet<RentalIncomeDetails>();
             this.TaxUsers = new HashSet<TaxUsers>();
             this.UserDelegates1 = new HashSet<UserDelegates>();
+            this.Vendors = new HashSet<Vendors>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
-            this.ReceiptTypes = new HashSet<ReceiptTypes>();
+            this.ReceiptImages = new HashSet<ReceiptImages>();
         }
     
         public string Id { get; set; }
@@ -32,14 +35,18 @@ namespace DataObjects.EntityFramework
         public string SecurityStamp { get; set; }
         public string Discriminator { get; set; }
     
+        public virtual ICollection<AccountTypes> AccountTypes { get; set; }
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual ReceiptChangeHistories ReceiptChangeHistories { get; set; }
         public virtual ICollection<Receipts> Receipts { get; set; }
+        public virtual ICollection<ReceiptCategories> ReceiptCategories { get; set; }
         public virtual ICollection<RentalIncomeDetails> RentalIncomeDetails { get; set; }
         public virtual ICollection<TaxUsers> TaxUsers { get; set; }
         public virtual UserDelegates UserDelegates { get; set; }
         public virtual ICollection<UserDelegates> UserDelegates1 { get; set; }
+        public virtual ICollection<Vendors> Vendors { get; set; }
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
-        public virtual ICollection<ReceiptTypes> ReceiptTypes { get; set; }
+        public virtual ICollection<ReceiptImages> ReceiptImages { get; set; }
     }
 }

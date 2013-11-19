@@ -60,8 +60,8 @@ namespace WebUI.Repositories
             else 
                 receipt = await DataAccess.ReceiptDao.GetReceiptAsync(receiptId);
 
-            var receiptTypeQuery = DataAccess.ReceiptTypeDao.GetReceiptTypesByUser(userId);
-            var receiptTypeSelectList = receiptTypeQuery.Select(x => new SelectListItem()
+            var accountTypeQuery = DataAccess.AccountTypeDao.GetAccountTypesByUser(userId);
+            var accountTypeSelectList = accountTypeQuery.Select(x => new SelectListItem()
             {
                 Selected = false,
                 Text = x.Type,
@@ -71,15 +71,15 @@ namespace WebUI.Repositories
             return new ReceiptEditViewModel
             {
                 Receipt = receipt,
-                ReceiptTypeSelectList = receiptTypeSelectList,
+                AccountTypeSelectList = accountTypeSelectList,
                 CurrencySelectList = null
             };
         }
         public async Task<ReceiptEditViewModel> GetReceiptEditPostAsync(string userId, Receipt receipt)
         {
 
-            var receiptTypeQuery = await DataAccess.ReceiptTypeDao.GetReceiptTypesByUserAsync(userId);
-            var receiptTypeSelectList = receiptTypeQuery.Select(x => new SelectListItem()
+            var accountTypeQuery = await DataAccess.AccountTypeDao.GetAccountTypesByUserAsync(userId);
+            var accountTypeSelectList = accountTypeQuery.Select(x => new SelectListItem()
             {
                 Selected = false,
                 Text = x.Type,
@@ -89,7 +89,7 @@ namespace WebUI.Repositories
             return new ReceiptEditViewModel
             {
                 Receipt = receipt,
-                ReceiptTypeSelectList = receiptTypeSelectList,
+                AccountTypeSelectList = accountTypeSelectList,
                 CurrencySelectList = null
             };
         }

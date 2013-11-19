@@ -21,7 +21,7 @@
                 { 'sName': 'PurchaseDate' },
                 { 'sName': 'Price' },
                 { 'sName': 'Vendor' },
-                { 'sName': 'ReceiptType' },
+                { 'sName': 'AccountType' },
                 { 'sName': 'IsBulk' },
                 { 'sName': 'HasImage' },
                 { 'sName': 'Actions', 'bSortable': false }

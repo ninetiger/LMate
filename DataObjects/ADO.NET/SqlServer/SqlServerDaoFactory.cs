@@ -15,7 +15,7 @@ namespace DataObjects.ADO.NET.SqlServer
         /// </summary>
         public IReceiptDao ReceiptDao { get { return new SqlServerReceiptDao(); } }
 
-        public IReceiptTypeDao ReceiptTypeDao
+        public IAccountTypeDao AccountTypeDao
         {
             get { throw new System.NotImplementedException(); }
         }

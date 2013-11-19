@@ -20,39 +20,49 @@ namespace BusinessObjects
         [StringLength(255, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         public string Description { get; set; }
 
+        [StringLength(50, ErrorMessage = "The {0} cannot be longer than {1} characters.")]
+        public string Reference { get; set; }
+
+        [DisplayName("Multi Items Receipt")]
+        public bool IsBulk { get; set; }
+
         [DisplayName("Date purchased")]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? PurchaseDate { get; set; }
 
-        [DisplayName("Date added")] //todo make it read only and added autoly
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime CreatedBy { get; set; }
-
-        [Required]
         public decimal? Price { get; set; }
 
-        public byte[] ImageData { get; set; }
-        [DisplayName("Upload new receipt image")]
-        public string ImageMimeType { get; set; }
+        [DisplayName("Include Tax")]
+        public bool IsIncludeTax { get; set; }
 
-        public string Vendor { get; set; }
-
+        [DisplayName("Tax Exclusive")]
+        public bool IsTaxExclusive { get; set; }
+        
         [DisplayName("Gst Rate")]
         public decimal? GstRate { get; set; }
-        public decimal? Tax { get; set; }
-        
-        [DisplayName("Is Bulk")]
-        public bool? IsBulk { get; set; }
 
+        public decimal? Tax { get; set; }
 
         [StringLength(4000, ErrorMessage = "The {0} cannot be longer than {1} characters.")]
         public string Note { get; set; }
 
-        [DisplayName("Receipt Type")]
-        public int? ReceiptTypeId { get; set; }
-        
+        //public byte[] ImageData { get; set; }
+        //[DisplayName("Upload new receipt image")]
+        //public string ImageMimeType { get; set; }
+
+        public string VendorId { get; set; }
+
+        [DisplayName("Receipt Category")]
+        public int? ReceiptCategoryId { get; set; }
+
+        [DisplayName("Receipt Status")]
         public int? ReceiptStatusId { get; set; }
+
+        [DisplayName("Currency")]
         public int? CurrencyId { get; set; }
+
+        [DisplayName("AccountType")]
+        public int? AccountTypeId { get; set; }
 
         [HiddenInput(DisplayValue = false)]
         public string UserId { get; set; }

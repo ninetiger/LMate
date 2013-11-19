@@ -15,8 +15,8 @@ namespace DataObjects.EntityFramework
     
     public partial class LMateDbContext : DbContext
     {
-        public LMateDbContext(string connectionString)
-            : base(connectionString)
+        public LMateDbContext(string ConnectionString)
+            : base(ConnectionString)
         {
         }
     
@@ -25,6 +25,7 @@ namespace DataObjects.EntityFramework
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AccountTypes> AccountTypes { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
@@ -32,14 +33,17 @@ namespace DataObjects.EntityFramework
         public virtual DbSet<Currencies> Currencies { get; set; }
         public virtual DbSet<DepreciationAssets> DepreciationAssets { get; set; }
         public virtual DbSet<DepreciationBuildings> DepreciationBuildings { get; set; }
-        public virtual DbSet<DepreciationMethond> DepreciationMethond { get; set; }
+        public virtual DbSet<DepreciationMethonds> DepreciationMethonds { get; set; }
         public virtual DbSet<Disposals> Disposals { get; set; }
-        public virtual DbSet<DisposalType> DisposalType { get; set; }
+        public virtual DbSet<DisposalTypes> DisposalTypes { get; set; }
+        public virtual DbSet<ReceiptCategories> ReceiptCategories { get; set; }
+        public virtual DbSet<ReceiptChangeHistories> ReceiptChangeHistories { get; set; }
+        public virtual DbSet<ReceiptImages> ReceiptImages { get; set; }
         public virtual DbSet<Receipts> Receipts { get; set; }
-        public virtual DbSet<ReceiptStatus> ReceiptStatus { get; set; }
-        public virtual DbSet<ReceiptTypes> ReceiptTypes { get; set; }
+        public virtual DbSet<ReceiptStatuses> ReceiptStatuses { get; set; }
         public virtual DbSet<RentalIncomeDetails> RentalIncomeDetails { get; set; }
         public virtual DbSet<TaxUsers> TaxUsers { get; set; }
         public virtual DbSet<UserDelegates> UserDelegates { get; set; }
+        public virtual DbSet<Vendors> Vendors { get; set; }
     }
 }

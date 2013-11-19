@@ -4,7 +4,19 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="LMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="TaxRate" Type="int" Nullable="false" />
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -56,7 +68,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Currency" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="DepreciationAssets">
           <Key>
@@ -64,7 +76,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OpeningAdjustedTaxValue" Type="money" Nullable="false" />
-          <Property Name="DepreciationMethodId" Type="int" Nullable="false" />
+          <Property Name="DepreciationMethod_Id" Type="int" Nullable="false" />
           <Property Name="RatePercentage" Type="decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="DepreciationClaimed" Type="money" Nullable="false" />
           <Property Name="CloseingAdjustedTaxValue" Type="money" Nullable="false" />
@@ -90,7 +102,7 @@
           <Property Name="DepreciationMethond_Id" Type="int" Nullable="false" />
           <Property Name="RentalIncomeDetails_Id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="DepreciationMethond">
+        <EntityType Name="DepreciationMethonds">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -108,49 +120,72 @@
           <Property Name="Receipt_Id" Type="int" Nullable="false" />
           <Property Name="DisposalType_Id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="DisposalType">
+        <EntityType Name="DisposalTypes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Receipts">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="PurchaseDate" Type="datetime2" Precision="7" />
-          <Property Name="CreatedBy" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Price" Type="money" />
-          <Property Name="ImageData" Type="varbinary(max)" />
-          <Property Name="ImageMimeType" Type="nvarchar(max)" />
-          <Property Name="Vendor" Type="nvarchar" MaxLength="50" />
-          <Property Name="GstRate" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="Tax" Type="money" />
-          <Property Name="IsBulk" Type="bit" />
-          <Property Name="Note" Type="nvarchar(max)" />
-          <Property Name="ReceiptType_Id" Type="int" />
-          <Property Name="ReceiptStatus_Id" Type="int" />
-          <Property Name="Currency_Id" Type="int" />
-          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ReceiptStatus">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ReceiptTypes">
+        <EntityType Name="ReceiptCategories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReceiptChangeHistories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Updater_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Changes" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Details" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ReceiptImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ImageMimeType" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsBulk" Type="bit" Nullable="false" />
+          <Property Name="PurchaseDate" Type="datetime2" Precision="7" />
+          <Property Name="Price" Type="money" />
+          <Property Name="IsIncludeTax" Type="bit" Nullable="false" />
+          <Property Name="IsTaxExclusive" Type="bit" Nullable="false" />
+          <Property Name="GstRate" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Tax" Type="money" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Vendor_Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="ReceiptCategory_Id" Type="int" />
+          <Property Name="ReceiptStatus_Id" Type="int" />
+          <Property Name="Currency_Id" Type="int" />
+          <Property Name="AccountType_Id" Type="int" />
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReceiptStatuses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="RentalIncomeDetails">
           <Key>
@@ -185,6 +220,14 @@
           <Property Name="Address" Type="nvarchar" MaxLength="400" Nullable="false" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <EntityType Name="User_ReceiptImage">
+          <Key>
+            <PropertyRef Name="User_Id" />
+            <PropertyRef Name="ReceiptImage_Id" />
+          </Key>
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ReceiptImage_Id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserDelegates">
           <Key>
             <PropertyRef Name="User_Id" />
@@ -193,6 +236,27 @@
           <Property Name="DelegateUser_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Role_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Vendor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AccountTypes_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="AccountTypes" Type="Self.AccountTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountTypes">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -250,14 +314,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DepreciationAssets_DepreciationMethond">
-          <End Role="DepreciationMethond" Type="Self.DepreciationMethond" Multiplicity="1" />
+          <End Role="DepreciationMethonds" Type="Self.DepreciationMethonds" Multiplicity="1" />
           <End Role="DepreciationAssets" Type="Self.DepreciationAssets" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DepreciationMethond">
+            <Principal Role="DepreciationMethonds">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DepreciationAssets">
-              <PropertyRef Name="DepreciationMethodId" />
+              <PropertyRef Name="DepreciationMethod_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -273,11 +337,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DepreciationAssets_RentalIncomeDetails">
+          <End Role="RentalIncomeDetails" Type="Self.RentalIncomeDetails" Multiplicity="1" />
+          <End Role="DepreciationAssets" Type="Self.DepreciationAssets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RentalIncomeDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepreciationAssets">
+              <PropertyRef Name="RentalIncomeDetail_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DepreciationBuildings_DepreciationMethond">
-          <End Role="DepreciationMethond" Type="Self.DepreciationMethond" Multiplicity="1" />
+          <End Role="DepreciationMethonds" Type="Self.DepreciationMethonds" Multiplicity="1" />
           <End Role="DepreciationBuildings" Type="Self.DepreciationBuildings" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DepreciationMethond">
+            <Principal Role="DepreciationMethonds">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DepreciationBuildings">
@@ -298,10 +374,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Disposals_DisposalType">
-          <End Role="DisposalType" Type="Self.DisposalType" Multiplicity="1" />
+          <End Role="DisposalTypes" Type="Self.DisposalTypes" Multiplicity="1" />
           <End Role="Disposals" Type="Self.Disposals" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DisposalType">
+            <Principal Role="DisposalTypes">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Disposals">
@@ -321,6 +397,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReceiptHistories_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ReceiptChangeHistories" Type="Self.ReceiptChangeHistories" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptChangeHistories">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipts_AccountTypes">
+          <End Role="AccountTypes" Type="Self.AccountTypes" Multiplicity="0..1" />
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipts">
+              <PropertyRef Name="AccountType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Receipts_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
@@ -333,23 +433,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Receipts_Currency">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="0..1" />
+        <Association Name="FK_Receipts_ReceiptCategories">
+          <End Role="ReceiptCategories" Type="Self.ReceiptCategories" Multiplicity="0..1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Currencies">
+            <Principal Role="ReceiptCategories">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipts">
-              <PropertyRef Name="Currency_Id" />
+              <PropertyRef Name="ReceiptCategory_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Receipts_ReceiptStatus">
-          <End Role="ReceiptStatus" Type="Self.ReceiptStatus" Multiplicity="0..1" />
+          <End Role="ReceiptStatuses" Type="Self.ReceiptStatuses" Multiplicity="0..1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ReceiptStatus">
+            <Principal Role="ReceiptStatuses">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipts">
@@ -357,26 +457,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Receipts_ReceiptTypes">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+        <Association Name="FK_Receipts_Vendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
+            <Principal Role="Vendors">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipts">
-              <PropertyRef Name="User_Id" />
+              <PropertyRef Name="Vendor_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ReceiptTypes_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
-          <End Role="ReceiptTypes" Type="Self.ReceiptTypes" Multiplicity="*" />
+          <End Role="ReceiptCategories" Type="Self.ReceiptCategories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ReceiptTypes">
+            <Dependent Role="ReceiptCategories">
               <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -417,6 +517,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_ReceiptImage_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="User_ReceiptImage" Type="Self.User_ReceiptImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_ReceiptImage">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ReceiptImage_ReceiptImages">
+          <End Role="ReceiptImages" Type="Self.ReceiptImages" Multiplicity="1" />
+          <End Role="User_ReceiptImage" Type="Self.User_ReceiptImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReceiptImages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_ReceiptImage">
+              <PropertyRef Name="ReceiptImage_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserDelegates_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="UserDelegates" Type="Self.UserDelegates" Multiplicity="0..1" />
@@ -441,7 +565,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Vendors_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendors">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="LMateModelStoreContainer">
+          <EntitySet Name="AccountTypes" EntityType="Self.AccountTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
@@ -450,15 +587,23 @@
           <EntitySet Name="Currencies" EntityType="Self.Currencies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepreciationAssets" EntityType="Self.DepreciationAssets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepreciationBuildings" EntityType="Self.DepreciationBuildings" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DepreciationMethond" EntityType="Self.DepreciationMethond" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepreciationMethonds" EntityType="Self.DepreciationMethonds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Disposals" EntityType="Self.Disposals" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DisposalType" EntityType="Self.DisposalType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DisposalTypes" EntityType="Self.DisposalTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceiptCategories" EntityType="Self.ReceiptCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceiptChangeHistories" EntityType="Self.ReceiptChangeHistories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceiptImages" EntityType="Self.ReceiptImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipts" EntityType="Self.Receipts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ReceiptStatus" EntityType="Self.ReceiptStatus" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ReceiptTypes" EntityType="Self.ReceiptTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceiptStatuses" EntityType="Self.ReceiptStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RentalIncomeDetails" EntityType="Self.RentalIncomeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaxUsers" EntityType="Self.TaxUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_ReceiptImage" EntityType="Self.User_ReceiptImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDelegates" EntityType="Self.UserDelegates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccountTypes_AspNetUsers" Association="Self.FK_AccountTypes_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AccountTypes" EntitySet="AccountTypes" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -476,15 +621,19 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_DepreciationAssets_DepreciationMethond" Association="Self.FK_DepreciationAssets_DepreciationMethond">
-            <End Role="DepreciationMethond" EntitySet="DepreciationMethond" />
+            <End Role="DepreciationMethonds" EntitySet="DepreciationMethonds" />
             <End Role="DepreciationAssets" EntitySet="DepreciationAssets" />
           </AssociationSet>
           <AssociationSet Name="FK_DepreciationAssets_Receipts" Association="Self.FK_DepreciationAssets_Receipts">
             <End Role="Receipts" EntitySet="Receipts" />
             <End Role="DepreciationAssets" EntitySet="DepreciationAssets" />
           </AssociationSet>
+          <AssociationSet Name="FK_DepreciationAssets_RentalIncomeDetails" Association="Self.FK_DepreciationAssets_RentalIncomeDetails">
+            <End Role="RentalIncomeDetails" EntitySet="RentalIncomeDetails" />
+            <End Role="DepreciationAssets" EntitySet="DepreciationAssets" />
+          </AssociationSet>
           <AssociationSet Name="FK_DepreciationBuildings_DepreciationMethond" Association="Self.FK_DepreciationBuildings_DepreciationMethond">
-            <End Role="DepreciationMethond" EntitySet="DepreciationMethond" />
+            <End Role="DepreciationMethonds" EntitySet="DepreciationMethonds" />
             <End Role="DepreciationBuildings" EntitySet="DepreciationBuildings" />
           </AssociationSet>
           <AssociationSet Name="FK_DepreciationBuildings_RentalIncomeDetails" Association="Self.FK_DepreciationBuildings_RentalIncomeDetails">
@@ -492,32 +641,40 @@
             <End Role="DepreciationBuildings" EntitySet="DepreciationBuildings" />
           </AssociationSet>
           <AssociationSet Name="FK_Disposals_DisposalType" Association="Self.FK_Disposals_DisposalType">
-            <End Role="DisposalType" EntitySet="DisposalType" />
+            <End Role="DisposalTypes" EntitySet="DisposalTypes" />
             <End Role="Disposals" EntitySet="Disposals" />
           </AssociationSet>
           <AssociationSet Name="FK_Disposals_Receipts" Association="Self.FK_Disposals_Receipts">
             <End Role="Receipts" EntitySet="Receipts" />
             <End Role="Disposals" EntitySet="Disposals" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReceiptHistories_AspNetUsers" Association="Self.FK_ReceiptHistories_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ReceiptChangeHistories" EntitySet="ReceiptChangeHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipts_AccountTypes" Association="Self.FK_Receipts_AccountTypes">
+            <End Role="AccountTypes" EntitySet="AccountTypes" />
+            <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
           <AssociationSet Name="FK_Receipts_AspNetUsers" Association="Self.FK_Receipts_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
-          <AssociationSet Name="FK_Receipts_Currency" Association="Self.FK_Receipts_Currency">
-            <End Role="Currencies" EntitySet="Currencies" />
+          <AssociationSet Name="FK_Receipts_ReceiptCategories" Association="Self.FK_Receipts_ReceiptCategories">
+            <End Role="ReceiptCategories" EntitySet="ReceiptCategories" />
             <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
           <AssociationSet Name="FK_Receipts_ReceiptStatus" Association="Self.FK_Receipts_ReceiptStatus">
-            <End Role="ReceiptStatus" EntitySet="ReceiptStatus" />
+            <End Role="ReceiptStatuses" EntitySet="ReceiptStatuses" />
             <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
-          <AssociationSet Name="FK_Receipts_ReceiptTypes" Association="Self.FK_Receipts_ReceiptTypes">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          <AssociationSet Name="FK_Receipts_Vendors" Association="Self.FK_Receipts_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
             <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
           <AssociationSet Name="FK_ReceiptTypes_AspNetUsers" Association="Self.FK_ReceiptTypes_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ReceiptTypes" EntitySet="ReceiptTypes" />
+            <End Role="ReceiptCategories" EntitySet="ReceiptCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_RentalIncomeDetails_AspNetUsers" Association="Self.FK_RentalIncomeDetails_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -531,6 +688,14 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="TaxUsers" EntitySet="TaxUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_ReceiptImage_AspNetUsers" Association="Self.FK_User_ReceiptImage_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="User_ReceiptImage" EntitySet="User_ReceiptImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ReceiptImage_ReceiptImages" Association="Self.FK_User_ReceiptImage_ReceiptImages">
+            <End Role="ReceiptImages" EntitySet="ReceiptImages" />
+            <End Role="User_ReceiptImage" EntitySet="User_ReceiptImage" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserDelegates_AspNetUsers" Association="Self.FK_UserDelegates_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserDelegates" EntitySet="UserDelegates" />
@@ -539,11 +704,30 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserDelegates" EntitySet="UserDelegates" />
           </AssociationSet>
+          <AssociationSet Name="FK_Vendors_AspNetUsers" Association="Self.FK_Vendors_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Vendors" EntitySet="Vendors" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LMateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccountTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TaxRate" Type="Int32" Nullable="false" />
+          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AccountTypes_AspNetUsers" FromRole="AccountTypes" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_AccountTypes" FromRole="AccountTypes" ToRole="Receipts" />
+        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -584,23 +768,26 @@
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AccountTypes" Relationship="Self.FK_AccountTypes_AspNetUsers" FromRole="AspNetUsers" ToRole="AccountTypes" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="ReceiptChangeHistories" Relationship="Self.FK_ReceiptHistories_AspNetUsers" FromRole="AspNetUsers" ToRole="ReceiptChangeHistories" />
           <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_AspNetUsers" FromRole="AspNetUsers" ToRole="Receipts" />
+          <NavigationProperty Name="ReceiptCategories" Relationship="Self.FK_ReceiptTypes_AspNetUsers" FromRole="AspNetUsers" ToRole="ReceiptCategories" />
           <NavigationProperty Name="RentalIncomeDetails" Relationship="Self.FK_RentalIncomeDetails_AspNetUsers" FromRole="AspNetUsers" ToRole="RentalIncomeDetails" />
           <NavigationProperty Name="TaxUsers" Relationship="Self.FK_TaxUsers_TaxUsers" FromRole="AspNetUsers" ToRole="TaxUsers" />
           <NavigationProperty Name="UserDelegates" Relationship="Self.FK_UserDelegates_AspNetUsers" FromRole="AspNetUsers" ToRole="UserDelegates" />
           <NavigationProperty Name="UserDelegates1" Relationship="Self.FK_UserDelegates_AspNetUsersDelegate" FromRole="AspNetUsers" ToRole="UserDelegates" />
+          <NavigationProperty Name="Vendors" Relationship="Self.FK_Vendors_AspNetUsers" FromRole="AspNetUsers" ToRole="Vendors" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="ReceiptTypes" Relationship="LMateModel.FK_ReceiptTypes_AspNetUsers" FromRole="AspNetUsers" ToRole="ReceiptTypes" />
+          <NavigationProperty Name="ReceiptImages" Relationship="Self.User_ReceiptImage" FromRole="AspNetUsers" ToRole="ReceiptImages" />
         </EntityType>
         <EntityType Name="Currencies">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_Currency" FromRole="Currencies" ToRole="Receipts" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="DepreciationAssets">
           <Key>
@@ -608,7 +795,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OpeningAdjustedTaxValue" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="DepreciationMethodId" Type="Int32" Nullable="false" />
+          <Property Name="DepreciationMethod_Id" Type="Int32" Nullable="false" />
           <Property Name="RatePercentage" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
           <Property Name="DepreciationClaimed" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="CloseingAdjustedTaxValue" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
@@ -617,8 +804,9 @@
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RentalIncomeDetail_Id" Type="Int32" Nullable="false" />
           <Property Name="Receipt_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="DepreciationMethond" Relationship="Self.FK_DepreciationAssets_DepreciationMethond" FromRole="DepreciationAssets" ToRole="DepreciationMethond" />
+          <NavigationProperty Name="DepreciationMethonds" Relationship="Self.FK_DepreciationAssets_DepreciationMethond" FromRole="DepreciationAssets" ToRole="DepreciationMethonds" />
           <NavigationProperty Name="Receipts" Relationship="Self.FK_DepreciationAssets_Receipts" FromRole="DepreciationAssets" ToRole="Receipts" />
+          <NavigationProperty Name="RentalIncomeDetails" Relationship="Self.FK_DepreciationAssets_RentalIncomeDetails" FromRole="DepreciationAssets" ToRole="RentalIncomeDetails" />
         </EntityType>
         <EntityType Name="DepreciationBuildings">
           <Key>
@@ -635,17 +823,17 @@
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DepreciationMethond_Id" Type="Int32" Nullable="false" />
           <Property Name="RentalIncomeDetails_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="DepreciationMethond" Relationship="Self.FK_DepreciationBuildings_DepreciationMethond" FromRole="DepreciationBuildings" ToRole="DepreciationMethond" />
+          <NavigationProperty Name="DepreciationMethonds" Relationship="Self.FK_DepreciationBuildings_DepreciationMethond" FromRole="DepreciationBuildings" ToRole="DepreciationMethonds" />
           <NavigationProperty Name="RentalIncomeDetails" Relationship="Self.FK_DepreciationBuildings_RentalIncomeDetails" FromRole="DepreciationBuildings" ToRole="RentalIncomeDetails" />
         </EntityType>
-        <EntityType Name="DepreciationMethond">
+        <EntityType Name="DepreciationMethonds">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Methond" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="DepreciationAssets" Relationship="Self.FK_DepreciationAssets_DepreciationMethond" FromRole="DepreciationMethond" ToRole="DepreciationAssets" />
-          <NavigationProperty Name="DepreciationBuildings" Relationship="Self.FK_DepreciationBuildings_DepreciationMethond" FromRole="DepreciationMethond" ToRole="DepreciationBuildings" />
+          <NavigationProperty Name="DepreciationAssets" Relationship="Self.FK_DepreciationAssets_DepreciationMethond" FromRole="DepreciationMethonds" ToRole="DepreciationAssets" />
+          <NavigationProperty Name="DepreciationBuildings" Relationship="Self.FK_DepreciationBuildings_DepreciationMethond" FromRole="DepreciationMethonds" ToRole="DepreciationBuildings" />
         </EntityType>
         <EntityType Name="Disposals">
           <Key>
@@ -657,62 +845,88 @@
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Receipt_Id" Type="Int32" Nullable="false" />
           <Property Name="DisposalType_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="DisposalType" Relationship="Self.FK_Disposals_DisposalType" FromRole="Disposals" ToRole="DisposalType" />
+          <NavigationProperty Name="DisposalTypes" Relationship="Self.FK_Disposals_DisposalType" FromRole="Disposals" ToRole="DisposalTypes" />
           <NavigationProperty Name="Receipts" Relationship="Self.FK_Disposals_Receipts" FromRole="Disposals" ToRole="Receipts" />
         </EntityType>
-        <EntityType Name="DisposalType">
+        <EntityType Name="DisposalTypes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Disposals" Relationship="Self.FK_Disposals_DisposalType" FromRole="DisposalType" ToRole="Disposals" />
+          <NavigationProperty Name="Disposals" Relationship="Self.FK_Disposals_DisposalType" FromRole="DisposalTypes" ToRole="Disposals" />
+        </EntityType>
+        <EntityType Name="ReceiptCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_ReceiptTypes_AspNetUsers" FromRole="ReceiptCategories" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_ReceiptCategories" FromRole="ReceiptCategories" ToRole="Receipts" />
+        </EntityType>
+        <EntityType Name="ReceiptChangeHistories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Updater_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Changes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Details" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_ReceiptHistories_AspNetUsers" FromRole="ReceiptChangeHistories" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="ReceiptImages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ImageMimeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.User_ReceiptImage" FromRole="ReceiptImages" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Receipts">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsBulk" Type="Boolean" Nullable="false" />
           <Property Name="PurchaseDate" Type="DateTime" Precision="7" />
-          <Property Name="CreatedBy" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="ImageMimeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsIncludeTax" Type="Boolean" Nullable="false" />
+          <Property Name="IsTaxExclusive" Type="Boolean" Nullable="false" />
           <Property Name="GstRate" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="Tax" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="IsBulk" Type="Boolean" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptType_Id" Type="Int32" />
+          <Property Name="Vendor_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptCategory_Id" Type="Int32" />
           <Property Name="ReceiptStatus_Id" Type="Int32" />
           <Property Name="Currency_Id" Type="Int32" />
+          <Property Name="AccountType_Id" Type="Int32" />
           <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="AccountTypes" Relationship="Self.FK_Receipts_AccountTypes" FromRole="Receipts" ToRole="AccountTypes" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Receipts_AspNetUsers" FromRole="Receipts" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Currencies" Relationship="Self.FK_Receipts_Currency" FromRole="Receipts" ToRole="Currencies" />
           <NavigationProperty Name="DepreciationAssets" Relationship="Self.FK_DepreciationAssets_Receipts" FromRole="Receipts" ToRole="DepreciationAssets" />
           <NavigationProperty Name="Disposals" Relationship="Self.FK_Disposals_Receipts" FromRole="Receipts" ToRole="Disposals" />
-          <NavigationProperty Name="ReceiptStatus" Relationship="Self.FK_Receipts_ReceiptStatus" FromRole="Receipts" ToRole="ReceiptStatus" />
-          <NavigationProperty Name="ReceiptTypes" Relationship="Self.FK_Receipts_ReceiptTypes" FromRole="Receipts" ToRole="ReceiptTypes" />
+          <NavigationProperty Name="ReceiptCategories" Relationship="Self.FK_Receipts_ReceiptCategories" FromRole="Receipts" ToRole="ReceiptCategories" />
+          <NavigationProperty Name="ReceiptStatuses" Relationship="Self.FK_Receipts_ReceiptStatus" FromRole="Receipts" ToRole="ReceiptStatuses" />
+          <NavigationProperty Name="Vendors" Relationship="Self.FK_Receipts_Vendors" FromRole="Receipts" ToRole="Vendors" />
         </EntityType>
-        <EntityType Name="ReceiptStatus">
+        <EntityType Name="ReceiptStatuses">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_ReceiptStatus" FromRole="ReceiptStatus" ToRole="Receipts" />
-        </EntityType>
-        <EntityType Name="ReceiptTypes">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_ReceiptTypes" FromRole="ReceiptTypes" ToRole="Receipts" />
-          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="LMateModel.FK_ReceiptTypes_AspNetUsers" FromRole="ReceiptTypes" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_ReceiptStatus" FromRole="ReceiptStatuses" ToRole="Receipts" />
         </EntityType>
         <EntityType Name="RentalIncomeDetails">
           <Key>
@@ -737,6 +951,7 @@
           <Property Name="TaxUser_Id" Type="Int32" Nullable="false" />
           <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_RentalIncomeDetails_AspNetUsers" FromRole="RentalIncomeDetails" ToRole="AspNetUsers" />
+          <NavigationProperty Name="DepreciationAssets" Relationship="Self.FK_DepreciationAssets_RentalIncomeDetails" FromRole="RentalIncomeDetails" ToRole="DepreciationAssets" />
           <NavigationProperty Name="DepreciationBuildings" Relationship="Self.FK_DepreciationBuildings_RentalIncomeDetails" FromRole="RentalIncomeDetails" ToRole="DepreciationBuildings" />
           <NavigationProperty Name="TaxUsers" Relationship="Self.FK_RentalIncomeDetails_TaxUsers" FromRole="RentalIncomeDetails" ToRole="TaxUsers" />
         </EntityType>
@@ -762,6 +977,41 @@
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_UserDelegates_AspNetUsers" FromRole="UserDelegates" ToRole="AspNetUsers" />
           <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_UserDelegates_AspNetUsersDelegate" FromRole="UserDelegates" ToRole="AspNetUsers" />
         </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Vendors_AspNetUsers" FromRole="Vendors" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_Vendors" FromRole="Vendors" ToRole="Receipts" />
+        </EntityType>
+        <Association Name="FK_AccountTypes_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="AccountTypes" Type="Self.AccountTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AccountTypes">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipts_AccountTypes">
+          <End Role="AccountTypes" Type="Self.AccountTypes" Multiplicity="0..1" />
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipts">
+              <PropertyRef Name="AccountType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -790,6 +1040,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReceiptHistories_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ReceiptChangeHistories" Type="Self.ReceiptChangeHistories" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptChangeHistories">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Receipts_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
@@ -798,6 +1060,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipts">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptTypes_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ReceiptCategories" Type="Self.ReceiptCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReceiptCategories">
               <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
@@ -850,27 +1124,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Receipts_Currency">
-          <End Role="Currencies" Type="Self.Currencies" Multiplicity="0..1" />
-          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+        <Association Name="FK_Vendors_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Currencies">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Receipts">
-              <PropertyRef Name="Currency_Id" />
+            <Dependent Role="Vendors">
+              <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DepreciationAssets_DepreciationMethond">
-          <End Role="DepreciationMethond" Type="Self.DepreciationMethond" Multiplicity="1" />
+          <End Role="DepreciationMethonds" Type="Self.DepreciationMethonds" Multiplicity="1" />
           <End Role="DepreciationAssets" Type="Self.DepreciationAssets" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DepreciationMethond">
+            <Principal Role="DepreciationMethonds">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DepreciationAssets">
-              <PropertyRef Name="DepreciationMethodId" />
+              <PropertyRef Name="DepreciationMethod_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -886,11 +1160,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DepreciationAssets_RentalIncomeDetails">
+          <End Role="RentalIncomeDetails" Type="Self.RentalIncomeDetails" Multiplicity="1" />
+          <End Role="DepreciationAssets" Type="Self.DepreciationAssets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RentalIncomeDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DepreciationAssets">
+              <PropertyRef Name="RentalIncomeDetail_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DepreciationBuildings_DepreciationMethond">
-          <End Role="DepreciationMethond" Type="Self.DepreciationMethond" Multiplicity="1" />
+          <End Role="DepreciationMethonds" Type="Self.DepreciationMethonds" Multiplicity="1" />
           <End Role="DepreciationBuildings" Type="Self.DepreciationBuildings" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DepreciationMethond">
+            <Principal Role="DepreciationMethonds">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DepreciationBuildings">
@@ -911,10 +1197,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Disposals_DisposalType">
-          <End Role="DisposalType" Type="Self.DisposalType" Multiplicity="1" />
+          <End Role="DisposalTypes" Type="Self.DisposalTypes" Multiplicity="1" />
           <End Role="Disposals" Type="Self.Disposals" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DisposalType">
+            <Principal Role="DisposalTypes">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Disposals">
@@ -934,11 +1220,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Receipts_ReceiptStatus">
-          <End Role="ReceiptStatus" Type="Self.ReceiptStatus" Multiplicity="0..1" />
+        <Association Name="FK_Receipts_ReceiptCategories">
+          <End Role="ReceiptCategories" Type="Self.ReceiptCategories" Multiplicity="0..1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ReceiptStatus">
+            <Principal Role="ReceiptCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipts">
+              <PropertyRef Name="ReceiptCategory_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipts_ReceiptStatus">
+          <End Role="ReceiptStatuses" Type="Self.ReceiptStatuses" Multiplicity="0..1" />
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReceiptStatuses">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipts">
@@ -946,15 +1244,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Receipts_ReceiptTypes">
-          <End Role="ReceiptTypes" Type="Self.ReceiptTypes" Multiplicity="0..1" />
+        <Association Name="FK_Receipts_Vendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ReceiptTypes">
+            <Principal Role="Vendors">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Receipts">
-              <PropertyRef Name="ReceiptType_Id" />
+              <PropertyRef Name="Vendor_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -974,7 +1272,12 @@
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
         </Association>
+        <Association Name="User_ReceiptImage">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <End Role="ReceiptImages" Type="Self.ReceiptImages" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="LMateDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountTypes" EntityType="Self.AccountTypes" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
@@ -982,15 +1285,26 @@
           <EntitySet Name="Currencies" EntityType="Self.Currencies" />
           <EntitySet Name="DepreciationAssets" EntityType="Self.DepreciationAssets" />
           <EntitySet Name="DepreciationBuildings" EntityType="Self.DepreciationBuildings" />
-          <EntitySet Name="DepreciationMethond" EntityType="Self.DepreciationMethond" />
+          <EntitySet Name="DepreciationMethonds" EntityType="Self.DepreciationMethonds" />
           <EntitySet Name="Disposals" EntityType="Self.Disposals" />
-          <EntitySet Name="DisposalType" EntityType="Self.DisposalType" />
+          <EntitySet Name="DisposalTypes" EntityType="Self.DisposalTypes" />
+          <EntitySet Name="ReceiptCategories" EntityType="Self.ReceiptCategories" />
+          <EntitySet Name="ReceiptChangeHistories" EntityType="Self.ReceiptChangeHistories" />
+          <EntitySet Name="ReceiptImages" EntityType="Self.ReceiptImages" />
           <EntitySet Name="Receipts" EntityType="Self.Receipts" />
-          <EntitySet Name="ReceiptStatus" EntityType="Self.ReceiptStatus" />
-          <EntitySet Name="ReceiptTypes" EntityType="Self.ReceiptTypes" />
+          <EntitySet Name="ReceiptStatuses" EntityType="Self.ReceiptStatuses" />
           <EntitySet Name="RentalIncomeDetails" EntityType="Self.RentalIncomeDetails" />
           <EntitySet Name="TaxUsers" EntityType="Self.TaxUsers" />
           <EntitySet Name="UserDelegates" EntityType="Self.UserDelegates" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" />
+          <AssociationSet Name="FK_AccountTypes_AspNetUsers" Association="Self.FK_AccountTypes_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AccountTypes" EntitySet="AccountTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipts_AccountTypes" Association="Self.FK_Receipts_AccountTypes">
+            <End Role="AccountTypes" EntitySet="AccountTypes" />
+            <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -999,9 +1313,17 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReceiptHistories_AspNetUsers" Association="Self.FK_ReceiptHistories_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ReceiptChangeHistories" EntitySet="ReceiptChangeHistories" />
+          </AssociationSet>
           <AssociationSet Name="FK_Receipts_AspNetUsers" Association="Self.FK_Receipts_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptTypes_AspNetUsers" Association="Self.FK_ReceiptTypes_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ReceiptCategories" EntitySet="ReceiptCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_RentalIncomeDetails_AspNetUsers" Association="Self.FK_RentalIncomeDetails_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1019,20 +1341,24 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserDelegates" EntitySet="UserDelegates" />
           </AssociationSet>
-          <AssociationSet Name="FK_Receipts_Currency" Association="Self.FK_Receipts_Currency">
-            <End Role="Currencies" EntitySet="Currencies" />
-            <End Role="Receipts" EntitySet="Receipts" />
+          <AssociationSet Name="FK_Vendors_AspNetUsers" Association="Self.FK_Vendors_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Vendors" EntitySet="Vendors" />
           </AssociationSet>
           <AssociationSet Name="FK_DepreciationAssets_DepreciationMethond" Association="Self.FK_DepreciationAssets_DepreciationMethond">
-            <End Role="DepreciationMethond" EntitySet="DepreciationMethond" />
+            <End Role="DepreciationMethonds" EntitySet="DepreciationMethonds" />
             <End Role="DepreciationAssets" EntitySet="DepreciationAssets" />
           </AssociationSet>
           <AssociationSet Name="FK_DepreciationAssets_Receipts" Association="Self.FK_DepreciationAssets_Receipts">
             <End Role="Receipts" EntitySet="Receipts" />
             <End Role="DepreciationAssets" EntitySet="DepreciationAssets" />
           </AssociationSet>
+          <AssociationSet Name="FK_DepreciationAssets_RentalIncomeDetails" Association="Self.FK_DepreciationAssets_RentalIncomeDetails">
+            <End Role="RentalIncomeDetails" EntitySet="RentalIncomeDetails" />
+            <End Role="DepreciationAssets" EntitySet="DepreciationAssets" />
+          </AssociationSet>
           <AssociationSet Name="FK_DepreciationBuildings_DepreciationMethond" Association="Self.FK_DepreciationBuildings_DepreciationMethond">
-            <End Role="DepreciationMethond" EntitySet="DepreciationMethond" />
+            <End Role="DepreciationMethonds" EntitySet="DepreciationMethonds" />
             <End Role="DepreciationBuildings" EntitySet="DepreciationBuildings" />
           </AssociationSet>
           <AssociationSet Name="FK_DepreciationBuildings_RentalIncomeDetails" Association="Self.FK_DepreciationBuildings_RentalIncomeDetails">
@@ -1040,19 +1366,23 @@
             <End Role="DepreciationBuildings" EntitySet="DepreciationBuildings" />
           </AssociationSet>
           <AssociationSet Name="FK_Disposals_DisposalType" Association="Self.FK_Disposals_DisposalType">
-            <End Role="DisposalType" EntitySet="DisposalType" />
+            <End Role="DisposalTypes" EntitySet="DisposalTypes" />
             <End Role="Disposals" EntitySet="Disposals" />
           </AssociationSet>
           <AssociationSet Name="FK_Disposals_Receipts" Association="Self.FK_Disposals_Receipts">
             <End Role="Receipts" EntitySet="Receipts" />
             <End Role="Disposals" EntitySet="Disposals" />
           </AssociationSet>
-          <AssociationSet Name="FK_Receipts_ReceiptStatus" Association="Self.FK_Receipts_ReceiptStatus">
-            <End Role="ReceiptStatus" EntitySet="ReceiptStatus" />
+          <AssociationSet Name="FK_Receipts_ReceiptCategories" Association="Self.FK_Receipts_ReceiptCategories">
+            <End Role="ReceiptCategories" EntitySet="ReceiptCategories" />
             <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
-          <AssociationSet Name="FK_Receipts_ReceiptTypes" Association="Self.FK_Receipts_ReceiptTypes">
-            <End Role="ReceiptTypes" EntitySet="ReceiptTypes" />
+          <AssociationSet Name="FK_Receipts_ReceiptStatus" Association="Self.FK_Receipts_ReceiptStatus">
+            <End Role="ReceiptStatuses" EntitySet="ReceiptStatuses" />
+            <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipts_Vendors" Association="Self.FK_Receipts_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
             <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
           <AssociationSet Name="FK_RentalIncomeDetails_TaxUsers" Association="Self.FK_RentalIncomeDetails_TaxUsers">
@@ -1063,29 +1393,30 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_ReceiptTypes_AspNetUsers" Association="LMateModel.FK_ReceiptTypes_AspNetUsers">
+          <AssociationSet Name="User_ReceiptImage" Association="Self.User_ReceiptImage">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="ReceiptTypes" EntitySet="ReceiptTypes" />
+            <End Role="ReceiptImages" EntitySet="ReceiptImages" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_ReceiptTypes_AspNetUsers">
-          <End Type="LMateModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
-          <End Type="LMateModel.ReceiptTypes" Role="ReceiptTypes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ReceiptTypes">
-              <PropertyRef Name="User_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LMateModelStoreContainer" CdmEntityContainer="LMateDbContext">
+          <EntitySetMapping Name="AccountTypes">
+            <EntityTypeMapping TypeName="LMateModel.AccountTypes">
+              <MappingFragment StoreEntitySet="AccountTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="LMateModel.AspNetRoles">
               <MappingFragment StoreEntitySet="AspNetRoles">
@@ -1130,7 +1461,7 @@
             <EntityTypeMapping TypeName="LMateModel.Currencies">
               <MappingFragment StoreEntitySet="Currencies">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1139,7 +1470,7 @@
               <MappingFragment StoreEntitySet="DepreciationAssets">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="OpeningAdjustedTaxValue" ColumnName="OpeningAdjustedTaxValue" />
-                <ScalarProperty Name="DepreciationMethodId" ColumnName="DepreciationMethodId" />
+                <ScalarProperty Name="DepreciationMethod_Id" ColumnName="DepreciationMethod_Id" />
                 <ScalarProperty Name="RatePercentage" ColumnName="RatePercentage" />
                 <ScalarProperty Name="DepreciationClaimed" ColumnName="DepreciationClaimed" />
                 <ScalarProperty Name="CloseingAdjustedTaxValue" ColumnName="CloseingAdjustedTaxValue" />
@@ -1168,9 +1499,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DepreciationMethond">
-            <EntityTypeMapping TypeName="LMateModel.DepreciationMethond">
-              <MappingFragment StoreEntitySet="DepreciationMethond">
+          <EntitySetMapping Name="DepreciationMethonds">
+            <EntityTypeMapping TypeName="LMateModel.DepreciationMethonds">
+              <MappingFragment StoreEntitySet="DepreciationMethonds">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Methond" ColumnName="Methond" />
               </MappingFragment>
@@ -1188,11 +1519,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DisposalType">
-            <EntityTypeMapping TypeName="LMateModel.DisposalType">
-              <MappingFragment StoreEntitySet="DisposalType">
+          <EntitySetMapping Name="DisposalTypes">
+            <EntityTypeMapping TypeName="LMateModel.DisposalTypes">
+              <MappingFragment StoreEntitySet="DisposalTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptCategories">
+            <EntityTypeMapping TypeName="LMateModel.ReceiptCategories">
+              <MappingFragment StoreEntitySet="ReceiptCategories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptChangeHistories">
+            <EntityTypeMapping TypeName="LMateModel.ReceiptChangeHistories">
+              <MappingFragment StoreEntitySet="ReceiptChangeHistories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Updater_Id" ColumnName="Updater_Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Changes" ColumnName="Changes" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptImages">
+            <EntityTypeMapping TypeName="LMateModel.ReceiptImages">
+              <MappingFragment StoreEntitySet="ReceiptImages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1201,38 +1565,30 @@
               <MappingFragment StoreEntitySet="Receipts">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="IsBulk" ColumnName="IsBulk" />
                 <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
-                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
-                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="IsIncludeTax" ColumnName="IsIncludeTax" />
+                <ScalarProperty Name="IsTaxExclusive" ColumnName="IsTaxExclusive" />
                 <ScalarProperty Name="GstRate" ColumnName="GstRate" />
                 <ScalarProperty Name="Tax" ColumnName="Tax" />
-                <ScalarProperty Name="IsBulk" ColumnName="IsBulk" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="ReceiptType_Id" ColumnName="ReceiptType_Id" />
+                <ScalarProperty Name="Vendor_Id" ColumnName="Vendor_Id" />
+                <ScalarProperty Name="ReceiptCategory_Id" ColumnName="ReceiptCategory_Id" />
                 <ScalarProperty Name="ReceiptStatus_Id" ColumnName="ReceiptStatus_Id" />
                 <ScalarProperty Name="Currency_Id" ColumnName="Currency_Id" />
+                <ScalarProperty Name="AccountType_Id" ColumnName="AccountType_Id" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ReceiptStatus">
-            <EntityTypeMapping TypeName="LMateModel.ReceiptStatus">
-              <MappingFragment StoreEntitySet="ReceiptStatus">
+          <EntitySetMapping Name="ReceiptStatuses">
+            <EntityTypeMapping TypeName="LMateModel.ReceiptStatuses">
+              <MappingFragment StoreEntitySet="ReceiptStatuses">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReceiptTypes">
-            <EntityTypeMapping TypeName="LMateModel.ReceiptTypes">
-              <MappingFragment StoreEntitySet="ReceiptTypes">
-                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1280,12 +1636,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="LMateModel.Vendors">
+              <MappingFragment StoreEntitySet="Vendors">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="LMateModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="User_ReceiptImage" TypeName="LMateModel.User_ReceiptImage" StoreEntitySet="User_ReceiptImage">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="User_Id" />
+            </EndProperty>
+            <EndProperty Name="ReceiptImages">
+              <ScalarProperty Name="Id" ColumnName="ReceiptImage_Id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

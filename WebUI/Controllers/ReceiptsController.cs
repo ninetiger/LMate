@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using WebUI.Models;
 using WebUI.Repositories;
 
@@ -72,7 +73,7 @@ namespace WebUI.Controllers
                     receiptBrief.PurchaseDate.ToString(),
                     receiptBrief.Price.ToString(),
                     receiptBrief.Vendor,
-                    receiptBrief.ReceiptType,
+                    receiptBrief.AccountType,
                     receiptBrief.IsBulk.ToString(),
                     receiptBrief.HasImage,
                     string.Empty
@@ -97,9 +98,9 @@ namespace WebUI.Controllers
             {
                 if (image != null)
                 {
-                    receipt.ImageMimeType = image.ContentType;
-                    receipt.ImageData = new byte[image.ContentLength];
-                    image.InputStream.Read(receipt.ImageData, 0, image.ContentLength);
+                    //receipt.ImageMimeType = image.ContentType;
+                    //receipt.ImageData = new byte[image.ContentLength];
+                    //image.InputStream.Read(receipt.ImageData, 0, image.ContentLength); //todo image
                 }
 
                 if (receipt.Id == 0)
@@ -141,7 +142,7 @@ namespace WebUI.Controllers
             var receipt = await _receiptRepository.GetReceiptAsync(id);
             if (receipt != null)
             {
-                return File(receipt.ImageData, receipt.ImageMimeType);
+                //return File(receipt.ImageData, receipt.ImageMimeType); //todo image
             }
 
             return null;

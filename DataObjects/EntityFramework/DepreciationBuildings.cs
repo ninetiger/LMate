@@ -26,7 +26,7 @@ namespace DataObjects.EntityFramework
         public int DepreciationMethond_Id { get; set; }
         public int RentalIncomeDetails_Id { get; set; }
     
-        public virtual DepreciationMethond DepreciationMethond { get; set; }
+        public virtual DepreciationMethonds DepreciationMethonds { get; set; }
         public virtual RentalIncomeDetails RentalIncomeDetails { get; set; }
     }
 }

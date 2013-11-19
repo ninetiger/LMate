@@ -22,9 +22,9 @@ namespace DataObjects.EntityFramework.Implementation
             get { return new EntityReceiptDao(); }
         }
 
-        public IReceiptTypeDao ReceiptTypeDao
+        public IAccountTypeDao AccountTypeDao
         {
-            get { return new EntityReceiptTypeDao(); }
+            get { return new EntityAccountTypeDao(); }
         }
     }
 

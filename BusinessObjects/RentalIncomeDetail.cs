@@ -22,7 +22,7 @@ namespace LMate.BusinessObjects
         //    {
         //        Description = "receipt 222",
         //        Cost = (decimal)19.99,
-        //        Type = ReceiptType.ReparisAndMaintenance,
+        //        Type = AccountType.ReparisAndMaintenance,
         //        PurchaseDate = DateTime.Now
         //    });
         //    RepairsAndMaintenance.Add(new Receipt()
@@ -37,21 +37,21 @@ namespace LMate.BusinessObjects
         //    {
         //        Description = "other1",
         //        Cost = 15m,
-        //        Type = ReceiptType.Other,
+        //        Type = AccountType.Other,
         //        PurchaseDate = DateTime.Now
         //    });
         //    OtherList.Add(new Receipt()
         //    {
         //        Description = "other 2",
         //        Cost = (decimal)12.86,
-        //        Type = ReceiptType.Insurance,
+        //        Type = AccountType.Insurance,
         //        PurchaseDate = DateTime.Now
         //    });
         //    OtherList.Add(new Receipt()
         //    {
         //        Description = "other 3",
         //        Cost = (decimal)12.86,
-        //        Type = ReceiptType.Other,
+        //        Type = AccountType.Other,
         //        PurchaseDate = DateTime.Now
         //    });
         //    DepreciationBuilding = new DepreciationBuilding();
@@ -88,14 +88,14 @@ namespace LMate.BusinessObjects
         //    if (RepairsAndMaintenance != null)
         //    {
         //        sumRepairsAndMaintenance =
-        //            RepairsAndMaintenance.Where(x => x.Type == ReceiptType.ReparisAndMaintenance)
+        //            RepairsAndMaintenance.Where(x => x.Type == AccountType.ReparisAndMaintenance)
         //                .Sum(x => x.Cost);
         //    }
 
         //    decimal sumOther = 0;
         //    if (OtherList != null)
         //    {
-        //        sumOther = OtherList.Where(x => x.Type == ReceiptType.Other)
+        //        sumOther = OtherList.Where(x => x.Type == AccountType.Other)
         //            .Sum(x => x.Cost);
         //    }
 
@@ -179,7 +179,7 @@ namespace LMate.BusinessObjects
             {
                 //return RepairsAndMaintenance != null ?
                 //       RepairsAndMaintenance
-                //           .Where(x => x.Type == ReceiptType.ReparisAndMaintenance)
+                //           .Where(x => x.Type == AccountType.ReparisAndMaintenance)
                 //           .Sum(x => x.Cost)
                 //       : 0;
                 return 0;
@@ -194,7 +194,7 @@ namespace LMate.BusinessObjects
             {
                 //return OtherList != null
                 //    ? OtherList
-                //        .Where(x => x.Type == ReceiptType.Other)
+                //        .Where(x => x.Type == AccountType.Other)
                 //        .Sum(x => x.Cost)
                 //    : 0;
                 return 0;

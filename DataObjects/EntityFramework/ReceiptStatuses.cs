@@ -12,16 +12,16 @@ namespace DataObjects.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class Disposals
+    public partial class ReceiptStatuses
     {
-        public int Id { get; set; }
-        public System.DateTime Date { get; set; }
-        public decimal Value { get; set; }
-        public string Note { get; set; }
-        public int Receipt_Id { get; set; }
-        public int DisposalType_Id { get; set; }
+        public ReceiptStatuses()
+        {
+            this.Receipts = new HashSet<Receipts>();
+        }
     
-        public virtual DisposalTypes DisposalTypes { get; set; }
-        public virtual Receipts Receipts { get; set; }
+        public int Id { get; set; }
+        public string Status { get; set; }
+    
+        public virtual ICollection<Receipts> Receipts { get; set; }
     }
 }

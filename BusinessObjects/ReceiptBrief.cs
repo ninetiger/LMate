@@ -9,8 +9,8 @@ namespace BusinessObjects
         public DateTime? PurchaseDate { get; set; }
         public decimal? Price { get; set; }
         public string Vendor { get; set; }
-        public string ReceiptType { get; set; }
-        public bool? IsBulk { get; set; }
+        public string AccountType { get; set; }
+        public bool IsBulk { get; set; }
         public string HasImage { get; set; }
     }
 }

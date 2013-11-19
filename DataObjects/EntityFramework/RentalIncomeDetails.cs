@@ -16,6 +16,7 @@ namespace DataObjects.EntityFramework
     {
         public RentalIncomeDetails()
         {
+            this.DepreciationAssets = new HashSet<DepreciationAssets>();
             this.DepreciationBuildings = new HashSet<DepreciationBuildings>();
         }
     
@@ -39,6 +40,7 @@ namespace DataObjects.EntityFramework
         public string User_Id { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual ICollection<DepreciationAssets> DepreciationAssets { get; set; }
         public virtual ICollection<DepreciationBuildings> DepreciationBuildings { get; set; }
         public virtual TaxUsers TaxUsers { get; set; }
     }

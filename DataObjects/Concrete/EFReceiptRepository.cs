@@ -1,5 +1,4 @@
 ﻿using BusinessObjects;
-using LMate.BusinessObjects;
 using LMate.DataObjects.Abstract;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -27,12 +26,23 @@ namespace LMate.DataObjects.Concrete
                 Receipt dbEntry = _context.Receipts.Find(receipt.Id);
                 if (dbEntry != null)
                 {
+                    dbEntry.Id = receipt.Id;
                     dbEntry.Description = receipt.Description;
+                    dbEntry.Reference = receipt.Reference;
+                    dbEntry.IsBulk = receipt.IsBulk;
                     dbEntry.PurchaseDate = receipt.PurchaseDate;
                     dbEntry.Price = receipt.Price;
-                    dbEntry.ImageData = receipt.ImageData;
-                    dbEntry.ImageMimeType = receipt.ImageMimeType;
+                    dbEntry.IsIncludeTax = receipt.IsIncludeTax;
+                    dbEntry.IsTaxExclusive = receipt.IsTaxExclusive;
+                    dbEntry.GstRate = receipt.GstRate;
+                    dbEntry.Tax = receipt.Tax;
                     dbEntry.Note = receipt.Note;
+                    dbEntry.VendorId = receipt.VendorId;
+                    dbEntry.ReceiptCategoryId = receipt.ReceiptCategoryId;
+                    dbEntry.ReceiptStatusId = receipt.ReceiptStatusId;
+                    dbEntry.CurrencyId = receipt.CurrencyId;
+                    dbEntry.AccountTypeId = receipt.AccountTypeId;
+                    dbEntry.UserId = receipt.UserId;
                 }
             }
 

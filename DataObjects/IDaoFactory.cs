@@ -13,6 +13,6 @@
         /// </summary>
         IReceiptDao ReceiptDao { get; }
 
-        IReceiptTypeDao ReceiptTypeDao { get; }
+        IAccountTypeDao AccountTypeDao { get; }
     }
 }

@@ -36,9 +36,9 @@ namespace DataObjects
             get { return Factory.ReceiptDao; }
         }
 
-        public static IReceiptTypeDao ReceiptTypeDao
+        public static IAccountTypeDao AccountTypeDao
         {
-            get { return Factory.ReceiptTypeDao; }
+            get { return Factory.AccountTypeDao; }
         }
     }
 }

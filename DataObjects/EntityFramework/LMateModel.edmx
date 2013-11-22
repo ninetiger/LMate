@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
@@ -145,6 +145,7 @@
           <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Changes" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Details" Type="nvarchar" MaxLength="200" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="ReceiptImages">
           <Key>
@@ -241,7 +242,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Vendor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
@@ -718,7 +719,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
@@ -876,6 +877,7 @@
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Changes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Details" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_ReceiptHistories_AspNetUsers" FromRole="ReceiptChangeHistories" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="ReceiptImages">
@@ -982,7 +984,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Vendors_AspNetUsers" FromRole="Vendors" ToRole="AspNetUsers" />
@@ -1545,6 +1547,7 @@
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Changes" ColumnName="Changes" />
                 <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1640,7 +1643,7 @@
             <EntityTypeMapping TypeName="LMateModel.Vendors">
               <MappingFragment StoreEntitySet="Vendors">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
               </MappingFragment>

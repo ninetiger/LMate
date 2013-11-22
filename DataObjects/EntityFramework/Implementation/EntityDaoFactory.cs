@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using BusinessObjects;
-using LMate.DataObjects;
 
 namespace DataObjects.EntityFramework.Implementation
 {
-
     /// <summary>
     /// Entity Framework specific factory that creates data access objects.
     /// </summary>
@@ -26,6 +24,27 @@ namespace DataObjects.EntityFramework.Implementation
         {
             get { return new EntityAccountTypeDao(); }
         }
+
+        public ICurrencyDao CurrencyDao
+        {
+            get { return new EntityCurrencyDao(); }
+        }
+
+        public IReceiptCategoryDao ReceiptCategory
+        {
+            get { return new EntityReceiptCategoryDao(); }
+        }
+
+        public IReceiptImageDao ReceiptImageDao
+        {
+            get { return new EntityReceiptImageDao(); }
+        }
+
+        public IAspNetUserDao AspNetUserDao
+        {
+            get { return new EntityAspNetUserDao(); }
+        }
     }
+
 
 }

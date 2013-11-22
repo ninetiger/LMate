@@ -20,7 +20,7 @@ namespace DataObjects.EntityFramework
         }
     
         public string Id { get; set; }
-        public string Vendor { get; set; }
+        public string Name { get; set; }
         public string User_Id { get; set; }
         public byte[] Version { get; set; }
     

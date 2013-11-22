@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetUser.cs" />
     <Compile Include="BusinessObject.cs" />
     <Compile Include="BusinessRules\BusinessRule.cs" />
     <Compile Include="BusinessRules\ValidateCompare.cs" />
@@ -55,11 +56,15 @@
     <Compile Include="BusinessRules\ValidateRequired.cs" />
     <Compile Include="BusinessRules\ValidationDataType.cs" />
     <Compile Include="BusinessRules\ValidationOperator.cs" />
+    <Compile Include="ReceiptStatus.cs" />
+    <Compile Include="ReceiptImage.cs" />
+    <Compile Include="ReceiptChangeHistory.cs" />
     <Compile Include="Depreciation.cs" />
     <Compile Include="DepreciationBuilding.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="AccountType.cs" />
     <Compile Include="ReceiptBrief.cs" />
+    <Compile Include="ReceiptCategory.cs" />
     <Compile Include="TaxUser.cs" />
     <Compile Include="Disposal.cs" />
     <Compile Include="Receipt.cs" />
@@ -67,6 +72,7 @@
     <Compile Include="DepreciationAsset.cs" />
     <Compile Include="RentalIncomeDetail.cs" />
     <Compile Include="RentalIncome.cs" />
+    <Compile Include="Vendor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

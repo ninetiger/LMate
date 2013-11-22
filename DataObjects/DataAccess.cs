@@ -40,5 +40,20 @@ namespace DataObjects
         {
             get { return Factory.AccountTypeDao; }
         }
+
+        public static ICurrencyDao CurrencyDao
+        {
+            get { return Factory.CurrencyDao; }
+        }
+
+        public static IReceiptImageDao ReceiptImageDao
+        {
+            get { return Factory.ReceiptImageDao; }
+        }
+
+        public static IAspNetUserDao AspNetUserDao
+        {
+            get { return Factory.AspNetUserDao; }
+        }
     }
 }

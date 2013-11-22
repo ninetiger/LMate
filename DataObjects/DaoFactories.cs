@@ -1,5 +1,4 @@
-﻿using DataObjects.ADO.NET.SqlServer;
-using DataObjects.EntityFramework.Implementation;
+﻿using DataObjects.EntityFramework.Implementation;
 
 namespace DataObjects
 {
@@ -24,17 +23,19 @@ namespace DataObjects
         /// <returns>Data access object factory.</returns>
         public static IDaoFactory GetFactory(string dataProvider)
         {
-            // Return the requested DaoFactory
-            switch (dataProvider)
-            {
-                case "EntityFramework.SqlExpress": 
-                case "EntityFramework.SqlServer": return new EntityDaoFactory();
-                
-                //case "ADO.NET.SqlExpress":
-                //case "ADO.NET.LocalDB":
-                //case "ADO.NET.SqlServer": 
-                default: return new SqlServerDaoFactory(); 
-            }
+            //// Return the requested DaoFactory
+            //switch (dataProvider)
+            //{
+                    
+            //    case "EntityFramework.SqlExpress": 
+            //    case "EntityFramework.SqlServer": return new EntityDaoFactory();
+
+            //    //case "ADO.NET.SqlExpress":
+            //    //case "ADO.NET.LocalDB":
+            //    //case "ADO.NET.SqlServer": 
+            //    default: return new SqlServerDaoFactory();  //excluded sql support
+            //}
+            return new EntityDaoFactory();
         }
     }
 }

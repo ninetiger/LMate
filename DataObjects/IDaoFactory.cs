@@ -14,5 +14,11 @@
         IReceiptDao ReceiptDao { get; }
 
         IAccountTypeDao AccountTypeDao { get; }
+        
+        ICurrencyDao CurrencyDao { get; }
+
+        IReceiptImageDao ReceiptImageDao { get; }
+
+        IAspNetUserDao AspNetUserDao { get; }
     }
 }

@@ -19,6 +19,7 @@ namespace DataObjects.EntityFramework
         public System.DateTime Date { get; set; }
         public string Changes { get; set; }
         public string Details { get; set; }
+        public byte[] Version { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
     }

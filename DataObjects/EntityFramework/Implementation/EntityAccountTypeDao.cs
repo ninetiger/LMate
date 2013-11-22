@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -32,8 +31,8 @@ namespace DataObjects.EntityFramework.Implementation
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var entities = context.AccountTypes.AsQueryable()
-                                .OrderBy(sortExpression)
+                var entities = context.AccountTypes
+                                .OrderBy(sortExpression) //todo change to have .where befroe .orderby
                                 .Where(c => c.User_Id == userId || c.User_Id == null);
 
                 var list = new List<AccountType>();
@@ -48,7 +47,7 @@ namespace DataObjects.EntityFramework.Implementation
         {
             using (var context = DataObjectFactory.CreateContext())
             {
-                var entities = context.AccountTypes.AsQueryable()
+                var entities = context.AccountTypes
                                 .OrderBy(sortExpression)
                                 .Where(c => c.User_Id == userId || c.User_Id == null);
 

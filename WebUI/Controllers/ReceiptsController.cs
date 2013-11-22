@@ -38,25 +38,25 @@ namespace WebUI.Controllers
 
         public JsonResult AutoCompleteSearch(string id, string searchString)
         {
-            List<string> list = new List<string>() {"aaa", "bbb", "abc"};
-            return Json(new {list}, JsonRequestBehavior.AllowGet);
+            List<string> list = new List<string>() { "aaa", "bbb", "abc" };
+            return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpPost]
         //todo check json attributes eg hannel json exception
         public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param) //todo copy DataTablesParam in and remove mvc.jquery.datatables lib
         {
-            string userID = User.Identity.GetUserId();
+            var userID = User.Identity.GetUserId();
             var recieptBriefList = await _receiptRepository.GetReceiptBriefsByUserAsync(userID);
-            List<List<string>> json = GenerateJsonContent(recieptBriefList);
-             var jsonString = Json(new
-            {
-                sEcho = param.sEcho,
-                iTotalRecords = recieptBriefList.Count(),
-                iTotalDisplayRecords = 3,
-                aaData = json
-            },
-            JsonRequestBehavior.AllowGet);
+            var json = GenerateJsonContent(recieptBriefList);
+            var jsonString = Json(new
+           {
+               sEcho = param.sEcho,
+               iTotalRecords = recieptBriefList.Count(),
+               iTotalDisplayRecords = 3,
+               aaData = json
+           },
+           JsonRequestBehavior.AllowGet);
 
             return jsonString;
         }
@@ -66,7 +66,7 @@ namespace WebUI.Controllers
             var list = new List<List<string>>();
             foreach (var receiptBrief in data)
             {
-                List<string> inner = new List<string>()
+                var inner = new List<string>()
                 {
                     receiptBrief.Id.ToString(CultureInfo.InvariantCulture),
                     receiptBrief.Description,
@@ -88,6 +88,7 @@ namespace WebUI.Controllers
         {
             string userID = User.Identity.GetUserId();
             var viewModel = await _receiptRepository.GetReceiptEditAsync(id, userID);
+
             return View(viewModel);
         }
 
@@ -98,9 +99,14 @@ namespace WebUI.Controllers
             {
                 if (image != null)
                 {
-                    //receipt.ImageMimeType = image.ContentType;
-                    //receipt.ImageData = new byte[image.ContentLength];
-                    //image.InputStream.Read(receipt.ImageData, 0, image.ContentLength); //todo image
+                    ReceiptImage ri = new ReceiptImage();
+                    ri.UserId = User.Identity.GetUserId();
+                    ri.IsActive = true;
+                    ri.Description = "dd";
+                    ri.ImageMimeType = image.ContentType;
+                    ri.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(ri.ImageData, 0, image.ContentLength); //todo image
+                    await DataAccess.ReceiptImageDao.SaveAsync(ri);
                 }
 
                 if (receipt.Id == 0)

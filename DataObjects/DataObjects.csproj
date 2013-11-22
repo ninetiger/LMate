@@ -69,10 +69,6 @@
     <Compile Include="Abstract\ITaxUserRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ADO.NET\DbAdapter.cs" />
-    <Compile Include="ADO.NET\Db.cs" />
-    <Compile Include="ADO.NET\SqlServer\SqlServerDaoFactory.cs" />
-    <Compile Include="ADO.NET\SqlServer\SqlServerReceiptDao.cs" />
     <Compile Include="Concrete\EFDbContext.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,9 +126,13 @@
     <Compile Include="EntityFramework\DisposalTypes.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\Implementation\EntityDoaFactory.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityReceiptCategoryDao.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityCurrencyDao.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityDaoFactory.cs" />
     <Compile Include="EntityFramework\Implementation\EntityReceiptDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityAccountTypeDao.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityAspNetUserDao.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityReceiptImageDao.cs" />
     <Compile Include="EntityFramework\LMateModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,8 +179,15 @@
     <Compile Include="EntityFramework\Vendors.cs">
       <DependentUpon>LMateModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IAspNetUserDao.cs" />
+    <Compile Include="IReceiptImageDao.cs" />
+    <Compile Include="IReceiptCategoryDao.cs" />
+    <Compile Include="IByUserDao.cs" />
+    <Compile Include="ILookupDao.cs" />
+    <Compile Include="IDao.cs" />
     <Compile Include="IDaoFactory.cs" />
     <Compile Include="IAccountTypeDao.cs" />
+    <Compile Include="ICurrencyDao.cs" />
     <Compile Include="IReceiptDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Extensions.cs" />

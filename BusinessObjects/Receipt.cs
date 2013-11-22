@@ -46,9 +46,9 @@ namespace BusinessObjects
         [StringLength(4000, ErrorMessage = "The {0} cannot be longer than {1} characters.")]
         public string Note { get; set; }
 
-        //public byte[] ImageData { get; set; }
-        //[DisplayName("Upload new receipt image")]
-        //public string ImageMimeType { get; set; }
+        public byte[] ImageData { get; set; }
+        [DisplayName("Upload new receipt image")]
+        public string ImageMimeType { get; set; }
 
         public string VendorId { get; set; }
 
@@ -59,7 +59,7 @@ namespace BusinessObjects
         public int? ReceiptStatusId { get; set; }
 
         [DisplayName("Currency")]
-        public int? CurrencyId { get; set; }
+        public int CurrencyId { get; set; }
 
         [DisplayName("AccountType")]
         public int? AccountTypeId { get; set; }

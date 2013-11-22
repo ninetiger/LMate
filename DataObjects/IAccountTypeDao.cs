@@ -11,6 +11,5 @@ namespace DataObjects
 
         IQueryable<AccountType> GetAccountTypesByUser(string userId, string sortExpression = "Id ASC");
         Task<IQueryable<AccountType>> GetAccountTypesByUserAsync(string userId, string sortExpression = "Id ASC");
- 
     }
 }

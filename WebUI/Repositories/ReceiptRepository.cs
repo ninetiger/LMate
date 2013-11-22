@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using DataObjects.EntityFramework;
 using WebUI.Models;
 
 namespace WebUI.Repositories
@@ -32,9 +33,15 @@ namespace WebUI.Repositories
             return await DataAccess.ReceiptDao.GetReceiptAsync(receiptId);
         }
 
-        public void SaveReceipt(Receipt receipt)
+        public async void SaveReceipt(Receipt receipt)
         {
+            AspNetUsers user = await DataAccess.AspNetUserDao.GetByIdAsync(receipt.Id);
             DataAccess.ReceiptDao.SaveReceipt(receipt);
+
+            var receiptImages = new ReceiptImages();
+            receiptImages.AspNetUsers.Add(user);
+            await DataAccess.ReceiptImageDao.SaveAsync(receiptImages);
+
         }
 
         public async Task SaveReceiptAsync(Receipt receipt)
@@ -57,23 +64,34 @@ namespace WebUI.Repositories
             Receipt receipt;
             if (receiptId == 0)
                 receipt = new Receipt();
-            else 
+            else
                 receipt = await DataAccess.ReceiptDao.GetReceiptAsync(receiptId);
 
             var accountTypeQuery = DataAccess.AccountTypeDao.GetAccountTypesByUser(userId);
             var accountTypeSelectList = accountTypeQuery.Select(x => new SelectListItem()
             {
-                Selected = false,
+                Selected = x.Id == receipt.AccountTypeId,
                 Text = x.Type,
-                Value = x.Id.ToString()
+                Value = x.Id.ToString(CultureInfo.InvariantCulture)
             }).ToList();
 
-            return new ReceiptEditViewModel
+            var currencyQuery = DataAccess.CurrencyDao.GetAll();
+            var currenciesSelectList = currencyQuery.Select(x => new SelectListItem()
             {
-                Receipt = receipt,
-                AccountTypeSelectList = accountTypeSelectList,
-                CurrencySelectList = null
-            };
+                Selected = x.Id == receipt.CurrencyId,
+                Text = x.Name,
+                Value = x.Id.ToString(CultureInfo.InvariantCulture)
+            }).ToList();
+
+            var imageList = DataAccess.ReceiptImageDao.GetAllByUserId(userId);
+
+            return new ReceiptEditViewModel
+                    {
+                        Receipt = receipt,
+                        AccountTypeSelectList = accountTypeSelectList,
+                        CurrencySelectList = currenciesSelectList,
+                        ImageList = imageList //todo immage
+                    };
         }
         public async Task<ReceiptEditViewModel> GetReceiptEditPostAsync(string userId, Receipt receipt)
         {

@@ -1,7 +1,7 @@
-﻿using BusinessObjects;
+﻿using DataObjects.EntityFramework;
 
 namespace DataObjects
 {
-    public interface IReceiptCategoryDao : IByUserDao<ReceiptCategory>
+    public interface IReceiptCategoryDao : IDao<ReceiptCategory>
     {}
 }

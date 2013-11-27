@@ -1,7 +1,7 @@
-﻿using BusinessObjects;
+﻿using DataObjects.EntityFramework;
 
 namespace DataObjects
 {
-    public interface IReceiptImageDao : IByUserDao<ReceiptImage>
+    public interface IReceiptImageDao : IDao<ReceiptImage>
     {}
 }

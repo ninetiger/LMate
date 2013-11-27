@@ -13,12 +13,12 @@
         /// </summary>
         IReceiptDao ReceiptDao { get; }
 
-        IAccountTypeDao AccountTypeDao { get; }
+        //IAccountTypeDao AccountTypeDao { get; }
         
-        ICurrencyDao CurrencyDao { get; }
+        //ICurrencyDao CurrencyDao { get; }
 
-        IReceiptImageDao ReceiptImageDao { get; }
+        //IReceiptImageDao ReceiptImageDao { get; }
 
-        IAspNetUserDao AspNetUserDao { get; }
+        //IAspNetUserDao AspNetUserDao { get; }
     }
 }

@@ -1,54 +1,71 @@
-﻿using BusinessObjects;
-using LMate.DataObjects.Abstract;
+﻿using System.Globalization;
+using System.Linq;
+using BusinessObjects;
+using DataObjects.Abstract;
+using DataObjects.EntityFramework;
+using DataObjects.EntityFramework.Implementation;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
-using System.Linq;
+using System.Threading.Tasks;
 
-namespace LMate.DataObjects.Concrete
+namespace DataObjects.Concrete
 {
     public class EFReceiptRepository : IReceiptRepository
     {
-        private readonly EFDbContext _context = new EFDbContext();
+        private readonly LMateEntities _context;
+        private readonly EntityReceiptDao _entityReceiptDao;
 
-        public IQueryable<Receipt> Receipts
+        public EFReceiptRepository()
         {
-            get { return _context.Receipts; }
+            _context = new LMateEntities();
+            _entityReceiptDao = new EntityReceiptDao(_context);
         }
 
-        public void SaveReceipt(Receipt receipt)
+        public async Task<IEnumerable<Receipt>> GetAllByUserIdAsync(string userId)
         {
-            if (receipt.Id == 0)
-            {
-                _context.Receipts.Add(receipt);
-            }
-            else
-            {
-                Receipt dbEntry = _context.Receipts.Find(receipt.Id);
-                if (dbEntry != null)
-                {
-                    dbEntry.Id = receipt.Id;
-                    dbEntry.Description = receipt.Description;
-                    dbEntry.Reference = receipt.Reference;
-                    dbEntry.IsBulk = receipt.IsBulk;
-                    dbEntry.PurchaseDate = receipt.PurchaseDate;
-                    dbEntry.Price = receipt.Price;
-                    dbEntry.IsIncludeTax = receipt.IsIncludeTax;
-                    dbEntry.IsTaxExclusive = receipt.IsTaxExclusive;
-                    dbEntry.GstRate = receipt.GstRate;
-                    dbEntry.Tax = receipt.Tax;
-                    dbEntry.Note = receipt.Note;
-                    dbEntry.VendorId = receipt.VendorId;
-                    dbEntry.ReceiptCategoryId = receipt.ReceiptCategoryId;
-                    dbEntry.ReceiptStatusId = receipt.ReceiptStatusId;
-                    dbEntry.CurrencyId = receipt.CurrencyId;
-                    dbEntry.AccountTypeId = receipt.AccountTypeId;
-                    dbEntry.UserId = receipt.UserId;
-                }
-            }
+            var list = await _entityReceiptDao.GetAsync(filter: x => x.User_Id == userId);
+            return list;
+        }
 
+        public async Task<IEnumerable<ReceiptBrief>> GetReceiptBriefsByUserAsync(string userId)
+        {
+            var list = await _entityReceiptDao.GetAsync(x => x.User_Id == userId);
+            return list.Select(x => new ReceiptBrief()
+            {
+                Id = x.Id,
+                Description = x.Description,
+                PurchaseDate = x.PurchaseDate,
+                Price = x.Price,
+                Vendor = x.Vendor.Name,
+                AccountType = x.AccountType.Type,
+                IsBulk = x.IsBulk,
+                HasImage = "No", //todo
+            });
+        }
+
+        public async Task InsertAsync(Receipt entityToInsert)
+        {
+            _entityReceiptDao.Insert(entityToInsert);
+            await SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Receipt entityToUpdate)
+        {
+            var entity = _entityReceiptDao.GetByIDAsync(entityToUpdate.Id);
+            if (entity != null)
+            {
+                _entityReceiptDao.Update(entityToUpdate);
+            }
+            await SaveChangesAsync();
+        }
+
+        private async Task<int> SaveChangesAsync()
+        {
             try
             {
-                _context.SaveChanges();
+                return await _entityReceiptDao.Context.SaveChangesAsync();
             }
             catch (DbEntityValidationException e)
             {
@@ -66,16 +83,82 @@ namespace LMate.DataObjects.Concrete
             }
         }
 
-        public Receipt DeleteReceipt(int id)
+        public async Task DeleteAsync(int id)
         {
-            Receipt dbEntry = _context.Receipts.Find(id);
+            await _entityReceiptDao.DeleteAsync(id);
+            await SaveChangesAsync();
+        }
 
-            if (dbEntry != null)
+        public async Task<ReceiptEditViewModel> GetReceiptEditAsync(int receiptId, string userId)
+        {
+            Receipt receipt;
+            if (receiptId == 0)
+                receipt = new Receipt();
+            else
+                receipt = await DataAccess.ReceiptDao.GetReceiptAsync(receiptId);
+
+            var accountTypeQuery = DataAccess.AccountTypeDao.GetAccountTypesByUser(userId);
+            var accountTypeSelectList = accountTypeQuery.Select(x => new SelectListItem()
             {
-                _context.Receipts.Remove(dbEntry);
-                _context.SaveChanges();
+                Selected = x.Id == receipt.AccountTypeId,
+                Text = x.Type,
+                Value = x.Id.ToString(CultureInfo.InvariantCulture)
+            }).ToList();
+
+            var currencyQuery = DataAccess.CurrencyDao.GetAll();
+            var currenciesSelectList = currencyQuery.Select(x => new SelectListItem()
+            {
+                Selected = x.Id == receipt.CurrencyId,
+                Text = x.Name,
+                Value = x.Id.ToString(CultureInfo.InvariantCulture)
+            }).ToList();
+
+            var imageList = DataAccess.ReceiptImageDao.GetAllByUserId(userId);
+
+            return new ReceiptEditViewModel
+                    {
+                        Receipt = receipt,
+                        AccountTypeSelectList = accountTypeSelectList,
+                        CurrencySelectList = currenciesSelectList,
+                        ImageList = imageList //todo immage
+                    };
+        }
+        public async Task<ReceiptEditViewModel> GetReceiptEditPostAsync(string userId, Receipt receipt)
+        {
+
+            var accountTypeQuery = await DataAccess.AccountTypeDao.GetAccountTypesByUserAsync(userId);
+            var accountTypeSelectList = accountTypeQuery.Select(x => new SelectListItem()
+            {
+                Selected = false,
+                Text = x.Type,
+                Value = x.Id.ToString(CultureInfo.InvariantCulture)
+            }).ToList();
+
+            return new ReceiptEditViewModel
+            {
+                Receipt = receipt,
+                AccountTypeSelectList = accountTypeSelectList,
+                CurrencySelectList = null
+            };
+        }
+
+        private bool _disposed;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
             }
-            return dbEntry;
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

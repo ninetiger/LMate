@@ -1,9 +1,8 @@
-﻿using BusinessObjects;
-using DataObjects.EntityFramework;
+﻿using DataObjects.EntityFramework;
 
 namespace DataObjects
 {
-    public interface IAspNetUserDao  : ILookupDao<AspNetUsers>
+    public interface IAspNetUserDao  : IDao<AspNetUser>
     {
     }
 }

@@ -1,15 +1,9 @@
-﻿using BusinessObjects;
-using LMate.BusinessObjects;
-using System.Linq;
+﻿using DataObjects.EntityFramework;
 
-namespace LMate.DataObjects.Abstract
+namespace DataObjects.Abstract
 {
-    public interface IReceiptRepository
+    public interface IReceiptRepository : IRepository<Receipt>
     {
-        IQueryable<Receipt> Receipts { get; }
 
-        void SaveReceipt(Receipt receipt);
-
-        Receipt DeleteReceipt(int id);
     }
 }

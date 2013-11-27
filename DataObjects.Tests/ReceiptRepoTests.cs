@@ -1,8 +1,8 @@
 ﻿using System;
-using BusinessObjects;
-using LMate.BusinessObjects;
-using LMate.DataObjects.Abstract;
-using LMate.DataObjects.Concrete;
+using System.Linq;
+using System.Threading.Tasks;
+using DataObjects.EntityFramework;
+using DataObjects.EntityFramework.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataObjects.Tests
@@ -21,8 +21,11 @@ namespace DataObjects.Tests
                 Price = 999
             };
 
-            IReceiptRepository receiptRepository = new EFReceiptRepository();
-            receiptRepository.SaveReceipt(receipt);
+            //IReceiptRepository receiptRepository = new EFReceiptRepository();
+            //receiptRepository.SaveReceipt(receipt);
+
+            IDao<Receipt> dao = new EntityReceiptDao(new LMateEntities());
+            var list = dao.GetAsync(null, null, "ReceiptCategory");
 
         }
     }

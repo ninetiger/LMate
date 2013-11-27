@@ -1,5 +1,4 @@
-﻿using LMate.DataObjects;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace DataObjects
 {
@@ -36,24 +35,24 @@ namespace DataObjects
             get { return Factory.ReceiptDao; }
         }
 
-        public static IAccountTypeDao AccountTypeDao
-        {
-            get { return Factory.AccountTypeDao; }
-        }
+        //public static IAccountTypeDao AccountTypeDao
+        //{
+        //    get { return Factory.AccountTypeDao; }
+        //}
 
-        public static ICurrencyDao CurrencyDao
-        {
-            get { return Factory.CurrencyDao; }
-        }
+        //public static ICurrencyDao CurrencyDao
+        //{
+        //    get { return Factory.CurrencyDao; }
+        //}
 
-        public static IReceiptImageDao ReceiptImageDao
-        {
-            get { return Factory.ReceiptImageDao; }
-        }
+        //public static IReceiptImageDao ReceiptImageDao
+        //{
+        //    get { return Factory.ReceiptImageDao; }
+        //}
 
-        public static IAspNetUserDao AspNetUserDao
-        {
-            get { return Factory.AspNetUserDao; }
-        }
+        //public static IAspNetUserDao AspNetUserDao
+        //{
+        //    get { return Factory.AspNetUserDao; }
+        //}
     }
 }

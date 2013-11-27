@@ -1,6 +1,9 @@
-﻿using BusinessObjects;
+﻿using System;
+using System.Drawing;
+using BusinessObjects;
 using DataObjects;
 using DataObjects.EntityFramework;
+using DataObjects.Shared;
 using Microsoft.AspNet.Identity;
 using Mvc.JQuery.Datatables;
 using System.Collections.Generic;
@@ -12,23 +15,24 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using WebUI.Models;
 using WebUI.Repositories;
+using Receipt = DataObjects.EntityFramework.Receipt;
 
 namespace WebUI.Controllers
 {
     public class ReceiptsController : Controller
     {
-
-        private readonly IReceiptRepository _receiptRepository;
+        private ReceiptRepository _efReceiptRepository;
 
         //todo need DI later
         public ReceiptsController()
         {
-            _receiptRepository = new ReceiptRepository();
+            _efReceiptRepository = new ReceiptRepository();
         }
+        //todo need a destructor???
 
-        public ReceiptsController(IReceiptRepository receiptRepository)
+        public ReceiptsController(ReceiptRepository efReceiptRepository)
         {
-            _receiptRepository = receiptRepository;
+            _efReceiptRepository = efReceiptRepository;
         }
 
         public ActionResult Index()
@@ -38,7 +42,7 @@ namespace WebUI.Controllers
 
         public JsonResult AutoCompleteSearch(string id, string searchString)
         {
-            List<string> list = new List<string>() { "aaa", "bbb", "abc" };
+            var list = new List<string>() { "aaa", "bbb", "abc" };
             return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
@@ -46,8 +50,9 @@ namespace WebUI.Controllers
         //todo check json attributes eg hannel json exception
         public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param) //todo copy DataTablesParam in and remove mvc.jquery.datatables lib
         {
-            var userID = User.Identity.GetUserId();
-            var recieptBriefList = await _receiptRepository.GetReceiptBriefsByUserAsync(userID);
+            var userId = User.Identity.GetUserId();
+            var recieptBriefList = await _efReceiptRepository.GetReceiptBriefsByUserIdAsync(userId);
+
             var json = GenerateJsonContent(recieptBriefList);
             var jsonString = Json(new
            {
@@ -61,14 +66,14 @@ namespace WebUI.Controllers
             return jsonString;
         }
 
-        private static List<List<string>> GenerateJsonContent(IEnumerable<ReceiptBrief> data)
+        private static List<List<string>> GenerateJsonContent(IEnumerable<ReceiptBriefViewModel> data)
         {
             var list = new List<List<string>>();
             foreach (var receiptBrief in data)
             {
                 var inner = new List<string>()
                 {
-                    receiptBrief.Id.ToString(CultureInfo.InvariantCulture),
+                    receiptBrief.Id.ToString(),
                     receiptBrief.Description,
                     receiptBrief.PurchaseDate.ToString(),
                     receiptBrief.Price.ToString(),
@@ -87,8 +92,7 @@ namespace WebUI.Controllers
         public async Task<ViewResult> Edit(int id)
         {
             string userID = User.Identity.GetUserId();
-            var viewModel = await _receiptRepository.GetReceiptEditAsync(id, userID);
-
+            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(id, userID);
             return View(viewModel);
         }
 
@@ -97,23 +101,36 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
+                receipt.User_Id = User.Identity.GetUserId();
+
                 if (image != null)
                 {
-                    ReceiptImage ri = new ReceiptImage();
-                    ri.UserId = User.Identity.GetUserId();
-                    ri.IsActive = true;
-                    ri.Description = "dd";
-                    ri.ImageMimeType = image.ContentType;
-                    ri.ImageData = new byte[image.ContentLength];
-                    image.InputStream.Read(ri.ImageData, 0, image.ContentLength); //todo image
-                    await DataAccess.ReceiptImageDao.SaveAsync(ri);
+                    var receiptImage = new ReceiptImage
+                    {
+                        ImageData = new byte[image.ContentLength],
+                        ImageMimeType = image.ContentType,
+                        Description = "dd",
+                        Date = DateTime.Now,
+                        IsActive = true,
+                        User_Id = User.Identity.GetUserId()
+                    };
+                    receiptImage.Receipts.Add(receipt);
+                    image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength); //todo image
+
+                    _efReceiptRepository.InsertImage(receiptImage);
+
                 }
 
                 if (receipt.Id == 0)
                 {
-                    receipt.UserId = User.Identity.GetUserId();
+                    _efReceiptRepository.Insert(receipt);
                 }
-                await _receiptRepository.SaveReceiptAsync(receipt);
+                else
+                {
+                    _efReceiptRepository.Update(receipt);
+                }
+
+                await _efReceiptRepository.SaveChangesAsync();
 
                 //This is a key/value dictionary similar to the session data and view bag features we have used previously.
                 //The key difference from session data is that temp data is deleted at the end of the HTTP request.
@@ -121,39 +138,46 @@ namespace WebUI.Controllers
                 return RedirectToAction("Index");
             }
 
-            var receiptEditViewModel = await _receiptRepository.GetReceiptEditPostAsync(User.Identity.GetUserId(), receipt);
+            var receiptEditViewModel = await _efReceiptRepository.GetReceiptForEditViewModelAsync(receipt);
             return View(receiptEditViewModel);
         }
 
         public async Task<ViewResult> Create()
         {
             string userID = User.Identity.GetUserId();
-            var viewModel = await _receiptRepository.GetReceiptEditAsync(0, userID);
+            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(0, userID);
             return View("Edit", viewModel);
         }
 
         //[HttpPost]
-        public async Task<RedirectToRouteResult> Delete(ReceiptBrief receiptBrief)
+        public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief)
         {
-            await _receiptRepository.DeleteReceiptAsync(receiptBrief);
+            await _efReceiptRepository.DeleteAsync(receiptBrief.Id ?? 0);
+            await _efReceiptRepository.SaveChangesAsync();
+
             TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);
             return RedirectToAction("Index");
         }
 
-        public async Task<FileContentResult> GetImage(int id)
+        public async Task<FileContentResult> GetImage(int imageId)
         {
-            //var userId = User.Identity.GetUserId();
-            //var receipt = ReceiptDao.GetReceiptsByUser(userId).FirstOrDefault(r => r.Id == id);
-
-            var receipt = await _receiptRepository.GetReceiptAsync(id);
-            if (receipt != null)
+            var image = await _efReceiptRepository.GetImage(imageId);
+            if (image != null)
             {
-                //return File(receipt.ImageData, receipt.ImageMimeType); //todo image
+                return File(image.ImageData, image.ImageMimeType);
             }
 
             return null;
         }
 
-
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && _efReceiptRepository != null)
+            {
+                _efReceiptRepository.Dispose();
+                _efReceiptRepository = null;
+            }
+            base.Dispose(disposing);
+        }
     }
 }

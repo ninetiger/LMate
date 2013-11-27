@@ -26,9 +26,10 @@ namespace DataObjects.EntityFramework
         /// Gof pattern: Factory method. 
         /// </remarks>
         /// <returns>Action Entities context.</returns>
-        public static LMateDbContext CreateContext()
+        public static LMateEntities CreateContext()
         {
-            return new LMateDbContext(ConnectionString);
+            //return new LMateDbContext(ConnectionString);
+            return new LMateEntities();
         }
     }
 }

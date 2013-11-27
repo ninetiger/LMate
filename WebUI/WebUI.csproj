@@ -188,8 +188,9 @@
     <Compile Include="Models\ReceiptEditViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IReceiptRepository.cs" />
     <Compile Include="Repositories\ReceiptRepository.cs" />
+    <Compile Include="Repositories\IReceiptRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +404,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\LMate\Receipts_Edit.js" />
     <Content Include="Scripts\LMate\Receipts_Index.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />

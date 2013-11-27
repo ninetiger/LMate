@@ -1,6 +1,7 @@
-﻿using BusinessObjects;
+﻿using DataObjects.EntityFramework;
+
 namespace DataObjects
 {
-    public interface ICurrencyDao : ILookupDao<Currency>
+    public interface ICurrencyDao : IDao<Currency>
     { }
 }

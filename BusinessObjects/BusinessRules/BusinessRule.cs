@@ -1,6 +1,4 @@
-﻿using LMate.BusinessObjects;
-
-namespace BusinessObjects.BusinessRules
+﻿namespace BusinessObjects.BusinessRules
 {
     /// <summary>
     /// Abstract base class for business rules. 

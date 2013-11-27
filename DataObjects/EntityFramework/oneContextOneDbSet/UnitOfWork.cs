@@ -1,65 +1,67 @@
-﻿namespace DataObjects.EntityFramework.oneContextOneDbSet
-{
-    ///// <summary>
-    ///// if we use one context one dbSet model, when dealing with mucl dbSet update at the same time case,
-    ///// unit of work patter is need to put all dbSet into the same context as a whole transaciton
-    ///// </summary>
-    //public class UnitOfWork : IDisposable
-    //{
-    //    private LMateDbContext context = new LMateDbContext();
-    //    private Repository<Department> departmentRepository;
-    //    private Repository<Course> courseRepository;
+﻿//using System;
 
-    //    public Repository<Department> DepartmentRepository
-    //    {
-    //        get
-    //        {
+//namespace DataObjects.EntityFramework.oneContextOneDbSet
+//{
+//    /// <summary>
+//    /// if we use one context one dbSet model, when dealing with mucl dbSet update at the same time case,
+//    /// unit of work patter is need to put all dbSet into the same context as a whole transaciton
+//    /// </summary>
+//    public class UnitOfWork : IDisposable
+//    {
+//        private LMateEntities context = new LMateEntities();
+//        private Repository<Department> departmentRepository;
+//        private Repository<Course> courseRepository;
 
-    //            if (this.departmentRepository == null)
-    //            {
-    //                this.departmentRepository = new Repository<Department>(context);
-    //            }
-    //            return departmentRepository;
-    //        }
-    //    }
+//        public Repository<Department> DepartmentRepository
+//        {
+//            get
+//            {
 
-    //    public Repository<Course> CourseRepository
-    //    {
-    //        get
-    //        {
+//                if (this.departmentRepository == null)
+//                {
+//                    this.departmentRepository = new Repository<Department>(context);
+//                }
+//                return departmentRepository;
+//            }
+//        }
 
-    //            if (this.courseRepository == null)
-    //            {
-    //                this.courseRepository = new Repository<Course>(context);
-    //            }
-    //            return courseRepository;
-    //        }
-    //    }
+//        public Repository<Course> CourseRepository
+//        {
+//            get
+//            {
 
-    //    public void Save()
-    //    {
-    //        context.SaveChanges();
-    //    }
+//                if (this.courseRepository == null)
+//                {
+//                    this.courseRepository = new Repository<Course>(context);
+//                }
+//                return courseRepository;
+//            }
+//        }
 
-    //    private bool disposed = false;
+//        public void Save()
+//        {
+//            context.SaveChanges();
+//        }
 
-    //    protected virtual void Dispose(bool disposing)
-    //    {
-    //        if (!this.disposed)
-    //        {
-    //            if (disposing)
-    //            {
-    //                context.Dispose();
-    //            }
-    //        }
-    //        this.disposed = true;
-    //    }
+//        private bool disposed = false;
 
-    //    public void Dispose()
-    //    {
-    //        Dispose(true);
-    //        GC.SuppressFinalize(this);
-    //    }
-    //}
+//        protected virtual void Dispose(bool disposing)
+//        {
+//            if (!this.disposed)
+//            {
+//                if (disposing)
+//                {
+//                    context.Dispose();
+//                }
+//            }
+//            this.disposed = true;
+//        }
 
-}
+//        public void Dispose()
+//        {
+//            Dispose(true);
+//            GC.SuppressFinalize(this);
+//        }
+//    }
+
+//}

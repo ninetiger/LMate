@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using BusinessObjects;
 
 namespace DataObjects.EntityFramework.Implementation
 {
@@ -17,33 +16,33 @@ namespace DataObjects.EntityFramework.Implementation
         /// </summary>
         public IReceiptDao ReceiptDao
         {
-            get { return new EntityReceiptDao(); }
+            get { return new EntityReceiptDao(new LMateEntities()); }
         }
 
-        public IAccountTypeDao AccountTypeDao
-        {
-            get { return new EntityAccountTypeDao(); }
-        }
+        //public IAccountTypeDao AccountTypeDao
+        //{
+        //    get { return new EntityAccountTypeDao(); }
+        //}
 
-        public ICurrencyDao CurrencyDao
-        {
-            get { return new EntityCurrencyDao(); }
-        }
+        //public ICurrencyDao CurrencyDao
+        //{
+        //    get { return new EntityCurrencyDao(); }
+        //}
 
-        public IReceiptCategoryDao ReceiptCategory
-        {
-            get { return new EntityReceiptCategoryDao(); }
-        }
+        //public IReceiptCategoryDao ReceiptCategory
+        //{
+        //    get { return new EntityReceiptCategoryDao(); }
+        //}
 
-        public IReceiptImageDao ReceiptImageDao
-        {
-            get { return new EntityReceiptImageDao(); }
-        }
+        //public IReceiptImageDao ReceiptImageDao
+        //{
+        //    get { return new EntityReceiptImageDao(); }
+        //}
 
-        public IAspNetUserDao AspNetUserDao
-        {
-            get { return new EntityAspNetUserDao(); }
-        }
+        //public IAspNetUserDao AspNetUserDao
+        //{
+        //    get { return new EntityAspNetUserDao(); }
+        //}
     }
 
 

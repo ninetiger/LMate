@@ -40,3 +40,4 @@
 /// <reference path="datatables-1.9.4/extras/scroller/media/docs/media/js/shbrushjscript.js" />
 /// <reference path="datatables-1.9.4/extras/scroller/media/docs/media/js/shcore.js" />
 /// <reference path="lmate/receipts_index.js" />
+/// <reference path="lmate/receipts_edit.js" />

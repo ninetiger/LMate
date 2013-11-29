@@ -42,7 +42,7 @@ namespace DataObjects.EntityFramework.ModelMapper
                 //DepreciationAssets = entity.DepreciationAssets,
                 //Disposals = entity.Disposals,
                 VendorName = entity.Vendor !=null ? entity.Vendor.Name :　string.Empty,
-                ReceiptImageIds = entity.ReceiptImages.Select(x=> x.Id).ToList()
+                ReceiptImageIds = entity.ReceiptImages.Select(x=> x.Id).ToArray()
             };
 
             return viewModel;

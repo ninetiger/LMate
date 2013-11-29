@@ -51,7 +51,7 @@ namespace WebUI.Repositories
                 Vendor = x.Vendor != null ? x.Vendor.Name : null,
                 AccountType = x.AccountType != null ? x.AccountType.Type : null,
                 IsBulk = x.IsBulk,
-                HasImage = "No"
+                HasImage = x.ReceiptImages.Count > 0 ? "Yes" : "No"
             });
 
             return vmQuery;

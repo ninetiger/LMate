@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using DataObjects.EntityFramework;
+using BusinessObjects;
 
 namespace WebUI.Models
 {
     public class ReceiptEditViewModel
     {
-        public Receipt Receipt { get; set; } //todo no need to include image collection
+        public ReceiptViewModel ReceiptViewModel { get; set; }
         public IEnumerable<SelectListItem> AccountTypeSelectList { get; set; }
         public IEnumerable<SelectListItem> CurrencySelectList { get; set; }
         //public ICollection<ReceiptImage> ReceiptImageList { get; set; }

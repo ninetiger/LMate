@@ -29,7 +29,7 @@ namespace DataObjects.EntityFramework.Implementation
         /// Eg, if the repository is instantiated for the Student entity type, the code in the calling method might specify q => q.OrderBy(s => s.LastName) for the orderBy parameter.</param>
         /// <param name="includeProperties">parsing the comma-delimited list</param>
         /// <returns></returns>
-        public async virtual Task<IQueryable<TEntity>> GetAsync(
+        public async virtual Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
@@ -42,19 +42,12 @@ namespace DataObjects.EntityFramework.Implementation
             query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
                     .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
-            List<TEntity> result;
             if (orderBy != null)
             {
-                //have to have a concrete implement and then convert to Iqueryable.
-                //so that we can use linq to list otherthen linq to eneity which has limited function supports.
-                result = await orderBy(query).ToListAsync();
-                return result.AsQueryable();
+                return await orderBy(query).ToListAsync();
             }
 
-            //have to have a concrete implement and then convert to Iqueryable.
-            //so that we can use linq to list otherthen linq to eneity which has limited function supports.
-            result = await query.ToListAsync();
-            return result.AsQueryable();
+            return await query.ToListAsync();
         }
 
         public async virtual Task<TEntity> GetByIDAsync(object id)

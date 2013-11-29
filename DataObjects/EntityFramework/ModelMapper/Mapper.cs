@@ -1,4 +1,5 @@
-﻿using BusinessObjects;
+﻿using System.Linq;
+using BusinessObjects;
 using DataObjects.Shared;
 
 namespace DataObjects.EntityFramework.ModelMapper
@@ -14,7 +15,7 @@ namespace DataObjects.EntityFramework.ModelMapper
         /// </summary>
         /// <param name="entity">A receipt entity to be transformed.</param>
         /// <returns>A receipt business object.</returns>
-        internal static ReceiptViewModel Map(Receipt entity)
+        public static ReceiptViewModel Map(Receipt entity)
         {
             var viewModel = new ReceiptViewModel
             {
@@ -38,11 +39,10 @@ namespace DataObjects.EntityFramework.ModelMapper
                 Version = entity.Version.AsBase64String(),
 
                 AccountTypeName  = entity.AccountType !=null ? entity.AccountType.Name : string.Empty,
-                DepreciationAssets = entity.DepreciationAssets,
-                Disposals = entity.Disposals,
-                ReceiptCategoryType = entity.ReceiptCategory != null ? entity.ReceiptCategory.Type : string.Empty,
+                //DepreciationAssets = entity.DepreciationAssets,
+                //Disposals = entity.Disposals,
                 VendorName = entity.Vendor !=null ? entity.Vendor.Name :　string.Empty,
-                ReceiptImages = entity.ReceiptImages
+                ReceiptImageIds = entity.ReceiptImages.Select(x=> x.Id).ToList()
             };
 
             return viewModel;
@@ -53,7 +53,7 @@ namespace DataObjects.EntityFramework.ModelMapper
         /// </summary>
         /// <param name="viewModel">A receipt business object.</param>
         /// <returns>A receipt entity.</returns>
-        internal static Receipt Map(ReceiptViewModel viewModel)
+        public static Receipt Map(ReceiptViewModel viewModel)
         {
             var receipt = new Receipt
             {

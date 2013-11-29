@@ -1,17 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessObjects;
-using DataObjects.EntityFramework;
 using WebUI.Models;
 
 namespace WebUI.Repositories
 {
-    public interface IReceiptRepository : IRepository<Receipt>
+    public interface IReceiptRepository : IRepository<ReceiptViewModel>
     {
-        Task<IQueryable<ReceiptBriefViewModel>> GetReceiptBriefsByUserIdAsync(string userId);
+        Task<IEnumerable<ReceiptBriefViewModel>> GetReceiptBriefsByUserIdAsync(string userId);
 
         Task<ReceiptEditViewModel> GetReceiptForEditAsync(int receiptId, string userId);
 
-        Task<ReceiptEditViewModel> GetReceiptForEditViewModelAsync(Receipt receipt);
+        Task<ReceiptEditViewModel> GetReceiptForEditViewModelAsync(ReceiptViewModel receipt);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -19,10 +21,10 @@ namespace DataObjects
         /// specify q => q.OrderBy(s => s.LastName) for the orderBy parameter.</param>
         /// <param name="includeProperties">parsing the comma-delimited list</param>
         /// <returns></returns>
-        Task<IQueryable<TEntity>> GetAsync(
-             Expression<Func<TEntity, bool>> filter = null,
-             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-             string includeProperties = "");
+        Task<IEnumerable<TEntity>> GetAsync(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "");
 
         Task<TEntity> GetByIDAsync(object id);
 

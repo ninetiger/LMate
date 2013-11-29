@@ -9,6 +9,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using DataObjects.EntityFramework.ModelMapper;
+using DataObjects.Shared;
 using WebUI.Models;
 
 namespace WebUI.Repositories
@@ -30,16 +32,17 @@ namespace WebUI.Repositories
             _entityReceiptImageDao = new EntityReceiptImageDao(_context);
         }
 
-        public async Task<IQueryable<Receipt>> GetAllByUserIdAsync(string userId)
+        public async Task<IEnumerable<ReceiptViewModel>> GetAllByUserIdAsync(string userId)
         {
             var list = await _entityReceiptDao.GetAsync(x => x.User_Id == userId);
-            return list;
+            var vmQuery = list.Select(Mapper.Map);
+            return vmQuery;
         }
 
-        public async Task<IQueryable<ReceiptBriefViewModel>> GetReceiptBriefsByUserIdAsync(string userId)
+        public async Task<IEnumerable<ReceiptBriefViewModel>> GetReceiptBriefsByUserIdAsync(string userId)
         {
             var list = await _entityReceiptDao.GetAsync(x => x.User_Id == userId);
-            return list.Select(x => new ReceiptBriefViewModel
+            var vmQuery = list.Select(x => new ReceiptBriefViewModel
             {
                 Id = x.Id,
                 Description = x.Description,
@@ -50,16 +53,36 @@ namespace WebUI.Repositories
                 IsBulk = x.IsBulk,
                 HasImage = "No"
             });
+
+            return vmQuery;
         }
 
-        public void Insert(Receipt entityToInsert)
+        public void Insert(ReceiptViewModel entityToInsert)
         {
-            _entityReceiptDao.Insert(entityToInsert);
+            _entityReceiptDao.Insert(Mapper.Map(entityToInsert));
         }
 
-        public void Update(Receipt entityToUpdate)
+        public async Task Update(ReceiptViewModel entityToUpdate)
         {
-            _entityReceiptDao.Update(entityToUpdate);
+            var receipt = await _entityReceiptDao.GetByIDAsync(entityToUpdate.Id);
+            receipt.Description = entityToUpdate.Description;
+            receipt.Reference = entityToUpdate.Reference;
+            receipt.IsBulk = entityToUpdate.IsBulk;
+            receipt.PurchaseDate = entityToUpdate.PurchaseDate;
+            receipt.Price = entityToUpdate.Price;
+            receipt.IsIncludeTax = entityToUpdate.IsIncludeTax;
+            receipt.IsTaxExclusive = entityToUpdate.IsTaxExclusive;
+            receipt.GstRate = entityToUpdate.GstRate;
+            receipt.Tax = entityToUpdate.Tax;
+            receipt.Note = entityToUpdate.Note;
+            receipt.Vendor_Id = entityToUpdate.VendorId;
+            receipt.ReceiptCategory_Id = entityToUpdate.ReceiptCategoryId;
+            receipt.Currency_Id = entityToUpdate.CurrencyId;
+            receipt.AccountType_Id = entityToUpdate.AccountTypeId;
+            //receipt.Version = entityToUpdate.Version.AsByteArray(); //todo need to understand how to use it
+            //receipt.ReceiptImages.Add(entityToUpdate.im);  //todo not sure how to add multi photos yet
+
+            _entityReceiptDao.Update(receipt);
         }
 
         public async Task<int> SaveChangesAsync()
@@ -84,76 +107,75 @@ namespace WebUI.Repositories
             }
         }
 
+        /// <summary>
+        /// Delete a receipt
+        /// </summary>
+        /// <param name="id">Receipt id</param>
         public async Task DeleteAsync(int id)
         {
-            await _entityReceiptDao.DeleteAsync(id);
+            var receipt = await _entityReceiptDao.GetByIDAsync(id);
+            receipt.ReceiptImages.Clear();
+            _entityReceiptDao.Delete(receipt);
         }
 
         public async Task<ReceiptEditViewModel> GetReceiptForEditAsync(int receiptId, string userId)
         {
-            Receipt receipt;
+            ReceiptViewModel receiptVm;
             if (receiptId == 0)
             {
-                receipt = new Receipt {User_Id = userId};
+                receiptVm = new ReceiptViewModel { UserId = userId };
             }
             else
             {
-                receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+                var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+                receiptVm = Mapper.Map(receipt);
             }
 
-            return await GetReceiptForEditViewModelAsync(receipt);
+            return await GetReceiptForEditViewModelAsync(receiptVm);
         }
 
-        public async Task<ReceiptEditViewModel> GetReceiptForEditViewModelAsync(Receipt receipt)
+        public async Task<ReceiptEditViewModel> GetReceiptForEditViewModelAsync(ReceiptViewModel receiptVm)
         {
-            var accountTypeQuery = await _entityAccountTypeDao.GetAsync(x => x.User_Id == receipt.User_Id || x.User_Id == null);
-            var accountTypeSelectList = accountTypeQuery.Select(x => new SelectListItem()
+            var accountTypeQuery = await _entityAccountTypeDao.GetAsync(x => x.User_Id == receiptVm.UserId || x.User_Id == null);
+            var accountTypeSelectList = accountTypeQuery.Select(x => new SelectListItem
             {
-                Selected = x.Id == (receipt.AccountType_Id ?? -1),
+                Selected = x.Id == (receiptVm.AccountTypeId ?? -1),
                 Text = x.Type,
                 Value = x.Id.ToString(CultureInfo.InvariantCulture)
-            }).ToList();
+            });
 
             var currencyQuery = await _entityCurrencyDao.GetAsync();
-            var currenciesSelectList = currencyQuery.Select(x => new SelectListItem()
+            var currenciesSelectList = currencyQuery.Select(x => new SelectListItem
             {
-                Selected = x.Id == receipt.Currency_Id,
+                Selected = x.Id == receiptVm.CurrencyId,
                 Text = x.Name,
                 Value = x.Id.ToString(CultureInfo.InvariantCulture)
-            }).ToList();
+            });
 
             return new ReceiptEditViewModel
             {
-                Receipt = receipt,
+                ReceiptViewModel = receiptVm,
                 AccountTypeSelectList = accountTypeSelectList,
                 CurrencySelectList = currenciesSelectList,
             };
         }
 
-        public void InsertImage(ReceiptImage image)
+        public async Task InsertImage(ReceiptImage image, int receiptId)
         {
+            var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+            image.Receipts.Add(receipt);
             _entityReceiptImageDao.Insert(image);
-        }
-
-        public async Task<ReceiptImage[]>  GetImages(int receiptId)
-        {
-            var receipt = await _entityReceiptDao.GetAsync(x => x.Id == receiptId);
-            if (receipt.Count() == 1)
-            {
-                return receipt.ToArray()[0].ReceiptImages.ToArray();
-            }
-
-            throw new Exception("Duplicated receipt id!!!");
         }
 
         public async Task<ReceiptImage> GetImage(int imageId)
         {
             var image = await _entityReceiptImageDao.GetAsync(x => x.Id == imageId);
 
-            if (image.Count() > 1)
+            var receiptImages = image as ReceiptImage[] ?? image.ToArray();
+            if (receiptImages.Count() > 1)
                 throw new Exception("Duplicated receiptImage id!!!");
 
-            return image.Count() == 1 ? image.ToArray()[0] : null;
+            return receiptImages.Count() == 1 ? receiptImages.ToArray()[0] : null;
         }
 
         private bool _disposed;

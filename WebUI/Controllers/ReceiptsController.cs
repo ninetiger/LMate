@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using BusinessObjects;
 using DataObjects;
 using DataObjects.EntityFramework;
+using DataObjects.EntityFramework.ModelMapper;
 using DataObjects.Shared;
 using Microsoft.AspNet.Identity;
 using Mvc.JQuery.Datatables;
@@ -68,25 +70,18 @@ namespace WebUI.Controllers
 
         private static List<List<string>> GenerateJsonContent(IEnumerable<ReceiptBriefViewModel> data)
         {
-            var list = new List<List<string>>();
-            foreach (var receiptBrief in data)
+            return data.Select(receiptBrief => new List<string>()
             {
-                var inner = new List<string>()
-                {
-                    receiptBrief.Id.ToString(),
-                    receiptBrief.Description,
-                    receiptBrief.PurchaseDate.ToString(),
-                    receiptBrief.Price.ToString(),
-                    receiptBrief.Vendor,
-                    receiptBrief.AccountType,
-                    receiptBrief.IsBulk.ToString(),
-                    receiptBrief.HasImage,
-                    string.Empty
-                };
-                list.Add(inner);
-            }
-
-            return list;
+                receiptBrief.Id.ToString(), 
+                receiptBrief.Description, 
+                receiptBrief.PurchaseDate.ToString(),
+                receiptBrief.Price.ToString(), 
+                receiptBrief.Vendor, 
+                receiptBrief.AccountType, 
+                receiptBrief.IsBulk.ToString(), 
+                receiptBrief.HasImage, 
+                string.Empty
+            }).ToList();
         }
 
         public async Task<ViewResult> Edit(int id)
@@ -97,11 +92,11 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(Receipt receipt, HttpPostedFileBase image)
+        public async Task<ActionResult> Edit(ReceiptViewModel receiptViewModel, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                receipt.User_Id = User.Identity.GetUserId();
+                receiptViewModel.UserId = User.Identity.GetUserId();
 
                 if (image != null)
                 {
@@ -114,31 +109,28 @@ namespace WebUI.Controllers
                         IsActive = true,
                         User_Id = User.Identity.GetUserId()
                     };
-                    receiptImage.Receipts.Add(receipt);
                     image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength); //todo image
-
-                    _efReceiptRepository.InsertImage(receiptImage);
-
+                    await _efReceiptRepository.InsertImage(receiptImage, receiptViewModel.Id);
                 }
 
-                if (receipt.Id == 0)
+                if (receiptViewModel.Id == 0)
                 {
-                    _efReceiptRepository.Insert(receipt);
+                    _efReceiptRepository.Insert(receiptViewModel);
                 }
                 else
                 {
-                    _efReceiptRepository.Update(receipt);
+                    await _efReceiptRepository.Update(receiptViewModel);
                 }
 
                 await _efReceiptRepository.SaveChangesAsync();
 
                 //This is a key/value dictionary similar to the session data and view bag features we have used previously.
                 //The key difference from session data is that temp data is deleted at the end of the HTTP request.
-                TempData["message"] = string.Format("{0} has been saved", receipt.Description);
+                TempData["message"] = string.Format("{0} has been saved", receiptViewModel.Description);
                 return RedirectToAction("Index");
             }
 
-            var receiptEditViewModel = await _efReceiptRepository.GetReceiptForEditViewModelAsync(receipt);
+            var receiptEditViewModel = await _efReceiptRepository.GetReceiptForEditViewModelAsync(receiptViewModel);
             return View(receiptEditViewModel);
         }
 
@@ -152,7 +144,10 @@ namespace WebUI.Controllers
         //[HttpPost]
         public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief)
         {
-            await _efReceiptRepository.DeleteAsync(receiptBrief.Id ?? 0);
+            if (!receiptBrief.Id.HasValue) return RedirectToAction("Index");
+
+
+            await _efReceiptRepository.DeleteAsync(receiptBrief.Id.Value);
             await _efReceiptRepository.SaveChangesAsync();
 
             TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebUI.Repositories
@@ -7,11 +7,11 @@ namespace WebUI.Repositories
     public interface IRepository<TEntity> : IDisposable
         where TEntity: class 
     {
-        Task<IQueryable<TEntity>> GetAllByUserIdAsync(string userId);
+        Task<IEnumerable<TEntity>> GetAllByUserIdAsync(string userId);
 
         void Insert(TEntity entityToInsert);
 
-        void Update(TEntity entityToUpdate);
+        Task Update(TEntity entityToUpdate);
 
         Task DeleteAsync(int id);
 

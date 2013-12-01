@@ -30,9 +30,23 @@
             var path = location.pathname.split('/');
             //var appRoot = location.protocol + '//' + location.host + '/' + path[1];
 
+            //todo shouldnt need jquery a css with class should do for the 2 function below
+            $(nRow).css('cursor', 'pointer');
+            $(nRow).hover(
+                function () {
+                    $(this).css("background-color", "#D6FF5C");
+                },
+                function () {
+                    $(this).css("background", "");
+                }
+            );
+            $(nRow).click(function () {
+                //nRow.setAttribute("id", aData[0]);
+                document.location.href = '/receipts/Edit?ID=' + aData[0];
+            });
 
             $('td:eq(0)', nRow)
-                .html('<input id="selectAllReceipts" type="checkbox" value="' + aData[0] + '"/>');
+                .html('<input class="receiptId" type="checkbox" value="' + aData[0] + '"/>');
 
             $('td:eq(8)', nRow)
                 .html('<a href="Receipts/Delete/?Id=' + aData[0] + '&Description=' +
@@ -72,6 +86,15 @@
         //});
         //}
     });
+
+    //$('#dataTable').on('click', 'tbody tr',function (event) {
+    //    //alert($(this).find('td input.receiptId').val());
+    //    //+ '<a href="Receipts/Edit/?Id=' + aData[0]
+    //    var receiptId = $(this).find('td input.receiptId').val();
+    //    document.location.href = '/receipts/Edit?ID=' + receiptId;
+    //});
+    
+
 }
 
 function AutoComplete() {

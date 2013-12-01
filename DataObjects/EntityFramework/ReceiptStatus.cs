@@ -14,7 +14,14 @@ namespace DataObjects.EntityFramework
     
     public partial class ReceiptStatus
     {
+        public ReceiptStatus()
+        {
+            this.Receipts = new HashSet<Receipt>();
+        }
+    
         public int Id { get; set; }
         public string Status { get; set; }
+    
+        public virtual ICollection<Receipt> Receipts { get; set; }
     }
 }

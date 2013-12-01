@@ -45,12 +45,12 @@ namespace WebUI.Repositories
             {
                 Id = x.Id,
                 Description = x.Description,
+                Vendor = x.Vendor != null ? x.Vendor.Name : string.Empty,
                 PurchaseDate = x.PurchaseDate,
                 Price = x.Price,
-                Vendor = x.Vendor != null ? x.Vendor.Name : null,
-                AccountType = x.AccountType != null ? x.AccountType.Type : null,
-                IsBulk = x.IsBulk,
-                HasImage = x.ReceiptImages.Count > 0 ? "Yes" : "No"
+                HasImage = x.ReceiptImages.Any() ? "Yes" : "No",
+                DateEntered = x.DateEntered,
+                Status = x.ReceiptStatus.Status
             });
 
             return vmQuery;

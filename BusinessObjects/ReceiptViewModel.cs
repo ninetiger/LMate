@@ -54,7 +54,7 @@ namespace BusinessObjects
         public int? ReceiptCategoryId { get; set; }
 
         [DisplayName("Receipt Status")]
-        public int? ReceiptStatusId { get; set; }
+        public int ReceiptStatusId { get; set; }
 
         [DisplayName("Currency")]
         public int? CurrencyId { get; set; }

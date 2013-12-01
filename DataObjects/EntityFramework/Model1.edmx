@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="LMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccountTypes">
           <Key>
             <PropertyRef Name="Id" />
@@ -177,6 +177,7 @@
           <Property Name="Reference" Type="nvarchar" MaxLength="50" />
           <Property Name="IsBulk" Type="bit" Nullable="false" />
           <Property Name="PurchaseDate" Type="datetime2" Precision="7" />
+          <Property Name="DateEntered" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Price" Type="money" />
           <Property Name="IsIncludeTax" Type="bit" Nullable="false" />
           <Property Name="IsTaxExclusive" Type="bit" Nullable="false" />
@@ -185,7 +186,7 @@
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="Vendor_Id" Type="int" />
           <Property Name="ReceiptCategory_Id" Type="int" />
-          <Property Name="ReceiptStatus_Id" Type="int" />
+          <Property Name="ReceiptStatus_Id" Type="int" Nullable="false" />
           <Property Name="Currency_Id" Type="int" />
           <Property Name="AccountType_Id" Type="int" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -459,6 +460,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Receipts_ReceiptStatuses">
+          <End Role="ReceiptStatuses" Type="Self.ReceiptStatuses" Multiplicity="1" />
+          <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReceiptStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipts">
+              <PropertyRef Name="ReceiptStatus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Receipts_Vendors">
           <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
           <End Role="Receipts" Type="Self.Receipts" Multiplicity="*" />
@@ -670,6 +683,10 @@
             <End Role="ReceiptCategories" EntitySet="ReceiptCategories" />
             <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
+          <AssociationSet Name="FK_Receipts_ReceiptStatuses" Association="Self.FK_Receipts_ReceiptStatuses">
+            <End Role="ReceiptStatuses" EntitySet="ReceiptStatuses" />
+            <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
           <AssociationSet Name="FK_Receipts_Vendors" Association="Self.FK_Receipts_Vendors">
             <End Role="Vendors" EntitySet="Vendors" />
             <End Role="Receipts" EntitySet="Receipts" />
@@ -711,7 +728,8 @@
             <End Role="Vendors" EntitySet="Vendors" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LMateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -894,7 +912,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ImageMimeType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -913,6 +931,7 @@
           <Property Name="Reference" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsBulk" Type="Boolean" Nullable="false" />
           <Property Name="PurchaseDate" Type="DateTime" Precision="7" />
+          <Property Name="DateEntered" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="IsIncludeTax" Type="Boolean" Nullable="false" />
           <Property Name="IsTaxExclusive" Type="Boolean" Nullable="false" />
@@ -921,7 +940,7 @@
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Vendor_Id" Type="Int32" />
           <Property Name="ReceiptCategory_Id" Type="Int32" />
-          <Property Name="ReceiptStatus_Id" Type="Int32" />
+          <Property Name="ReceiptStatus_Id" Type="Int32" Nullable="false" />
           <Property Name="Currency_Id" Type="Int32" />
           <Property Name="AccountType_Id" Type="Int32" />
           <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
@@ -932,6 +951,7 @@
           <NavigationProperty Name="Disposals" Relationship="Self.FK_Disposals_Receipts" FromRole="Receipts" ToRole="Disposals" />
           <NavigationProperty Name="ReceiptCategory" Relationship="Self.FK_Receipts_ReceiptCategories" FromRole="Receipts" ToRole="ReceiptCategories" />
           <NavigationProperty Name="ReceiptChangeHistories" Relationship="Self.FK_ReceiptChangeHistories_Receipts" FromRole="Receipts" ToRole="ReceiptChangeHistories" />
+          <NavigationProperty Name="ReceiptStatus" Relationship="Self.FK_Receipts_ReceiptStatuses" FromRole="Receipts" ToRole="ReceiptStatuses" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK_Receipts_Vendors" FromRole="Receipts" ToRole="Vendors" />
           <NavigationProperty Name="ReceiptImages" Relationship="Self.Receipt_ReceiptImage" FromRole="Receipts" ToRole="ReceiptImages" />
         </EntityType>
@@ -941,6 +961,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Receipts" Relationship="Self.FK_Receipts_ReceiptStatuses" FromRole="ReceiptStatuses" ToRole="Receipts" />
         </EntityType>
         <EntityType Name="RentalIncomeDetail">
           <Key>
@@ -1285,6 +1306,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Receipts_ReceiptStatuses">
+          <End Role="ReceiptStatuses" Type="Self.ReceiptStatus" Multiplicity="1" />
+          <End Role="Receipts" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReceiptStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipts">
+              <PropertyRef Name="ReceiptStatus_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Receipts_Vendors">
           <End Role="Vendors" Type="Self.Vendor" Multiplicity="0..1" />
           <End Role="Receipts" Type="Self.Receipt" Multiplicity="*" />
@@ -1426,6 +1459,10 @@
           <AssociationSet Name="FK_ReceiptChangeHistories_Receipts" Association="Self.FK_ReceiptChangeHistories_Receipts">
             <End Role="Receipts" EntitySet="Receipts" />
             <End Role="ReceiptChangeHistories" EntitySet="ReceiptChangeHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipts_ReceiptStatuses" Association="Self.FK_Receipts_ReceiptStatuses">
+            <End Role="ReceiptStatuses" EntitySet="ReceiptStatuses" />
+            <End Role="Receipts" EntitySet="Receipts" />
           </AssociationSet>
           <AssociationSet Name="FK_Receipts_Vendors" Association="Self.FK_Receipts_Vendors">
             <End Role="Vendors" EntitySet="Vendors" />
@@ -1621,6 +1658,7 @@
                 <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="IsBulk" ColumnName="IsBulk" />
                 <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="DateEntered" ColumnName="DateEntered" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="IsIncludeTax" ColumnName="IsIncludeTax" />
                 <ScalarProperty Name="IsTaxExclusive" ColumnName="IsTaxExclusive" />

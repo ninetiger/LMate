@@ -6,36 +6,6 @@
 <h1>All Receipts</h1>
 
 <p>@Html.ActionLink("Add a new receipt", "Create")</p>
-
-@*<table id="dt_example" class="Grid" style="width: 100%; max-width: ">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Description</th>
-                <th>PurchaseDate</th>
-                <th class="NumericCol">Price</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@Html.ActionLink(item.Description, "Edit", new { item.Id })</td>
-                    <td>@item.PurchaseDate</td>
-                    <td class="NumericCol">@item.Price.ToString()</td>
-                    <td>
-                        @using (Html.BeginForm("Delete", "Receipts"))
-                        {
-                            @Html.Hidden("Id", item.Id)
-                            <input type="submit" value="Delete" />
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
 <br />
 <div class="center-block">
     <table>
@@ -66,12 +36,12 @@
         <tr>
             <th><input id="selectAllReceipts" type="checkbox" /></th>
             <th>Description</th>
+            <th>Vendor</th>
             <th>Purchase Date</th>
             <th>Price</th>
-            <th>Vendor</th>
-            <th>Receipt Type</th>
-            <th>Is Bulk</th>
             <th>Has Image</th>
+            <th>Date Entered</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b78dfd5a40a04542a47a03a24eb7fd0a" Name="Diagram1">
+      <Diagram DiagramId="9767105ce26f4a9bb8c55ff54e578003" Name="Diagram1">
         <EntityTypeShape EntityType="LMateModel.AccountType" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.AspNetRole" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
@@ -12,16 +12,16 @@
         <EntityTypeShape EntityType="LMateModel.AspNetUserRole" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.AspNetUser" Width="1.5" PointX="0.75" PointY="20.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.Currency" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LMateModel.DepreciationAsset" Width="1.5" PointX="10.5" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMateModel.DepreciationAsset" Width="1.5" PointX="10.5" PointY="24.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.DepreciationBuilding" Width="1.5" PointX="10.5" PointY="29.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.DepreciationMethod" Width="1.5" PointX="8.25" PointY="31.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.Disposal" Width="1.5" PointX="7.5" PointY="21.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.DisposalType" Width="1.5" PointX="5.25" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.ReceiptCategory" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LMateModel.ReceiptChangeHistory" Width="1.5" PointX="10.5" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMateModel.ReceiptChangeHistory" Width="1.5" PointX="10.5" PointY="20.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.ReceiptImage" Width="1.5" PointX="3" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LMateModel.Receipt" Width="1.5" PointX="5.25" PointY="22.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="LMateModel.ReceiptStatus" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMateModel.Receipt" Width="1.5" PointX="5.25" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LMateModel.ReceiptStatus" Width="1.5" PointX="3" PointY="27.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.RentalIncomeDetail" Width="1.5" PointX="8.25" PointY="25.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.TaxUser" Width="1.5" PointX="3" PointY="33.25" IsExpanded="true" />
         <EntityTypeShape EntityType="LMateModel.UserDelegate" Width="1.5" PointX="3" PointY="36.375" IsExpanded="true" />
@@ -49,6 +49,7 @@
         <AssociationConnector Association="LMateModel.FK_Disposals_Receipts" ManuallyRouted="false" />
         <AssociationConnector Association="LMateModel.FK_Receipts_ReceiptCategories" ManuallyRouted="false" />
         <AssociationConnector Association="LMateModel.FK_ReceiptChangeHistories_Receipts" ManuallyRouted="false" />
+        <AssociationConnector Association="LMateModel.FK_Receipts_ReceiptStatuses" ManuallyRouted="false" />
         <AssociationConnector Association="LMateModel.FK_Receipts_Vendors" ManuallyRouted="false" />
         <AssociationConnector Association="LMateModel.FK_RentalIncomeDetails_TaxUsers" ManuallyRouted="false" />
         <AssociationConnector Association="LMateModel.Receipt_ReceiptImage" ManuallyRouted="false" />

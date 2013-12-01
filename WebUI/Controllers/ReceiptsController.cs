@@ -72,14 +72,14 @@ namespace WebUI.Controllers
         {
             return data.Select(receiptBrief => new List<string>()
             {
-                receiptBrief.Id.ToString(), 
+                receiptBrief.Id.ToString(CultureInfo.InvariantCulture), 
                 receiptBrief.Description, 
-                receiptBrief.PurchaseDate.HasValue ? receiptBrief.PurchaseDate.Value.ToString("d MMM yyyy") : string.Empty,
-                receiptBrief.Price.ToString(), 
                 receiptBrief.Vendor, 
-                receiptBrief.AccountType, 
-                receiptBrief.IsBulk.ToString(), 
+                receiptBrief.PurchaseDate.HasValue ? receiptBrief.PurchaseDate.Value.ToString("d MMM yyyy") : string.Empty,
+                receiptBrief.Price.HasValue ? receiptBrief.Price.Value.ToString("#0.00") : string.Empty, 
                 receiptBrief.HasImage, 
+                receiptBrief.DateEntered.ToString("d MMM yyyy"),
+                receiptBrief.Status, 
                 string.Empty
             }).ToList();
         }
@@ -144,10 +144,9 @@ namespace WebUI.Controllers
         //[HttpPost]
         public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief)
         {
-            if (!receiptBrief.Id.HasValue) return RedirectToAction("Index");
+            if (receiptBrief.Id < 1) return RedirectToAction("Index"); //TODO LOG it
 
-
-            await _efReceiptRepository.DeleteAsync(receiptBrief.Id.Value);
+            await _efReceiptRepository.DeleteAsync(receiptBrief.Id);
             await _efReceiptRepository.SaveChangesAsync();
 
             TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);

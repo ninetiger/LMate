@@ -27,6 +27,7 @@ namespace DataObjects.EntityFramework
         public string Reference { get; set; }
         public bool IsBulk { get; set; }
         public Nullable<System.DateTime> PurchaseDate { get; set; }
+        public System.DateTime DateEntered { get; set; }
         public Nullable<decimal> Price { get; set; }
         public bool IsIncludeTax { get; set; }
         public bool IsTaxExclusive { get; set; }
@@ -35,7 +36,7 @@ namespace DataObjects.EntityFramework
         public string Note { get; set; }
         public Nullable<int> Vendor_Id { get; set; }
         public Nullable<int> ReceiptCategory_Id { get; set; }
-        public Nullable<int> ReceiptStatus_Id { get; set; }
+        public int ReceiptStatus_Id { get; set; }
         public Nullable<int> Currency_Id { get; set; }
         public Nullable<int> AccountType_Id { get; set; }
         public string User_Id { get; set; }
@@ -47,6 +48,7 @@ namespace DataObjects.EntityFramework
         public virtual ICollection<Disposal> Disposals { get; set; }
         public virtual ReceiptCategory ReceiptCategory { get; set; }
         public virtual ICollection<ReceiptChangeHistory> ReceiptChangeHistories { get; set; }
+        public virtual ReceiptStatus ReceiptStatus { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<ReceiptImage> ReceiptImages { get; set; }
     }

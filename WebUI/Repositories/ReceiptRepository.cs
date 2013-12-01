@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using DataObjects.EntityFramework.ModelMapper;
-using DataObjects.Shared;
 using WebUI.Models;
 
 namespace WebUI.Repositories

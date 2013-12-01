@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -40,6 +39,7 @@ namespace BusinessObjects
         public bool IsTaxExclusive { get; set; }
         
         [DisplayName("Gst Rate")]
+        [Range(0, 100, ErrorMessage = "Range is 0 - 100")]
         public decimal? GstRate { get; set; }
 
         public decimal? Tax { get; set; }

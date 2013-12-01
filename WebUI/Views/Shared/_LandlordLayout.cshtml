@@ -73,8 +73,10 @@
         //        }
 
         $(function () {
+            var controlerName = window.location.pathname.split('/');
+            //alert(window.location.pathname + '\r\n/'+ controlerName[1]);
             $('#navigation li').removeClass('active');
-            $('#navigation li a[href="' + window.location.pathname + '"]').parent().addClass('active');
+            $('#navigation li a[href="/' + controlerName[1] + '"]').parent().addClass('active');
 
             //stateful button
             $(':input[data-loading-text]').click(function () {

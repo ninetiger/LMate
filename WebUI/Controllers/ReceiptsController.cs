@@ -74,7 +74,7 @@ namespace WebUI.Controllers
             {
                 receiptBrief.Id.ToString(), 
                 receiptBrief.Description, 
-                receiptBrief.PurchaseDate.ToString(),
+                receiptBrief.PurchaseDate.HasValue ? receiptBrief.PurchaseDate.Value.ToString("d MMM yyyy") : string.Empty,
                 receiptBrief.Price.ToString(), 
                 receiptBrief.Vendor, 
                 receiptBrief.AccountType, 

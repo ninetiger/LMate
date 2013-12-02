@@ -21,6 +21,7 @@ namespace WebUI.Repositories
         private readonly EntityReceiptDao _entityReceiptDao;
         private readonly EntityCurrencyDao _entityCurrencyDao;
         private readonly EntityReceiptImageDao _entityReceiptImageDao;
+        private readonly EntityReceiptCategoryDao _entityReceiptCategoryDao;
 
         public ReceiptRepository()
         {
@@ -29,6 +30,7 @@ namespace WebUI.Repositories
             _entityReceiptDao = new EntityReceiptDao(_context);
             _entityCurrencyDao = new EntityCurrencyDao(_context);
             _entityReceiptImageDao = new EntityReceiptImageDao(_context);
+            _entityReceiptCategoryDao = new EntityReceiptCategoryDao(_context);
         }
 
         public async Task<IEnumerable<ReceiptViewModel>> GetAllByUserIdAsync(string userId)
@@ -151,11 +153,22 @@ namespace WebUI.Repositories
                 Value = x.Id.ToString(CultureInfo.InvariantCulture)
             });
 
+            var categoryQuery =
+                await _entityReceiptCategoryDao.GetAsync(x => x.User_Id == receiptVm.UserId || x.User_Id == null);
+            var categorySelectList = categoryQuery.Select(x => new SelectListItem
+            {
+                Selected = x.Id == (receiptVm.ReceiptCategoryId ?? -1),
+                Text = x.Type,
+                Value = x.Id.ToString(CultureInfo.InvariantCulture)
+            });
+            //var multiSelectList = new MultiSelectList(categoryQuery, "Id", "Type");
+
             return new ReceiptEditViewModel
             {
                 ReceiptViewModel = receiptVm,
                 AccountTypeSelectList = accountTypeSelectList,
                 CurrencySelectList = currenciesSelectList,
+                CategorySelectList = categorySelectList
             };
         }
 

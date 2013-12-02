@@ -20,22 +20,14 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.Description)
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.PurchaseDate)
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.VendorId)
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
                     @Html.TextBoxFor(x => x.ReceiptViewModel.Description, new { @class = "form-control input-sm" })
                 </div>
                 <div class="col-xs-6 col-sm-4">
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.PurchaseDate,"{0:d MMM yyyy}", new { @class = "form-control input-sm" })
+                    @Html.LabelFor(x => x.ReceiptViewModel.PurchaseDate)
+                    @Html.TextBoxFor(x => x.ReceiptViewModel.PurchaseDate, "{0:d MMM yyyy}", new { @class = "form-control input-sm" })
                 </div>
                 <div class="col-xs-6 col-sm-4">
+                    @Html.LabelFor(x => x.ReceiptViewModel.VendorId)
                     @Html.TextBoxFor(x => x.ReceiptViewModel.VendorId, new { @class = "form-control input-sm" })
                 </div>
             </div>
@@ -43,36 +35,31 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.Price)
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.GstRate)
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.AccountTypeId)
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        @Html.TextBoxFor(x => x.ReceiptViewModel.Price,"{0:#0.00}", new { @class = "form-control input-sm" })
+                        @Html.TextBoxFor(x => x.ReceiptViewModel.Price, "{0:#0.00}", new { @class = "form-control input-sm" })
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-4">
+                    @Html.LabelFor(x => x.ReceiptViewModel.GstRate)
                     <div class="input-group">
                         @Html.TextBoxFor(x => x.ReceiptViewModel.GstRate, "{0:#0}", new { @class = "form-control input-sm" })
                         <span class="input-group-addon">%</span>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-4">
-                    @Html.DropDownListFor(x => x.ReceiptViewModel.AccountTypeId, Model.AccountTypeSelectList, string.Empty, new { @class = "form-control input-sm" })
+                    @Html.LabelFor(x => x.ReceiptViewModel.AccountTypeId)
+                    @Html.DropDownListFor(x => x.ReceiptViewModel.AccountTypeId, Model.AccountTypeSelectList, string.Empty, new { style = "width: 100%" })
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
-                    @*@Html.CheckBoxFor(x => x.ReceiptViewModel.IsBulk)
-                    @Html.LabelFor(x => x.ReceiptViewModel.IsBulk)*@
+                    @Html.LabelFor(x => x.ReceiptViewModel.Reference)
+                    @Html.TextBoxFor(x => x.ReceiptViewModel.Reference, new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                    <br />
                     <div class="input-group">
                         <span class="input-group-addon">
                             @Html.CheckBoxFor(x => x.ReceiptViewModel.IsBulk)
@@ -82,13 +69,25 @@
                 </div>
                 <div class="col-xs-6 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.CurrencyId)
-                    @Html.DropDownListFor(x => x.ReceiptViewModel.CurrencyId, Model.CurrencySelectList, string.Empty, new { @class = "form-control input-sm" })
+                    @Html.DropDownListFor(x => x.ReceiptViewModel.CurrencyId, Model.CurrencySelectList, string.Empty, new { style = "width: 100%" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-6 col-sm-4">
+                    @Html.LabelFor(x => x.ReceiptViewModel.ReceiptCategoryId)
+                    @Html.DropDownListFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, string.Empty, new { style = "width: 100%" })
+                    @*@Html.ListBoxFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, new { style = "width: 100%" }) //for multi select*@
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     @Html.Label("Image")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
                     @{
                         int imageCount = 0;
                         if (@Model.ReceiptViewModel.ReceiptImageIds != null)
@@ -123,7 +122,7 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.Note)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.Note, new { @class = "form-control" })
+                    @Html.TextAreaFor(x => x.ReceiptViewModel.Note, new { @class = "form-control" })
                 </div>
             </div>
             <div class="row">
@@ -138,19 +137,14 @@
 
 @section Contents{
     @Styles.Render("~/Content/jquery-ui")
+    <link rel="stylesheet" type="text/css" href="~/Content/css/select2.css">
 }
 @section Scripts {
     <script src="/Scripts/LMate/Receipts_Edit.js"></script>
+    <script src="/Scripts/select2.js"></script>
     @Scripts.Render("~/bundles/jquery-ui-min")
 }
 @section DocumentReady
 {
-    @*GetImages();*@
-
-    $( "#ReceiptViewModel_PurchaseDate").datepicker({
-      changeMonth: true,
-      changeYear: true
-    });
-
-
+    docReady();
 }

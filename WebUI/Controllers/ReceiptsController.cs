@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
 using BusinessObjects;
-using DataObjects;
 using DataObjects.EntityFramework;
-using DataObjects.EntityFramework.ModelMapper;
-using DataObjects.Shared;
 using Microsoft.AspNet.Identity;
 using Mvc.JQuery.Datatables;
 using System.Collections.Generic;
@@ -14,10 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using WebUI.Models;
 using WebUI.Repositories;
-using Receipt = DataObjects.EntityFramework.Receipt;
 
 namespace WebUI.Controllers
 {

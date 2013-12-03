@@ -11,7 +11,7 @@ namespace WebUI.App_Start
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui-min").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui-{version}.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -32,7 +32,13 @@ namespace WebUI.App_Start
                          "~/Scripts/jquery-ui-{version}.js",
                         "~/Scripts/DataTables-1.9.4/media/js/*.js", //todo need to be specific rather then *
                          "~/Scripts/LMate/Receipts_Index.js"
-                        ));   
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/receipts_edit").Include(
+                "~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/select2.js",
+                "~/Scripts/LMate/Receipts_Edit.js"
+            ));
 
             //========== style ===========//
             bundles.Add(new StyleBundle("~/Content/jquery-ui").Include(
@@ -55,6 +61,9 @@ namespace WebUI.App_Start
                       "~/Content/DataTables-1.9.4/media/css/*.css",//todo need to be specific rather then *
                       "~/Content/themes/base/jquery-ui.css"));
 
+            bundles.Add(new ScriptBundle("~/Content/receipts_edit").Include(
+                  "~/Content/css/select2.css",
+                  "~/Content/themes/base/jquery-ui.css"));
         }
     }
 }

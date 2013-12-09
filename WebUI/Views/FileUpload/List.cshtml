@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_LandlordLayout.cshtml";
+}
+
+<h2>List</h2>
+
+<form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
+    <div id="drop">
+        Drop Here
+        <a>Browse</a>
+        <input type="file" name="upl" multiple />
+    </div>
+    <ul>
+        <!-- The file uploads will be shown here -->
+    </ul>
+
+</form>
+
+
+@section Contents{
+    @Styles.Render("~/Content/fileupload1")
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/fileupload1")
+}
+
+@section DocumentReady
+{
+    knob();
+}

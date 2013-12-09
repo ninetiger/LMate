@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Model";
+    Layout = "~/Views/Shared/_LandlordLayout.cshtml";
+}
+
+<h2>Model</h2>
+
+<button type="button" data-toggle="modal" data-target="#fileUploadModal">Upload Image/PDF</button>
+<div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 660px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="btn btn-success fileinput-button pull-left">
+                    <i class="icon-plus icon-white"></i>
+                    <span>Add files...</span>
+                    <input type="file" id="fileupload" name="files" multiple> @*ccept="image/*"*@
+                </span>
+                <h4 class="modal-title pull-left">or Drag & Drop inside this dialog</h4>
+                <button type="button" class="close btn-lg" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="clear-fix"></div>
+            </div>
+            <div class="modal-body" style="max-height: 350px; overflow-y: auto">
+                @*<div style=" height:100px;max-height:500px;overflow-y:auto">*@
+                <table class="table table-striped hide" id="filelistholder">
+                    <tbody id="fileListTBody"></tbody>
+                </table>
+                @*</div>*@
+            </div>
+            <div class="modal-footer">
+                <button id="btnUploadAll" class="btn btn-success" type="button">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Upload</span>
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@section Contents{
+    @Styles.Render("~/Content/fileupload")
+    @*@Styles.Render("~/bundles/fileupload/bootstrap/Basic/css")*@
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/fileupload")
+
+    @*@Scripts.Render("~/bundles/fileupload/bootstrap/Basic/js")
+        <script src="~/Scripts/Lmate/fileupload.js"></script>*@
+}
+
+@section DocumentReady
+{
+    @*fileUploadInit();*@
+    fileUploadInit1();
+}

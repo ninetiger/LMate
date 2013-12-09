@@ -101,3 +101,17 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.green {
+    color: green
+}
+.gray {
+    color: gray
+}
+.blue {
+    color: blue
+}
+
+.fontSize16 {
+    font-size:16px
+}

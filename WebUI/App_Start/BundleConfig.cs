@@ -7,6 +7,8 @@ namespace WebUI.App_Start
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+
+            //todo need to tidy up to seperate minified versions
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -39,6 +41,42 @@ namespace WebUI.App_Start
                 "~/Scripts/select2.js",
                 "~/Scripts/LMate/Receipts_Edit.js"
             ));
+
+            //Basic js
+            bundles.Add(new ScriptBundle("~/bundles/fileupload1").Include(
+                 "~/Scripts/jquery.knob.js",
+                 "~/Scripts/FileUpload/jqueryui/jquery.ui.widget.js",
+                 "~/Scripts/FileUpload/jquery.iframe-transport.js",
+                 "~/Scripts/FileUpload/jquery.fileupload.js",
+                 "~/Scripts/LMate/FileUpload.js"
+            ));
+            //Basic css
+            bundles.Add(new StyleBundle("~/Content/fileupload1").Include(
+                "~/Content/FileUploadKnob.css"
+           ));
+            //BasicPlus js
+            bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
+                 "~/Scripts/FileUpload/jqueryui/jquery.ui.widget.js",
+                 "~/Scripts/FileUpload/load-image.debug.js",
+                 "~/Scripts/FileUpload/canvas-to-blob.debug.js",
+                 "~/Scripts/FileUpload/jquery.iframe-transport.js",
+                 "~/Scripts/FileUpload/jquery.fileupload.js",
+                 "~/Scripts/FileUpload/jquery.fileupload-process.js",
+                 "~/Scripts/FileUpload/jquery.fileupload-image.js",
+                 "~/Scripts/FileUpload/jquery.fileupload-audio.js",
+                 "~/Scripts/FileUpload/jquery.fileupload-video.js",
+                 "~/Scripts/FileUpload/jquery.fileupload-validate.js",
+                 "~/Scripts/LMate/FileUpload.js"
+            ));
+            //BasicPlus css
+            bundles.Add(new StyleBundle("~/Content/fileupload").Include(
+                //"~/Content/FileUpload/css/bootstrap/bootstrap.debug.css",
+                //"~/Content/FileUpload/css/bootstrap/bootstrap-responsive.debug.css",
+               "~/Scripts/bootstrap.js",
+                      "~/Scripts/respond.js",
+               "~/Content/FileUpload/css/jquery.fileupload-ui.css"
+           ));
+
 
             //========== style ===========//
             bundles.Add(new StyleBundle("~/Content/jquery-ui").Include(

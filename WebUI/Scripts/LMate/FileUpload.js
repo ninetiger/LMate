@@ -81,7 +81,7 @@ function fileUploadInit1() {
             maxChunkSize: 1073741824,
             add: function (e, data) {
                 $('#filelistholder').removeClass('hide');
-
+                alert(data.files[0].type);
                 var tpl = $('<tr><td style="width:5%;vertical-align: middle"><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
                     '<td style="width: 40%; vertical-align: middle"><input class="form-control input-sm" id="name" value="002.jpg" /></td>' +
                     '<td style="width: 15%; vertical-align: middle"><span id="size" class="gray">300kb</span></td>' +
@@ -93,7 +93,6 @@ function fileUploadInit1() {
                 tpl.find('#name').val(data.files[0].name);
                 tpl.find('#size').text(formatFileSize(data.files[0].size));
                 data.context = tpl.appendTo('#fileListTBody');
-
                 //use button to upload all
                 $('#btnUploadAll').click(function () {
                     data.submit();
@@ -126,14 +125,17 @@ function fileUploadInit1() {
                 //$('#globalProgressBar').addClass('fade');
             }
         });
+        
+        //$('#fileupload').click(function (e, data) {
+        //    var uploadAll = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
 
-        $('#fileupload')
-.bind('fileuploaddestroy', function (e, data) {
-    // Event handler example. Do something if you need after file has been deleted on the server. 
-    // (Refer to the client side documentatio).
-    alert(e.data);
-    alert(data);
-});
+        //    $('#btnName').text('Add more files...');
+        //    var btnAddMoreFiles = $.find('#btnAddFiles');
+            
+
+        //    $('#btnAddFiles').replaceWith(uploadAll);
+        //    $('#btnUploadAll').replaceWith(btnAddMoreFiles);
+        //});
     });
 }
 

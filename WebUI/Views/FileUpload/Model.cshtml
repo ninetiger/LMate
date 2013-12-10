@@ -10,28 +10,35 @@
     <div class="modal-dialog" style="width: 660px">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="btn btn-success fileinput-button pull-left">
-                    <i class="icon-plus icon-white"></i>
-                    <span>Add files...</span>
-                    <input type="file" id="fileupload" name="files" multiple> @*ccept="image/*"*@
-                </span>
-                <h4 class="modal-title pull-left">or Drag & Drop inside this dialog</h4>
-                <button type="button" class="close btn-lg" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <div class="clear-fix"></div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                @*<h4 class="modal-title">Upload images or PDFs to attach the receipt</h4>*@
+
             </div>
             <div class="modal-body" style="max-height: 350px; overflow-y: auto">
-                @*<div style=" height:100px;max-height:500px;overflow-y:auto">*@
+                <h4 class="modal-title">Upload images or PDFs to attach the receipt</h4>
+                <h5>You can also drag & drop files into this dialog.</h5>
                 <table class="table table-striped hide" id="filelistholder">
                     <tbody id="fileListTBody"></tbody>
                 </table>
-                @*</div>*@
             </div>
             <div class="modal-footer">
-                <button id="btnUploadAll" class="btn btn-success" type="button">
-                    <i class="icon-upload icon-white"></i>
-                    <span>Upload</span>
-                </button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<div class="row" style="vertical-align: bottom">*@
+                <span id="footer-left" class="pull-left">
+                    <span id="btnAddFiles" class="btn btn-info fileinput-button btn-sm">
+                        <i class="icon-plus icon-white"></i>
+                        <span id="btnName">Add files...</span>
+                        <input type="file" id="fileupload" name="files" multiple> @*ccept="image/*"*@
+                    </span>
+                </span>
+                <span class="pull-left">Having trouble? Switch to basic uploader. </span>
+                <div class="pull-right">
+                    <button id="btnUploadAll" class="btn btn-success btn-sm" type="button">
+                        <i class="icon-upload icon-white"></i>
+                        <span>Upload</span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+                @*</div>*@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

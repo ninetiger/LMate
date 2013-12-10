@@ -644,7 +644,6 @@
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\BackloadDemo\Index.cshtml" />
-    <Content Include="Views\BackloadDemo\List.cshtml" />
     <Content Include="Views\FileUpload\Index.cshtml" />
     <Content Include="Views\FileUpload\List.cshtml" />
     <Content Include="Views\FileUpload\Model.cshtml" />

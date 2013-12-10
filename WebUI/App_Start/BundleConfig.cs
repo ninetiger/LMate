@@ -73,7 +73,7 @@ namespace WebUI.App_Start
                 //"~/Content/FileUpload/css/bootstrap/bootstrap.debug.css",
                 //"~/Content/FileUpload/css/bootstrap/bootstrap-responsive.debug.css",
                "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js",
+               "~/Scripts/respond.js",
                "~/Content/FileUpload/css/jquery.fileupload-ui.css"
            ));
 

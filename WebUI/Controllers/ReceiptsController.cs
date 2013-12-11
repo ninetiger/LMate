@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using BusinessObjects;
 using DataObjects.EntityFramework;
 using Microsoft.AspNet.Identity;
@@ -154,6 +155,32 @@ namespace WebUI.Controllers
             }
 
             return null;
+        }
+
+        [HttpPost]
+        public async Task UploadFiles(int? receiptId, string desc, IEnumerable<HttpPostedFileBase> files)
+        {
+            //todo need to check the receipt belong to this user
+            HttpPostedFileBase image = files.FirstOrDefault();
+            if (image != null && image.ContentLength > 0)
+            {
+                 string savedFileName = Path.Combine(
+                   AppDomain.CurrentDomain.BaseDirectory + "Files",
+                   Path.GetFileName(image.FileName));
+                 image.SaveAs(savedFileName);
+                //var receiptImage = new ReceiptImage
+                //{
+                //    ImageData = new byte[image.ContentLength],
+                //    ImageMimeType = image.ContentType,
+                //    Description = "dd",
+                //    Date = DateTime.Now,
+                //    IsActive = true,
+                //    User_Id = User.Identity.GetUserId()
+                //};
+                //image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength);
+                //await _efReceiptRepository.InsertImage(receiptImage, receiptId.Value);
+                //await _efReceiptRepository.SaveChangesAsync();
+            }
         }
 
         protected override void Dispose(bool disposing)

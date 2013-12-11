@@ -29,13 +29,12 @@ namespace WebUI.Controllers
             _efReceiptRepository = efReceiptRepository;
         }
 
-        //
-        // GET: /BackupDemo/
         public ActionResult Index()
         {
             return View();
         }
 
+        //knob
         public ActionResult List()
         {
             return View();

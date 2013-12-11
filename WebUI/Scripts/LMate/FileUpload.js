@@ -81,7 +81,6 @@ function fileUploadInit1() {
             maxChunkSize: 1073741824,
             add: function (e, data) {
                 $('#filelistholder').removeClass('hide');
-                alert(data.files[0].type);
                 var tpl = $('<tr><td style="width:5%;vertical-align: middle"><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
                     '<td style="width: 40%; vertical-align: middle"><input class="form-control input-sm" id="name" value="002.jpg" /></td>' +
                     '<td style="width: 15%; vertical-align: middle"><span id="size" class="gray">300kb</span></td>' +
@@ -125,13 +124,13 @@ function fileUploadInit1() {
                 //$('#globalProgressBar').addClass('fade');
             }
         });
-        
+
         //$('#fileupload').click(function (e, data) {
         //    var uploadAll = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
 
         //    $('#btnName').text('Add more files...');
         //    var btnAddMoreFiles = $.find('#btnAddFiles');
-            
+
 
         //    $('#btnAddFiles').replaceWith(uploadAll);
         //    $('#btnUploadAll').replaceWith(btnAddMoreFiles);
@@ -228,3 +227,126 @@ function formatFileSize(bytes) {
 
     return (bytes / 1024).toFixed(2) + ' KB';
 }
+
+var submitCount = 1;
+var addCount = 1;
+function ReceiptUpload() {
+    $('#fileupload').fileupload({
+        dataType: "text",
+        dropZone: $('#dropzone'),
+        url: "/receipts/UploadFiles",
+        limitConcurrentUploads: 1,
+        sequentialUploads: true,
+        progressInterval: 5,
+        maxChunkSize: 1048576000, //1GB //TODO limit to 20MB
+        //loadImageMaxFileSize: 1073741824,
+        //loadImageFileTypesk /^image\/(gif|jpeg|png)$/ 
+        //formData: { receiptId: $('#ReceiptViewModel_Id').val(), desc: 'aa'},
+        add: function (e, data) {
+            $('#filelistholder').removeClass('hide');
+            var tpl = $('<tr><td style="width:5%;vertical-align: middle"><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
+                '<td style="width: 40%; vertical-align: middle"><input class="form-control input-sm filename" />' +
+                '<td style="width: 15%; vertical-align: middle"><span id="size" class="gray">300kb</span></td>' +
+                ' <td style="width: 40%; text-align: right"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div></td></tr>');
+            //var tpl = $('<tr><td><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
+            //    '<td><span id="name"></span> - <span id="size" class="gray"></span></td>' +
+            //    '<td><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div></td></tr>');
+            //tpl.find('#name').text(data.files[0].name);
+            tpl.find('input.filename').first().val(data.files[0].name);
+            tpl.find('#size').text(formatFileSize(data.files[0].size));
+            //var descId = 'desc' + ($('#filelistholder').find('tr').length + 1);
+            var descId = 'desc' + addCount++;
+            tpl.find('input.filename').prop('id', descId);
+            //$('<input type="hidden" id="' + data.files[0].name + data.files[0].size + '" value="' + descId + '" />').insertAfter(tpl.find('input.filename'));
+            data.context = tpl.appendTo('#fileListTBody');
+            //use button to upload all
+            $('#btnUploadAll').click(function () {
+                data.submit();
+            });
+        }
+        , submit: function (e, data) {
+            var id = '#desc' + submitCount++;
+            data.formData = { receiptId: $('#ReceiptViewModel_Id').val(), desc: $(id).val() };
+        }
+        , done: function (e, data) {
+            $('#btnUploadAll').unbind('click');
+            data.context.find('div.progress').addClass('fade');
+            //data.context.find('#size').append('<span class="glyphicon glyphicon-ok-sign green fontSize16"></span>');
+            data.context.find('div.progress').replaceWith('<span class="glyphicon glyphicon-ok-sign green fontSize16"></span>');
+
+            data.context.find('input').addClass('fade');
+            data.context.find('input').replaceWith('<span>' + data.files[0].name + '</span>');
+
+        }
+        , progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#overallbar').css('width', progress + '%');
+        }
+        , progress: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            data.context.find('.progress-bar').css('width', progress + '%');
+            data.context.find('.sr-only').text(progress + '% Complete');
+        }
+        , fail: function (e, data) {
+            alert('fail: ' + data.files[0].name);
+            alert('errorThrown:' + data.errorThrown
+            + '\r\n' + 'status:' + data.textStatus
+            + '\r\n' + 'jqXHR:' + data.jqXHR);
+            // data.errorThrown
+            // data.textStatus;
+            // data.jqXHR;
+        }
+        , always: function (e, data) {
+            //alert('always');
+            //$('#globalProgressBar').addClass('fade');
+        }
+        //, drop: function (e, data) {
+        //}
+        , dragover: function (e) {
+            e.preventDefault();
+            
+            var dropZone = $('#dropzone'),
+            timeout = window.dropZoneTimeout;
+            if (!timeout) {
+                dropZone.addClass('in');
+            } else {
+                clearTimeout(timeout);
+            }
+            var found = false,
+                node = e.target;
+            do {
+                if (node === dropZone[0]) {
+                    found = true;
+                    break;
+                }
+                node = node.parentNode;
+            } while (node != null);
+            if (found) {
+                dropZone.addClass('hover');
+            } else {
+                dropZone.removeClass('hover');
+            }
+            window.dropZoneTimeout = setTimeout(function () {
+                window.dropZoneTimeout = null;
+                dropZone.removeClass('in hover');
+            }, 100);
+        }
+    });
+
+    //$('#fileupload').click(function (e, data) {
+    //    var uploadAll = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
+
+    //    $('#btnName').text('Add more files...');
+    //    var btnAddMoreFiles = $.find('#btnAddFiles');
+
+
+    //    $('#btnAddFiles').replaceWith(uploadAll);
+    //    $('#btnUploadAll').replaceWith(btnAddMoreFiles);
+    //});
+}
+
+
+//function trimForId(id) {
+//    id = id.replace(/[^a-zA-Z0-9-_\s]/g, "");
+//    return id.replace(/_|\s/g, "");
+//}

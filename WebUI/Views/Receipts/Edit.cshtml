@@ -15,7 +15,6 @@
         <button class="pull-right" type="button" data-toggle="modal" data-target="#fileUploadModal">Upload Image/PDF</button>
         <div class="clearfix"></div>
     </div>
-
     <div class="panel-body">
         @using (Html.BeginForm("Edit", "Receipts", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
@@ -137,22 +136,22 @@
         }
     </div>
 </div>
-
 <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 660px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                @*<h4 class="modal-title">Upload images or PDFs to attach the receipt</h4>*@
-            </div>
-            <div class="modal-body" style="max-height: 350px; overflow-y: auto">
-                <div id="dropzone" class="fade well">Drop files here</div>
-                
                 <h4 class="modal-title">Upload images or PDFs to attach the receipt</h4>
+            </div>
+            <div class="modal-body" style="height:100px; max-height: 450px; overflow-y: auto">
+                @*<div id="dropzone" class="well" style="display:none">Drop files here</div>*@
+                @*<div id="bodyContent">*@
+                @*<h4 class="modal-title">Upload images or PDFs to attach the receipt</h4>*@
                 <h5>You can also drag & drop files into this dialog.</h5>
                 <table class="table table-striped hide" id="filelistholder">
                     <tbody id="fileListTBody"></tbody>
                 </table>
+                @*</div>*@
             </div>
             <div class="modal-footer">
                 @*<div class="row" style="vertical-align: bottom">*@

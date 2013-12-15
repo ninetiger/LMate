@@ -300,11 +300,16 @@ function ReceiptUpload() {
             //alert('always');
             //$('#globalProgressBar').addClass('fade');
         }
-        //, drop: function (e, data) {
-        //}
+        , drop: function (e, data) {
+            //alert('in');
+            $('.modal-body').show();
+            $('#dropzone').hide();
+        }
+        , dragleave: function() {
+            alert('leave');
+        }
         , dragover: function (e) {
             e.preventDefault();
-            
             var dropZone = $('#dropzone'),
             timeout = window.dropZoneTimeout;
             if (!timeout) {
@@ -332,6 +337,25 @@ function ReceiptUpload() {
             }, 100);
         }
     });
+    
+    // Prevent the default action when a file is dropped on the window
+    $(document)
+        .on('drop dragover', function(e) {
+            //if (!$('#fileUploadModal').hasClass('fade')) {
+            $('.modal-body').hide();
+            $('#dropzone').show();
+            //}
+            e.preventDefault();
+        })
+        .on('drop', function() {
+            $('.modal-body').show();
+            $('#dropzone').hide();
+        })
+        .on('dragleave', function() {
+            $('.modal-body').show();
+            $('#dropzone').hide();
+        });
+
 
     //$('#fileupload').click(function (e, data) {
     //    var uploadAll = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
@@ -344,9 +368,3 @@ function ReceiptUpload() {
     //    $('#btnUploadAll').replaceWith(btnAddMoreFiles);
     //});
 }
-
-
-//function trimForId(id) {
-//    id = id.replace(/[^a-zA-Z0-9-_\s]/g, "");
-//    return id.replace(/_|\s/g, "");
-//}

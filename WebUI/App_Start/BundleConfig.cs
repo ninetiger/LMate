@@ -42,18 +42,6 @@ namespace WebUI.App_Start
                 "~/Scripts/LMate/Receipts_Edit.js"
             ));
 
-            //Basic js
-            bundles.Add(new ScriptBundle("~/bundles/fileupload1").Include(
-                 "~/Scripts/jquery.knob.js",
-                 "~/Scripts/FileUpload/jqueryui/jquery.ui.widget.js",
-                 "~/Scripts/FileUpload/jquery.iframe-transport.js",
-                 "~/Scripts/FileUpload/jquery.fileupload.js",
-                 "~/Scripts/LMate/FileUpload.js"
-            ));
-            //Basic css
-            bundles.Add(new StyleBundle("~/Content/fileupload1").Include(
-                "~/Content/FileUploadKnob.css"
-           ));
             //BasicPlus js
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
                  "~/Scripts/FileUpload/jqueryui/jquery.ui.widget.js",
@@ -74,9 +62,9 @@ namespace WebUI.App_Start
                 //"~/Content/FileUpload/css/bootstrap/bootstrap-responsive.debug.css",
                "~/Scripts/bootstrap.js",
                "~/Scripts/respond.js",
-               "~/Content/FileUpload/css/jquery.fileupload-ui.css"
+               "~/Content/FileUpload/css/jquery.fileupload-ui.css",
+               "~/Content/LMate/FileUploadCustom.css"
            ));
-
 
             //========== style ===========//
             bundles.Add(new StyleBundle("~/Content/jquery-ui").Include(

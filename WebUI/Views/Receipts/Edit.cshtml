@@ -141,17 +141,22 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Upload images or PDFs to attach the receipt</h4>
+                <h4 class="modal-title"><span class="glyphicon glyphicon-picture fontSize16"></span> Upload images or PDFs</h4>
             </div>
-            <div class="modal-body" style="height:100px; max-height: 450px; overflow-y: auto">
-                @*<div id="dropzone" class="well" style="display:none">Drop files here</div>*@
-                @*<div id="bodyContent">*@
-                @*<h4 class="modal-title">Upload images or PDFs to attach the receipt</h4>*@
-                <h5>You can also drag & drop files into this dialog.</h5>
-                <table class="table table-striped hide" id="filelistholder">
-                    <tbody id="fileListTBody"></tbody>
-                </table>
-                @*</div>*@
+            <div class="modal-body" style="max-height: 350px; overflow-y: auto">
+                <div id="dropzone" class="well hide">Drop files here</div>
+                <div id="bodyContent">
+                    <div id="desc">
+                        <h5>Attach uploaded images or PDFs to this receipt as evidence.</h5>
+                        <h5>You can also drag & drop files into this dialog.</h5>
+                        <h5>Attachment type can be jpg, jpeg or pdf.</h5>
+                        <br />
+                        <div>Having trouble? Switch to basic uploader.</div>
+                    </div>
+                    <table class="table table-striped hide" id="filelistholder">
+                        <tbody id="fileListTBody"></tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 @*<div class="row" style="vertical-align: bottom">*@
@@ -162,7 +167,7 @@
                         <input type="file" id="fileupload" name="files" multiple> @*ccept="image/*"*@
                     </span>
                 </span>
-                <span class="pull-left">Having trouble? Switch to basic uploader. </span>
+                @*<span class="pull-left">Having trouble? Switch to basic uploader. </span>*@
                 <div class="pull-right">
                     <button id="btnUploadAll" class="btn btn-success btn-sm" type="button">
                         <i class="icon-upload icon-white"></i>
@@ -191,7 +196,5 @@
 {
     docReady();
     ReceiptUpload();
-    
-    @*<span class="fileupload-loading"></span> //fileupload-loading is the position holder, use add/remove processing below to run
-    $('.panel-body').addClass('fileupload-processing');*@
+   
 }

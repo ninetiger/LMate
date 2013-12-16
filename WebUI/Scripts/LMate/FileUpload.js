@@ -301,13 +301,11 @@ function ReceiptUpload() {
             //$('#globalProgressBar').addClass('fade');
         }
         , drop: function (e, data) {
-            //alert('in');
-            $('.modal-body').show();
-            $('#dropzone').hide();
+            $('#dropzone').addClass('active');
         }
-        , dragleave: function() {
-            alert('leave');
-        }
+	//, dragleave: function() {
+          //  alert('leave');
+        //}
         , dragover: function (e) {
             e.preventDefault();
             var dropZone = $('#dropzone'),
@@ -341,19 +339,22 @@ function ReceiptUpload() {
     // Prevent the default action when a file is dropped on the window
     $(document)
         .on('drop dragover', function(e) {
-            //if (!$('#fileUploadModal').hasClass('fade')) {
-            $('.modal-body').hide();
-            $('#dropzone').show();
-            //}
+            $('#bodyContent').addClass('hide');
+            $('#dropzone').removeClass('hide');
             e.preventDefault();
         })
-        .on('drop', function() {
-            $('.modal-body').show();
-            $('#dropzone').hide();
+        .on('drop', function () {
+            if ($('#dropzone').hasClass('active')) {
+                $('#desc').addClass('hide');
+            }
+            $('#dropzone').html();
+            $('#bodyContent').removeClass('hide');
+            
+            $('#dropzone').addClass('hide');
         })
         .on('dragleave', function() {
-            $('.modal-body').show();
-            $('#dropzone').hide();
+            $('#bodyContent').removeClass('hide');
+            $('#dropzone').addClass('hide');
         });
 
 

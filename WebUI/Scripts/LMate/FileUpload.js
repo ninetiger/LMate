@@ -303,9 +303,6 @@ function ReceiptUpload() {
         , drop: function (e, data) {
             $('#dropzone').addClass('active');
         }
-	//, dragleave: function() {
-          //  alert('leave');
-        //}
         , dragover: function (e) {
             e.preventDefault();
             var dropZone = $('#dropzone'),
@@ -335,10 +332,10 @@ function ReceiptUpload() {
             }, 100);
         }
     });
-    
+
     // Prevent the default action when a file is dropped on the window
     $(document)
-        .on('drop dragover', function(e) {
+        .on('drop dragover', function (e) {
             $('#bodyContent').addClass('hide');
             $('#dropzone').removeClass('hide');
             e.preventDefault();
@@ -347,25 +344,51 @@ function ReceiptUpload() {
             if ($('#dropzone').hasClass('active')) {
                 $('#desc').addClass('hide');
             }
-            $('#dropzone').html();
             $('#bodyContent').removeClass('hide');
-            
             $('#dropzone').addClass('hide');
         })
-        .on('dragleave', function() {
+        .on('dragleave', function (e) {
+            if (modelEnter == true) return;
             $('#bodyContent').removeClass('hide');
             $('#dropzone').addClass('hide');
+        })
+    ;
+
+
+    $('#fileUploadModal')
+        .on('dragleave', function (e) {
+            modelEnter = false;
+        })
+        .on('dragenter', function (e) {
+            modelEnter = true;
+            e.stopPropagation();
+            e.preventDefault();
         });
+    ;
+    $('.modal-dialog')
+        .on('dragleave', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+        })
+        .on('dragenter', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    ;
 
+    $('.modal-content')
+  .on('dragleave', function (e) {
+      e.stopPropagation();
+      e.preventDefault();
 
-    //$('#fileupload').click(function (e, data) {
-    //    var uploadAll = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
+  })
+            .on('dragenter', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            });
+    ;
 
-    //    $('#btnName').text('Add more files...');
-    //    var btnAddMoreFiles = $.find('#btnAddFiles');
-
-
-    //    $('#btnAddFiles').replaceWith(uploadAll);
-    //    $('#btnUploadAll').replaceWith(btnAddMoreFiles);
-    //});
 }
+
+
+var modelEnter = false;

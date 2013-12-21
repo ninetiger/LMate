@@ -317,15 +317,10 @@ function ReceiptUpload() {
             $('#dropzone').addClass('active');
         }
         , dragover: function (e) {
-            $('#btnName7').text('in dragov:' + ++cc);
             e.preventDefault();
             var dropZone = $('#dropzone'),
             timeout = window.dropZoneTimeout;
-            if (!timeout) {
-                $('#btnName').text('aaaaaaaaaa:');
-                dropZone.addClass('in');
-            } else {
-                $('#btnName').text('bbbbbbbbbbbb:');
+            if (timeout) {
                 clearTimeout(timeout);
             }
             var found = false,
@@ -337,42 +332,27 @@ function ReceiptUpload() {
                 }
                 node = node.parentNode;
             } while (node != null);
-            if (found) {
-                $('#btnName').text('cccccccccccccc:');
-                dropZone.removeClass('hover');
-            } else {
-                $('#btnName').text('dddddddddddddddd:');
-                dropZone.addClass('in');
+            if (!found) {
+                dropZone.addClass('in fade');
             }
-            window.dropZoneTimeout = setTimeout(function () {
-                window.dropZoneTimeout = null;
-                $('#btnName').text('eeeeeeeeeeeeeee:');
-                dropZone.removeClass('in hover');
-            }, 100);
         }
     });
 
     // Prevent the default action when a file is dropped on the window
     $(document)
         .on('drop dragover', function (e) {
-                $('#btnName1').text('in:' + ++a);
-            modelEnter = true;
             e.preventDefault();
 
-            var dropZone = $(this), timeout = window.dropZoneTimeout;
-            if (!timeout) {
-                $('#btnName').text('ffffffffffff:');
-            } else {
+            var timeout = window.dropZoneTimeout;
+            if (timeout) {
                 $('#bodyContent').addClass('hide');
                 $('#dropzone').removeClass('hide');
                 $('#dropzone').removeClass('in');
-                $('#btnName').text('ggggggggggggg:');
                 clearTimeout(timeout);
             }
 
             window.dropZoneTimeout = setTimeout(function () {
                 window.dropZoneTimeout = null;
-                $('#btnName').text('hhhhhhhhhhhh:');
                 $('#bodyContent').removeClass('hide');
                 $('#dropzone').addClass('hide');
             }, 100);
@@ -383,58 +363,5 @@ function ReceiptUpload() {
             }
             $('#bodyContent').removeClass('hide');
             $('#dropzone').addClass('hide');
-        })
-
-        .on('dragleave', function (e) {
-            $('#btnName2').text('doc leave:' + ++b);
-
-            if (modelEnter == true) return;
-            //$('#bodyContent').removeClass('hide');
-            //$('#dropzone').addClass('hide');
-        })
-    ;
-
-    $('#fileUploadModal')
-        .on('dragleave', function (e) {
-            $('#btnName3').text('model leave:' + ++c);
-
-            e.stopPropagation();
-            e.preventDefault();
-            modelEnter = false;
-        })
-        .on('dragenter', function (e) {
-            $('#btnName4').text('model enter:' + ++d);
-            //$('#bodyContent').addClass('hide');
-            //$('#dropzone').removeClass('hide');
-            modelEnter = true;
         });
-    ;
-    $('.modal-dialog')
-        .on('dragleave', function (e) {
-            $('#btnName5').text('dialog leave:' + ++aa);
-            e.stopPropagation();
-            e.preventDefault();
-        })
-        .on('dragenter', function (e) {
-            $('#btnName6').text('dialog enter:' + ++bb);
-            e.stopPropagation();
-            e.preventDefault();
-        });
-    ;
-
-    $('.modal-content')
-  .on('dragleave', function (e) {
-      e.stopPropagation();
-      e.preventDefault();
-
-  })
-            .on('dragenter', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-            });
-    ;
-
 }
-
-var a = 0, b = 0, c = 0, d = 0, aa=0, bb=0, cc=0, ee=0;
-var modelEnter = false, pageEnter = false;

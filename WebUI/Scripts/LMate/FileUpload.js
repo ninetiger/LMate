@@ -259,8 +259,21 @@ function ReceiptUpload() {
             tpl.find('input.filename').prop('id', descId);
             //$('<input type="hidden" id="' + data.files[0].name + data.files[0].size + '" value="' + descId + '" />').insertAfter(tpl.find('input.filename'));
             data.context = tpl.appendTo('#fileListTBody');
+       
+
+            if (!$('#desc').hasClass('hide')) {
+                $('#desc').addClass('hide');
+                $('#btnName').text('Add more files...');
+                var addFiles = $('#btnAddFiles').detach();
+                var btnUpload = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
+
+                $('#footer-right').prepend(btnUpload);
+                $('#footer-left').append(addFiles);
+                addFiles = null;
+            }
+
             //use button to upload all
-            $('#btnUploadAll').click(function () {
+            $('#btnUploadAll').on('click', function () {
                 data.submit();
             });
         }
@@ -304,12 +317,15 @@ function ReceiptUpload() {
             $('#dropzone').addClass('active');
         }
         , dragover: function (e) {
+            $('#btnName7').text('in dragov:' + ++cc);
             e.preventDefault();
             var dropZone = $('#dropzone'),
             timeout = window.dropZoneTimeout;
             if (!timeout) {
+                $('#btnName').text('aaaaaaaaaa:');
                 dropZone.addClass('in');
             } else {
+                $('#btnName').text('bbbbbbbbbbbb:');
                 clearTimeout(timeout);
             }
             var found = false,
@@ -322,12 +338,15 @@ function ReceiptUpload() {
                 node = node.parentNode;
             } while (node != null);
             if (found) {
-                dropZone.addClass('hover');
-            } else {
+                $('#btnName').text('cccccccccccccc:');
                 dropZone.removeClass('hover');
+            } else {
+                $('#btnName').text('dddddddddddddddd:');
+                dropZone.addClass('in');
             }
             window.dropZoneTimeout = setTimeout(function () {
                 window.dropZoneTimeout = null;
+                $('#btnName').text('eeeeeeeeeeeeeee:');
                 dropZone.removeClass('in hover');
             }, 100);
         }
@@ -336,9 +355,27 @@ function ReceiptUpload() {
     // Prevent the default action when a file is dropped on the window
     $(document)
         .on('drop dragover', function (e) {
-            $('#bodyContent').addClass('hide');
-            $('#dropzone').removeClass('hide');
+                $('#btnName1').text('in:' + ++a);
+            modelEnter = true;
             e.preventDefault();
+
+            var dropZone = $(this), timeout = window.dropZoneTimeout;
+            if (!timeout) {
+                $('#btnName').text('ffffffffffff:');
+            } else {
+                $('#bodyContent').addClass('hide');
+                $('#dropzone').removeClass('hide');
+                $('#dropzone').removeClass('in');
+                $('#btnName').text('ggggggggggggg:');
+                clearTimeout(timeout);
+            }
+
+            window.dropZoneTimeout = setTimeout(function () {
+                window.dropZoneTimeout = null;
+                $('#btnName').text('hhhhhhhhhhhh:');
+                $('#bodyContent').removeClass('hide');
+                $('#dropzone').addClass('hide');
+            }, 100);
         })
         .on('drop', function () {
             if ($('#dropzone').hasClass('active')) {
@@ -347,30 +384,39 @@ function ReceiptUpload() {
             $('#bodyContent').removeClass('hide');
             $('#dropzone').addClass('hide');
         })
+
         .on('dragleave', function (e) {
+            $('#btnName2').text('doc leave:' + ++b);
+
             if (modelEnter == true) return;
-            $('#bodyContent').removeClass('hide');
-            $('#dropzone').addClass('hide');
+            //$('#bodyContent').removeClass('hide');
+            //$('#dropzone').addClass('hide');
         })
     ;
 
-
     $('#fileUploadModal')
         .on('dragleave', function (e) {
+            $('#btnName3').text('model leave:' + ++c);
+
+            e.stopPropagation();
+            e.preventDefault();
             modelEnter = false;
         })
         .on('dragenter', function (e) {
+            $('#btnName4').text('model enter:' + ++d);
+            //$('#bodyContent').addClass('hide');
+            //$('#dropzone').removeClass('hide');
             modelEnter = true;
-            e.stopPropagation();
-            e.preventDefault();
         });
     ;
     $('.modal-dialog')
         .on('dragleave', function (e) {
+            $('#btnName5').text('dialog leave:' + ++aa);
             e.stopPropagation();
             e.preventDefault();
         })
         .on('dragenter', function (e) {
+            $('#btnName6').text('dialog enter:' + ++bb);
             e.stopPropagation();
             e.preventDefault();
         });
@@ -390,5 +436,5 @@ function ReceiptUpload() {
 
 }
 
-
-var modelEnter = false;
+var a = 0, b = 0, c = 0, d = 0, aa=0, bb=0, cc=0, ee=0;
+var modelEnter = false, pageEnter = false;

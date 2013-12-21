@@ -14,20 +14,11 @@
 }
 
     #dropzone.in {
-        /*width: 100%;
-        height: 115px;
-        line-height: 200px;*/
-        /*font-size: 40px;
-        text-align: center;
-        vertical-align: middle;*/
+        background: antiquewhite;
         color: black;
         font-style: normal;
         z-index: 999;
     }
-
-    /*#dropzone.hover {
-        background: lawngreen;
-    }*/
 
     #dropzone.fade {
         -webkit-transition: all 0.3s ease-out;

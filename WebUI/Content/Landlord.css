@@ -106,6 +106,10 @@ input[type="checkbox"].input-validation-error {
     color: green;
 }
 
+.red {
+    color: red;
+}
+
 .gray {
     color: gray;
 }

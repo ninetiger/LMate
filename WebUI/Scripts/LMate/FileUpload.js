@@ -244,22 +244,21 @@ function ReceiptUpload() {
         //formData: { receiptId: $('#ReceiptViewModel_Id').val(), desc: 'aa'},
         add: function (e, data) {
             $('#filelistholder').removeClass('hide');
-            var tpl = $('<tr><td style="width:5%;vertical-align: middle"><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
-                '<td style="width: 40%; vertical-align: middle"><input class="form-control input-sm filename" />' +
-                '<td style="width: 15%; vertical-align: middle"><span id="size" class="gray">300kb</span></td>' +
-                ' <td style="width: 40%; text-align: right"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div></td></tr>');
-            //var tpl = $('<tr><td><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
-            //    '<td><span id="name"></span> - <span id="size" class="gray"></span></td>' +
-            //    '<td><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div></td></tr>');
-            //tpl.find('#name').text(data.files[0].name);
+            var tpl = $('<tr><td style="width:5%;"><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
+                '<td style="width: 40%;"><input class="form-control input-sm filename" />' +
+                '<td style="width: 15%;"><span id="size" class="gray">300kb</span></td>' +
+                '<td id="tdProgress" style="width: 35%;">' +
+                    '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>' +
+                '</td>' +
+                '<td style="width: 5%;">' +
+                    '<span id="fileCancel" class="glyphicon glyphicon-remove-circle red fontSize16"></span>' +
+                '</td>' +
+                '</tr>');
             tpl.find('input.filename').first().val(data.files[0].name);
             tpl.find('#size').text(formatFileSize(data.files[0].size));
-            //var descId = 'desc' + ($('#filelistholder').find('tr').length + 1);
             var descId = 'desc' + addCount++;
             tpl.find('input.filename').prop('id', descId);
-            //$('<input type="hidden" id="' + data.files[0].name + data.files[0].size + '" value="' + descId + '" />').insertAfter(tpl.find('input.filename'));
             data.context = tpl.appendTo('#fileListTBody');
-       
 
             if (!$('#desc').hasClass('hide')) {
                 $('#desc').addClass('hide');
@@ -269,8 +268,8 @@ function ReceiptUpload() {
 
                 $('#footer-right').prepend(btnUpload);
                 $('#footer-left').append(addFiles);
-                addFiles = null;
             }
+            $('#overallbar').css('width', 0);
 
             //use button to upload all
             $('#btnUploadAll').on('click', function () {
@@ -284,8 +283,7 @@ function ReceiptUpload() {
         , done: function (e, data) {
             $('#btnUploadAll').unbind('click');
             data.context.find('div.progress').addClass('fade');
-            //data.context.find('#size').append('<span class="glyphicon glyphicon-ok-sign green fontSize16"></span>');
-            data.context.find('div.progress').replaceWith('<span class="glyphicon glyphicon-ok-sign green fontSize16"></span>');
+            data.context.find('#fileCancel').replaceWith('<span class="glyphicon glyphicon-upload green fontSize16"></span>');
 
             data.context.find('input').addClass('fade');
             data.context.find('input').replaceWith('<span>' + data.files[0].name + '</span>');
@@ -314,7 +312,7 @@ function ReceiptUpload() {
             //$('#globalProgressBar').addClass('fade');
         }
         , drop: function (e, data) {
-            $('#dropzone').addClass('active');
+            //$('#dropzone').addClass('active');
         }
         , dragover: function (e) {
             e.preventDefault();
@@ -358,10 +356,10 @@ function ReceiptUpload() {
             }, 100);
         })
         .on('drop', function () {
-            if ($('#dropzone').hasClass('active')) {
-                $('#desc').addClass('hide');
-            }
-            $('#bodyContent').removeClass('hide');
-            $('#dropzone').addClass('hide');
+            //if ($('#dropzone').hasClass('active')) {
+            //    $('#desc').addClass('hide');
+            //}
+            //$('#bodyContent').removeClass('hide');
+            //$('#dropzone').addClass('hide');
         });
 }

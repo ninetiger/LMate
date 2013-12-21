@@ -45,3 +45,24 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+.progress {
+    margin: 0;
+}
+
+#tdProgress {
+    /*text-align: right;*/
+    /*vertical-align: middle;*/
+}
+
+#fileListTBody tr td {
+     vertical-align: middle;
+}
+
+div.modal-body {
+    padding-bottom: 0;
+}
+
+#overallProgress {
+    height: 5px;
+}

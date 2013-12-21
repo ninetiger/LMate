@@ -91,11 +91,11 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     @{
-                        int imageCount = 0;
-                        if (@Model.ReceiptViewModel.ReceiptImageIds != null)
-                        {
-                            imageCount = @Model.ReceiptViewModel.ReceiptImageIds.Count();
-                        }
+            int imageCount = 0;
+            if (@Model.ReceiptViewModel.ReceiptImageIds != null)
+            {
+                imageCount = @Model.ReceiptViewModel.ReceiptImageIds.Count();
+            }
                     }
                     @if (imageCount > 0)
                     {
@@ -158,6 +158,7 @@
                     </table>
                 </div>
             </div>
+            <div class="progress" id="overallProgress"><div class="progress-bar" id="overallbar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>
             <div class="modal-footer">
                 <span id="footer-left" class="pull-left"></span>
                 <div class="pull-right" id="footer-right">
@@ -182,11 +183,11 @@
     @Scripts.Render("~/bundles/receipts_edit")
     @Scripts.Render("~/bundles/fileupload")
     @*@Scripts.Render("~/bundles/fileupload/bootstrap/BasicPlus/js")
-    <script src="/Scripts/LMate/FileUpload.js"></script>*@
+        <script src="/Scripts/LMate/FileUpload.js"></script>*@
 }
 @section DocumentReady
 {
     docReady();
     ReceiptUpload();
- //  $('#fileUploadModal').modal();
+    $('#fileUploadModal').modal();
 }

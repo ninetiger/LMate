@@ -228,13 +228,22 @@ function formatFileSize(bytes) {
     return (bytes / 1024).toFixed(2) + ' KB';
 }
 
-var submitCount = 1;
-var addCount = 1;
+var submitCount = 1, addCount = 1;
 
 function AfterCancelUpload() {
     if ($('#fileListTBody').find('tr').length <= 0) {
         $('#desc').removeClass('hide');
         $('#filelistholder').addClass('hide');
+
+        $('#btnName').text('Add files...');
+        var addFiles = $('#btnAddFiles').detach();
+        $('#footer-left').empty();
+
+        $('#btnUploadAll').remove();
+        $('#footer-right').prepend(addFiles);
+
+        submitCount = 1;
+        addCount = 1;
     }
 }
 
@@ -250,19 +259,19 @@ function IsPdfFile(name) {
 }
 
 function IsAllowedFileTypes(file) {
-    var imageIcon = '<span class="glyphicon glyphicon-picture fontSize16"></span>';
-    var pdfIcon = '<span class="glyphicon glyphicon-list-alt fontSize16"></span>';
-    var icon = '', type = file.type;
-    if (type.length > 0 && IsImageFile(type)) {
-        icon = imageIcon;
-    } else if (IsPdfFile(file.name)) {
-        icon = pdfIcon;
-    }
-    return icon;
+    return '<span class="glyphicon glyphicon-picture fontSize16"></span>';
+    //var imageIcon = '<span class="glyphicon glyphicon-picture fontSize16"></span>';
+    //var pdfIcon = '<span class="glyphicon glyphicon-list-alt fontSize16"></span>';
+    //var icon = '', type = file.type;
+    //if (type.length > 0 && IsImageFile(type)) {
+    //    icon = imageIcon;
+    //} else if (IsPdfFile(file.name)) {
+    //    icon = pdfIcon;
+    //}
+    //return icon;
 }
 
 function ReceiptUpload() {
-
     $('#fileupload').fileupload({
         dataType: "text",
         dropZone: $('#dropzone'),
@@ -278,9 +287,9 @@ function ReceiptUpload() {
             var file = data.files[0];
             var icon = IsAllowedFileTypes(file);
             if (icon === '') return;
-
             $('#filelistholder').removeClass('hide');
             var descId = 'desc' + addCount++;
+
             var tpl = $('<tr><td style="width:5%;">' + icon + '</td>' +
                 '<td style="width: 40%;"><input id="' + descId + '" class="form-control input-sm filename" value="' + file.name + '"/>' +
                 '<td style="width: 15%;"><span id="size" class="gray">' + formatFileSize(file.size) + '</span></td>' +
@@ -295,7 +304,7 @@ function ReceiptUpload() {
                 $('#desc').addClass('hide');
                 $('#btnName').text('Add more files...');
                 var addFiles = $('#btnAddFiles').detach();
-                var btnUpload = '<button class="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
+                var btnUpload = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
 
                 $('#footer-right').prepend(btnUpload);
                 $('#footer-left').append(addFiles);
@@ -304,7 +313,7 @@ function ReceiptUpload() {
             $('#overallbar').css('width', 0);
 
             //use button to upload all
-            $('.btnUploadAll').on('click', function () {
+            $('#btnUploadAll').on('click', function () {
                 data.submit();
             });
 
@@ -350,9 +359,6 @@ function ReceiptUpload() {
             //alert('always');
             //$('#globalProgressBar').addClass('fade');
         }
-        , drop: function (e, data) {
-            //$('#dropzone').addClass('active');
-        }
         , dragover: function (e) {
             e.preventDefault();
             var dropZone = $('#dropzone'),
@@ -393,12 +399,5 @@ function ReceiptUpload() {
                 $('#bodyContent').removeClass('hide');
                 $('#dropzone').addClass('hide');
             }, 100);
-        })
-        .on('drop', function () {
-            //if ($('#dropzone').hasClass('active')) {
-            //    $('#desc').addClass('hide');
-            //}
-            //$('#bodyContent').removeClass('hide');
-            //$('#dropzone').addClass('hide');
         });
 }

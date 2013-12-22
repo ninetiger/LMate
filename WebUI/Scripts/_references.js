@@ -110,3 +110,4 @@
 /// <reference path="jquery.knob.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="modernizr-2.7.1.js" />
+/// <reference path="lmate/fileuploaddemo.js" />

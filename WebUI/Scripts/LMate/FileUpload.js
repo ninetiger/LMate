@@ -329,6 +329,8 @@ function ReceiptUpload() {
             $('.filename').focusout(function () {
                 if ($(this).val().length < 1) {
                     $(this).val($(this).prop('placeholder'));
+                } else {
+                    $(this).prop('placeholder', $(this).val());
                 }
             });
         }

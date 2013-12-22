@@ -238,7 +238,31 @@ function AfterCancelUpload() {
     }
 }
 
+//return type can be 'i' for image; 'p' for PDF
+function IsImageFile(type) {
+    var pattern = /^image\/(gif|jpeg|png)$/i;
+    return (pattern.test(type));
+}
+
+function IsPdfFile(name) {
+    var pattern = /.\.pdf$/i;
+    return (pattern.test(name));
+}
+
+function IsAllowedFileTypes(file) {
+    var imageIcon = '<span class="glyphicon glyphicon-picture fontSize16"></span>';
+    var pdfIcon = '<span class="glyphicon glyphicon-list-alt fontSize16"></span>';
+    var icon = '', type = file.type;
+    if (type.length > 0 && IsImageFile(type)) {
+        icon = imageIcon;
+    } else if (IsPdfFile(file.name)) {
+        icon = pdfIcon;
+    }
+    return icon;
+}
+
 function ReceiptUpload() {
+
     $('#fileupload').fileupload({
         dataType: "text",
         dropZone: $('#dropzone'),
@@ -251,16 +275,19 @@ function ReceiptUpload() {
         //loadImageFileTypesk /^image\/(gif|jpeg|png)$/ 
         //formData: { receiptId: $('#ReceiptViewModel_Id').val(), desc: 'aa'},
         add: function (e, data) {
-            $('#filelistholder').removeClass('hide');
+            var file = data.files[0];
+            var icon = IsAllowedFileTypes(file);
+            if (icon === '') return;
 
+            $('#filelistholder').removeClass('hide');
             var descId = 'desc' + addCount++;
-            var tpl = $('<tr><td style="width:5%;"><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
-                '<td style="width: 40%;"><input id="' + descId + '" class="form-control input-sm filename" value="' + data.files[0].name + '"/>' +
-                '<td style="width: 15%;"><span id="size" class="gray">' + formatFileSize(data.files[0].size) + '</span></td>' +
+            var tpl = $('<tr><td style="width:5%;">' + icon + '</td>' +
+                '<td style="width: 40%;"><input id="' + descId + '" class="form-control input-sm filename" value="' + file.name + '"/>' +
+                '<td style="width: 15%;"><span id="size" class="gray">' + formatFileSize(file.size) + '</span></td>' +
                 '<td id="tdProgress" style="width: 35%;">' +
                     '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>' +
                 '</td><td style="width: 5%;">' +
-                    '<a class="btnCancel" href="#" onclick="$(this).closest(&#39;tr&#39;).remove(); AfterCancelUpload(); return;"><span class="glyphicon glyphicon-remove-circle red fontSize16"></span></a>' +
+                    '<a class="btnCancel" href="#"><span class="glyphicon glyphicon-remove-circle red fontSize16"></span></a>' +
                 '</td></tr>');
             data.context = tpl.appendTo('#fileListTBody');
 
@@ -268,7 +295,7 @@ function ReceiptUpload() {
                 $('#desc').addClass('hide');
                 $('#btnName').text('Add more files...');
                 var addFiles = $('#btnAddFiles').detach();
-                var btnUpload = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
+                var btnUpload = '<button class="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
 
                 $('#footer-right').prepend(btnUpload);
                 $('#footer-left').append(addFiles);
@@ -277,12 +304,19 @@ function ReceiptUpload() {
             $('#overallbar').css('width', 0);
 
             //use button to upload all
-            $('#btnUploadAll').on('click', function () {
+            $('.btnUploadAll').on('click', function () {
                 data.submit();
+            });
+
+            $('.btnCancel').on('click', function () {
+                $(this).closest('tr').remove();
+                AfterCancelUpload();
             });
         }
         , submit: function (e, data) {
             var id = '#desc' + submitCount++;
+            if (!$(id).val()) { //dont submit if has been canceled
+                e.preventDefault();}
             data.formData = { receiptId: $('#ReceiptViewModel_Id').val(), desc: $(id).val() };
         }
         , done: function (e, data) {

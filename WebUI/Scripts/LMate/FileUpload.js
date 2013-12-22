@@ -291,7 +291,7 @@ function ReceiptUpload() {
             var descId = 'desc' + addCount++;
 
             var tpl = $('<tr><td style="width:5%;">' + icon + '</td>' +
-                '<td style="width: 40%;"><input id="' + descId + '" class="form-control input-sm filename" placeholder="' + file.name + '" value=""/>' + //todo need Modernizr combined with jQuery for browsers not support placeholder eg ie9
+                '<td style="width: 40%;"><input id="' + descId + '" class="form-control input-sm filename" placeholder="' + file.name + '" value="' + file.name + '"/>' + //use placeholder as the hidden field for watermark
                 '<td style="width: 15%;"><span id="size" class="gray">' + formatFileSize(file.size) + '</span></td>' +
                 '<td id="tdProgress" style="width: 35%;">' +
                     '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>' +
@@ -321,11 +321,22 @@ function ReceiptUpload() {
                 $(this).closest('tr').remove();
                 AfterCancelUpload();
             });
+
+            //for watermark effect of the upload file description
+            $('.filename').focusin(function () {
+                $(this).val('');
+            });
+            $('.filename').focusout(function () {
+                if ($(this).val().length < 1) {
+                    $(this).val($(this).prop('placeholder'));
+                }
+            });
         }
         , submit: function (e, data) {
             var id = '#desc' + submitCount++;
             if (!$(id).val()) { //dont submit if has been canceled
-                e.preventDefault();}
+                e.preventDefault();
+            }
             data.formData = { receiptId: $('#ReceiptViewModel_Id').val(), desc: $(id).val() };
         }
         , done: function (e, data) {
@@ -334,8 +345,9 @@ function ReceiptUpload() {
             data.context.find('.btnCancel').replaceWith('<span class="glyphicon glyphicon-upload green fontSize16"></span>');
 
             data.context.find('input').addClass('fade');
-            data.context.find('input').replaceWith('<span>' + data.files[0].name + '</span>');
-
+            var input = data.context.find('input');
+            var fileName = input.val();
+            input.replaceWith('<span>' + fileName + '</span>');
         }
         , progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);

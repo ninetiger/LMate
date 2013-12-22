@@ -153,9 +153,19 @@
                         <br />
                         <div>Having trouble? Switch to basic uploader.</div>
                     </div>
-                    <table class="table table-striped hide" id="filelistholder">
-                        <tbody id="fileListTBody"></tbody>
-                    </table>
+                    <div id="filelistholder" class="hide">
+                        <h5>You can give a description for each of the file upto 50 chars.</h5>
+                        <table class="table table-striped">
+                            <tr>
+                                <th></th>
+                                <th>Description (Max. 50 Chars)</th>
+                                <th>File Size</th>
+                                <th></th>
+                                <th>Status</th>
+                            </tr>
+                            <tbody id="fileListTBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div class="progress" id="overallProgress"><div class="progress-bar" id="overallbar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>

@@ -291,7 +291,7 @@ function ReceiptUpload() {
             var descId = 'desc' + addCount++;
 
             var tpl = $('<tr><td style="width:5%;">' + icon + '</td>' +
-                '<td style="width: 40%;"><input id="' + descId + '" class="form-control input-sm filename" value="' + file.name + '"/>' +
+                '<td style="width: 40%;"><input id="' + descId + '" class="form-control input-sm filename" placeholder="' + file.name + '" value=""/>' + //todo need Modernizr combined with jQuery for browsers not support placeholder eg ie9
                 '<td style="width: 15%;"><span id="size" class="gray">' + formatFileSize(file.size) + '</span></td>' +
                 '<td id="tdProgress" style="width: 35%;">' +
                     '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>' +

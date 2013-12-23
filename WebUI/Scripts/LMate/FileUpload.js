@@ -98,10 +98,12 @@ function ReceiptUpload() {
                 $('#footer-left').append(addFiles);
 
             }
+            $('#overallbar').addClass("noTransition");
             $('#overallbar').css('width', 0);
 
             //use button to upload all
             $('#btnUploadAll').on('click', function () {
+                $('#overallbar').removeClass("noTransition");
                 data.submit();
             });
 

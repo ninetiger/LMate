@@ -140,3 +140,17 @@ input[type="checkbox"].input-validation-error {
 .processing .loading {
     display: block;
 }
+
+.noTransition
+{
+    /*-moz-transition: none !important;
+    -webkit-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;*/
+
+    -webkit-transition: none !important;
+    -moz-transition: none!important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+}

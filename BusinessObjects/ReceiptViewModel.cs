@@ -70,7 +70,5 @@ namespace BusinessObjects
 
         public string AccountTypeName { get; set; }
         public string VendorName { get; set; }
-
-        public int[] ReceiptImageIds { get; set; }
     }
 }

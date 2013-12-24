@@ -25,7 +25,6 @@
 function InitialViewFiles() {
     var placeHolder = '<div id="viewFilesHolder" class="hidden"><div id="fileList"></div></div>';
     $('body').append(placeHolder);
-
     $('#btnViewFiles')
         .popover({
             placement: 'bottom'
@@ -35,14 +34,14 @@ function InitialViewFiles() {
             , container: 'body'
         })
         .click(function (e) {
-
+            InitViewer();
             GetImages();
-
             e.stopPropagation();
         });
 
     $('html').on('click', function (e) {
-        if ($(e.target).closest('.popover').length < 1) {
+        if ($(e.target).closest('.popover').length < 1
+            && $(e.target).closest('div#viewer').length < 1) {
             $('#btnViewFiles').popover('hide');
         }
     });
@@ -50,7 +49,23 @@ function InitialViewFiles() {
     $(window).resize(function () {
         if ($('div.popover').hasClass('in')) {
             $('#btnViewFiles').popover('show');
+            $('div.popover').css('left', (parseFloat($('div.popover').css('left')) + 80));
         }
+    });
+}
+
+function InitViewer() {
+    $('#btnViewFiles').prop('disabled', true).text('Loading...');
+    $("div#viewer").draggable({
+        cancel: 'div#viewerBody',
+        cursor: 'move',
+        create: function () {
+            $(this).css({ 'top':-690, 'left': 25 });
+        }
+    }).css('z-index', 1500).resizable();
+
+    $('div#viewer div#viewerHeader button').click(function() {
+        $('div#viewer').addClass('hidden');
     });
 }
 
@@ -74,10 +89,19 @@ function GetImages() {
             }
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
+
             $('#btnViewFiles').popover('toggle');
+            $('div.popover').css('left', (parseFloat($('div.popover').css('left')) + 80));
+
+            $('div#fileList table tbody tr').click(function () {
+                $('div#viewer').removeClass('hidden');
+            });
         }
         , fail: function () {
             alert("fail");
+        }
+        , complete: function () {
+            $('#btnViewFiles').text('View Files').prop('disabled', false);
         }
     });
 }

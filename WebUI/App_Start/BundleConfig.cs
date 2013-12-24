@@ -88,8 +88,10 @@ namespace WebUI.App_Start
                       "~/Content/themes/base/jquery-ui.css"));
 
             bundles.Add(new ScriptBundle("~/Content/receipts_edit").Include(
-                  "~/Content/css/select2.css",
-                  "~/Content/themes/base/jquery-ui.css"));
+                  "~/Content/css/select2.css"
+                  ,"~/Content/themes/base/jquery-ui.css"
+                  , "~/Content/LMate/Receipts_Edit.css"
+                  ));
         }
     }
 }

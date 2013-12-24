@@ -390,6 +390,7 @@
     <Content Include="Content\FileUpload\img\progressbar.gif" />
     <Content Include="Content\FileUpload\img\progressblue.gif" />
     <Content Include="Content\ie.css" />
+    <Content Include="Content\LMate\Receipts_Edit.css" />
     <Content Include="Content\LMate\FileUploadCustom.css" />
     <Content Include="Content\mobile.css" />
     <Content Include="Content\landlord.css" />

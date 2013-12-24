@@ -157,6 +157,16 @@ namespace WebUI.Controllers
             return null;
         }
 
+        public async Task<string> GetImageAddrsByReceiptId(int receiptId)
+        {
+            string result = string.Empty;
+            if (receiptId > 0)
+            {
+                result = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId);
+            }
+            return result;
+        }
+
         [HttpPost]
         public async Task UploadFiles(int? receiptId, string desc, IEnumerable<HttpPostedFileBase> files)
         {

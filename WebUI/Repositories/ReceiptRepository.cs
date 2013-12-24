@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using BusinessObjects;
 using DataObjects.EntityFramework;
 using DataObjects.EntityFramework.Implementation;
@@ -188,6 +189,17 @@ namespace WebUI.Repositories
                 throw new Exception("Duplicated receiptImage id!!!");
 
             return receiptImages.Count() == 1 ? receiptImages.ToArray()[0] : null;
+        }
+
+        public async Task<string> GetImageAddrsByReceiptId(int receiptId)
+        {
+            var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+            var sb = new StringBuilder();
+            foreach (var image in receipt.ReceiptImages)
+            {
+                sb.Append(image.Id.ToString(CultureInfo.InvariantCulture) + ',' + image.Description + ';');
+            }
+            return sb.ToString();
         }
 
         private bool _disposed;

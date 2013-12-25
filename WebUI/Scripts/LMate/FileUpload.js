@@ -18,7 +18,7 @@ function formatFileSize(bytes) {
 var submitCount = 1, addCount = 1;
 
 function AfterCancelUpload() {
-    if ($('#fileListTBody').find('tr').length <= 0) {
+    if ($('#fileListTBody').find('tr').length <= 1) { //1 coz of the header row
         $('#desc').removeClass('hide');
         $('#filelistholder').addClass('hide');
 

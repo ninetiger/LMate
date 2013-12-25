@@ -1,13 +1,18 @@
 .viewer {
     -ms-touch-action: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /*z-index: 50;*/
 }
 
 .iviewer_common {
-    position:absolute;
-    bottom:10px;
-    border: 1px  solid #000;
+    position: absolute;
+    right: 5px;
+    bottom: 150px;
+    border: 1px solid #000;
     height: 28px;
-    z-index: 5000;
+    z-index: 1040;
 }
 
 .iviewer_cursor {
@@ -26,40 +31,41 @@
 }
 
 .iviewer_zoom_in {
-    left: 20px;
+    bottom: 348px;
     background: url(img/iviewer.zoom_in.gif);
 }
 
 .iviewer_zoom_out {
-    left: 55px;
+    bottom: 315px;
     background: url(img/iviewer.zoom_out.gif);
 }
 
 .iviewer_zoom_zero {
-    left: 90px;
+    /*left: 90px;*/
+    bottom: 282px;
     background: url(img/iviewer.zoom_zero.gif);
 }
 
 .iviewer_zoom_fit {
-    left: 125px;
+    bottom: 249px;
     background: url(img/iviewer.zoom_fit.gif);
 }
 
 .iviewer_zoom_status {
-    left: 160px;
+    bottom: 216px;
     font: 1em/28px Sans;
     color: #000;
     background-color: #fff;
     text-align: center;
-    width: 60px;
+    width: 30px;
 }
 
 .iviewer_rotate_left {
-    left: 227px;
+    bottom: 183px;
     background: #fff url(img/iviewer.rotate_left.png) center center no-repeat;
 }
 
 .iviewer_rotate_right {
-    left: 262px;
+    bottom: 150px;
     background: #fff url(img/iviewer.rotate_right.png) center center no-repeat;
 }

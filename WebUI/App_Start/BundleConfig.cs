@@ -39,7 +39,8 @@ namespace WebUI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/receipts_edit").Include(
                 "~/Scripts/jquery-ui-{version}.js",
                 "~/Scripts/select2.js",
-                "~/Scripts/LMate/Receipts_Edit.js"
+                "~/Scripts/LMate/Receipts_Edit.js",
+                "~/Scripts/iViewer/jquery.iviewer.js"
             ));
 
             //BasicPlus js
@@ -91,6 +92,7 @@ namespace WebUI.App_Start
                   "~/Content/css/select2.css"
                   ,"~/Content/themes/base/jquery-ui.css"
                   , "~/Content/LMate/Receipts_Edit.css"
+                  , "~/Scripts/iViewer/jquery.iviewer.css"
                   ));
         }
     }

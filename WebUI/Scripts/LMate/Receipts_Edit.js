@@ -20,6 +20,7 @@
     });
 
     InitialViewFiles();
+    InitImageViewer();
 }
 
 function InitialViewFiles() {
@@ -35,7 +36,7 @@ function InitialViewFiles() {
         })
         .click(function (e) {
             InitViewer();
-            GetImages();
+            GetImagesForPopover();
             e.stopPropagation();
         });
 
@@ -60,16 +61,19 @@ function InitViewer() {
         cancel: 'div#viewerBody',
         cursor: 'move',
         create: function () {
-            $(this).css({ 'top':-690, 'left': 25 });
+            $(this).css({ 'top': -690, 'left': 25 });
         }
-    }).css('z-index', 1500).resizable();
+    }).css('z-index', 1500).resizable({
+        minHeight: 250
+        , minWidth: 300
+    });
 
-    $('div#viewer div#viewerHeader button').click(function() {
+    $('div#viewer div#viewerHeader button').click(function () {
         $('div#viewer').addClass('hidden');
     });
 }
 
-function GetImages() {
+function GetImagesForPopover() {
     $.ajax({
         url: "/receipts/GetImageAddrsByReceiptId",
         dataType: "text",
@@ -104,4 +108,33 @@ function GetImages() {
             $('#btnViewFiles').text('View Files').prop('disabled', false);
         }
     });
+}
+
+function InitImageViewer() {
+    var iv1 = $("#imageViewer").iviewer({
+        //src: "/images/testimage.jpg",
+        src: "/Receipts/GetImage?imageId=9",
+        update_on_resize: false,
+        zoom_animation: false,
+        mousewheel: false,
+        onMouseMove: function (ev, coords) { },
+        onStartDrag: function (ev, coords) { return false; }, //this image will not be dragged
+        onDrag: function (ev, coords) { }
+    });
+
+    $("#in").click(function () { iv1.iviewer('zoom_by', 1); });
+    $("#out").click(function () { iv1.iviewer('zoom_by', -1); });
+    $("#fit").click(function () { iv1.iviewer('fit'); });
+    $("#orig").click(function () { iv1.iviewer('set_zoom', 100); });
+    $("#update").click(function () { iv1.iviewer('update_container_info'); });
+
+    //var iv2 = $("#viewer2").iviewer(
+    //{
+    //    src: "test_image2.jpg"
+    //});
+
+    //$("#chimg").click(function () {
+    //    iv2.iviewer('loadImage', "test_image.jpg");
+    //    return false;
+    //});
 }

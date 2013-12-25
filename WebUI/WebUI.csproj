@@ -488,6 +488,7 @@
     <Content Include="Scripts\DataTables-1.9.4\extras\ColVis\media\js\ColVis.min.js.gz" />
     <Content Include="Scripts\DataTables-1.9.4\extras\ColReorder\media\js\ColReorder.min.js.gz" />
     <Content Include="Scripts\DataTables-1.9.4\extras\AutoFill\media\js\AutoFill.min.js.gz" />
+    <Content Include="Scripts\iViewer\iviewer.jquery.json" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
@@ -533,6 +534,17 @@
     <Content Include="Scripts\FileUpload\jqueryui\jquery.ui.widget.js" />
     <Content Include="Scripts\FileUpload\load-image.debug.js" />
     <Content Include="Scripts\FileUpload\tmpl.debug.js" />
+    <Content Include="Scripts\iViewer\img\grab.cur" />
+    <Content Include="Scripts\iViewer\img\hand.cur" />
+    <Content Include="Scripts\iViewer\img\iviewer.rotate_left.png" />
+    <Content Include="Scripts\iViewer\img\iviewer.rotate_right.png" />
+    <Content Include="Scripts\iViewer\img\iviewer.zoom_fit.gif" />
+    <Content Include="Scripts\iViewer\img\iviewer.zoom_in.gif" />
+    <Content Include="Scripts\iViewer\img\iviewer.zoom_out.gif" />
+    <Content Include="Scripts\iViewer\img\iviewer.zoom_zero.gif" />
+    <Content Include="Scripts\iViewer\jquery.iviewer.css" />
+    <Content Include="Scripts\iViewer\jquery.iviewer.js" />
+    <Content Include="Scripts\iViewer\jquery.iviewer.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />

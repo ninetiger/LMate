@@ -34,8 +34,10 @@ function InitialViewFiles() {
             , container: 'body'
         })
         .click(function (e) {
-            InitViewer();
+            $('#btnViewFiles').prop('disabled', true).text('Loading...'); //todo need image
             GetImagesForPopover();
+            InitDraggableViewer();
+            InitImageViewer();
             e.stopPropagation();
         });
 
@@ -54,9 +56,7 @@ function InitialViewFiles() {
     });
 }
 
-function InitViewer() {
-    $('#btnViewFiles').prop('disabled', true).text('Loading...'); //todo need image
-
+function InitDraggableViewer() {
     var offsetBottom = 75;
     var sidesMargin = 11;
     $("div#viewDragger").draggable({
@@ -105,11 +105,12 @@ function GetImagesForPopover() {
             $('#btnViewFiles').popover('toggle');
             $('div.popover').css('left', (parseFloat($('div.popover').css('left')) + 80));
 
+            // popover row click event
             $('div#fileList table tbody tr').click(function () {
+                $("div#viewerBody").iviewer('loadImage', $(this).find('img').prop('src'));
                 $('div#viewDragger').removeClass('hidden');
             });
 
-            InitImageViewer();
         }
         , fail: function () {
             alert("fail");
@@ -121,10 +122,8 @@ function GetImagesForPopover() {
 }
 
 function InitImageViewer() {
-    //$('div#viewerBody').css({ 'width': 700, 'height': '450px !important ' });
     var iv1 = $("div#viewerBody").iviewer({
         //src: "/images/testimage.jpg",
-        src: "/Receipts/GetImage?imageId=9",
         update_on_resize: true,
         zoom_animation: false,
         mousewheel: false,
@@ -139,15 +138,6 @@ function InitImageViewer() {
     //$("#fit").click(function () { iv1.iviewer('fit'); });
     //$("#orig").click(function () { iv1.iviewer('set_zoom', 100); });
     //$("#update").click(function () { iv1.iviewer('update_container_info'); });
-
-
-    //var iv2 = $("#viewer2").iviewer(
-    //{
-    //    src: "test_image2.jpg"
-    //});
-
-    //$("#chimg").click(function () {
-    //    iv2.iviewer('loadImage', "test_image.jpg");
-    //    return false;
-    //});
 }
+
+//var dragger = '<div id="viewDragger" class="ui-widget-content"><div id="viewerHeader"><h5 id="title"class="pull-left">File Viewer</h5><button class="pull-right"><b>X</b></button><div class="clearfix"></div><hr /></div><div id="viewerBody"><div id="imageViewer" class="viewer"></div><input id="imageSrc" type="hidden" value=""/></div><div id="viewerFooter"><hr /></div></div>';

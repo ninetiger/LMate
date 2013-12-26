@@ -15,7 +15,7 @@ div.popover {
     }
 
 div#viewDragger {
-    width: 800px;
+    width: 800px; /*change the size also need to change div#viewerBody below*/
     height: 500px;
 
     margin: 0;
@@ -48,8 +48,8 @@ div#viewDragger hr {
 div#viewerBody {
     position: relative;
     background-color: violet;
-    width: 100%;
-    height: 100%;
+    width: 800px; /*use the same size as div#viewDragger*/
+    height: 500px;
     margin: 5px 5px 0 5px; /*todo need a way that nonIE use this line, IE use the line before*/
     /*margin-top: 10px;*/ /*for IE only*/ 
     /*  below is the jquery way in case calc is not browser compatable well.

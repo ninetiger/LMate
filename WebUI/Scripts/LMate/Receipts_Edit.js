@@ -74,8 +74,8 @@ function InitDraggableViewer() {
             $("div#viewerBody").css({ 'height': h - offsetBottom, 'width': w - sidesMargin });
         }
     }).css('z-index', 1500).resizable({
-        minHeight: 250
-        , minWidth: 300
+        minHeight: 350
+        , minWidth: 250
         , resize: function (event, ui) {
             $("div#viewerBody")
                 .height(ui.size.height - offsetBottom)
@@ -101,16 +101,16 @@ function navigateFiles(isNext) {
     currentImg = currentImg.replace(window.location.protocol + '//' + window.location.host, '');
     var currentTr = $('div#fileList table tbody tr td').find('img[src="' + currentImg + '"]').parent().parent();
 
-    var nextTr;
+    var nextTr, tr =$('div#fileList table tbody tr');
     if (isNext) {
         nextTr = currentTr.next();
         if (nextTr[0] == null) { //get the 1st if it's the end
-            nextTr =  $('div#fileList table tbody tr').first();
+            nextTr = tr.first();
         }
     } else {
         nextTr = currentTr.prev();
-        if (nextTr[0] == null) { //get the 1st if it's the end
-            nextTr = $('div#fileList table tbody tr').last();
+        if (nextTr[0] == null) {
+            nextTr = tr.last();
         }
     }
 
@@ -176,6 +176,7 @@ function setButtonLoading(isLoading) {
     }
 }
 
+
 function InitImageViewer() {
     var iv1 = $("div#viewerBody").iviewer({
         //src: "/images/testimage.jpg",
@@ -183,7 +184,7 @@ function InitImageViewer() {
         zoom_animation: false,
         mousewheel: false,
         onMouseMove: function (ev, coords) { },
-        onStartDrag: function (ev, coords) { }, //this image will not be dragged
+        onStartDrag: function (ev, coords) { }, //this image will not be dragged if set: return false;
         onDrag: function (ev, coords) { },
         //onFinishLoad: function (ev, src) { $(this).iviewer('center'); }
     });

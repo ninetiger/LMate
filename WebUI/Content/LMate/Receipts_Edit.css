@@ -78,11 +78,11 @@ div#viewerFooter {
         }
 
         div#viewerFooter button#prev {
-            left: 85%;
+            left: calc(100% - 90px);
         }
 
         div#viewerFooter button#next {
-            left: calc(85% + 40px);
+            left: calc(100% - 50px);
         }
 
 div#fileList table tbody tr {

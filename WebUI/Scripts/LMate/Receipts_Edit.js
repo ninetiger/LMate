@@ -20,7 +20,6 @@
     });
 
     InitialViewFiles();
-    InitImageViewer();
 }
 
 function InitialViewFiles() {
@@ -42,7 +41,7 @@ function InitialViewFiles() {
 
     $('html').on('click', function (e) {
         if ($(e.target).closest('.popover').length < 1
-            && $(e.target).closest('div#viewer').length < 1) {
+            && $(e.target).closest('div#viewDragger').length < 1) {
             $('#btnViewFiles').popover('hide');
         }
     });
@@ -56,20 +55,29 @@ function InitialViewFiles() {
 }
 
 function InitViewer() {
-    $('#btnViewFiles').prop('disabled', true).text('Loading...');
-    $("div#viewer").draggable({
+    $('#btnViewFiles').prop('disabled', true).text('Loading...'); //todo need image
+
+    var offsetBottom = 75;
+    var sidesMargin = 11;
+    $("div#viewDragger").draggable({
         cancel: 'div#viewerBody',
         cursor: 'move',
         create: function () {
             $(this).css({ 'top': -690, 'left': 25 });
+            $("div#viewerBody").css({'height': '-='+offsetBottom+'px', 'width' : '-='+sidesMargin +'px'});
         }
     }).css('z-index', 1500).resizable({
         minHeight: 250
         , minWidth: 300
+        , resize: function (event, ui) {
+            $("div#viewerBody")
+                .height(ui.size.height - offsetBottom)
+                .width(ui.size.width-sidesMargin);
+        }
     });
 
-    $('div#viewer div#viewerHeader button').click(function () {
-        $('div#viewer').addClass('hidden');
+    $('div#viewDragger div#viewerHeader button').click(function () {
+        $('div#viewDragger').addClass('hidden');
     });
 }
 
@@ -98,8 +106,10 @@ function GetImagesForPopover() {
             $('div.popover').css('left', (parseFloat($('div.popover').css('left')) + 80));
 
             $('div#fileList table tbody tr').click(function () {
-                $('div#viewer').removeClass('hidden');
+                $('div#viewDragger').removeClass('hidden');
             });
+
+            InitImageViewer();
         }
         , fail: function () {
             alert("fail");
@@ -111,22 +121,25 @@ function GetImagesForPopover() {
 }
 
 function InitImageViewer() {
-    var iv1 = $("#imageViewer").iviewer({
+    //$('div#viewerBody').css({ 'width': 700, 'height': '450px !important ' });
+    var iv1 = $("div#viewerBody").iviewer({
         //src: "/images/testimage.jpg",
         src: "/Receipts/GetImage?imageId=9",
-        update_on_resize: false,
+        update_on_resize: true,
         zoom_animation: false,
         mousewheel: false,
         onMouseMove: function (ev, coords) { },
-        onStartDrag: function (ev, coords) { return false; }, //this image will not be dragged
-        onDrag: function (ev, coords) { }
+        onStartDrag: function (ev, coords) { }, //this image will not be dragged
+        onDrag: function (ev, coords) { },
+        //onFinishLoad: function (ev, src) { $(this).iviewer('center'); }
     });
 
-    $("#in").click(function () { iv1.iviewer('zoom_by', 1); });
-    $("#out").click(function () { iv1.iviewer('zoom_by', -1); });
-    $("#fit").click(function () { iv1.iviewer('fit'); });
-    $("#orig").click(function () { iv1.iviewer('set_zoom', 100); });
-    $("#update").click(function () { iv1.iviewer('update_container_info'); });
+    //$("#in").click(function () { iv1.iviewer('zoom_by', 1); });
+    //$("#out").click(function () { iv1.iviewer('zoom_by', -1); });
+    //$("#fit").click(function () { iv1.iviewer('fit'); });
+    //$("#orig").click(function () { iv1.iviewer('set_zoom', 100); });
+    //$("#update").click(function () { iv1.iviewer('update_container_info'); });
+
 
     //var iv2 = $("#viewer2").iviewer(
     //{

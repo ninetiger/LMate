@@ -1,10 +1,7 @@
-﻿using System.Data.Entity;
-using DataObjects.EntityFramework;
+﻿using DataObjects.EntityFramework;
 using DataObjects.EntityFramework.Implementation;
-using DataObjects.Shared;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System.Data.Entity;
 
 
 namespace DataObjects.Tests

@@ -9,191 +9,191 @@
     <h2>Edit Receipt @Model.ReceiptViewModel.Description</h2>
 </div>
 @Html.ValidationSummary()
-<div id="panel" class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title pull-left">Edit Receipt</h3>
-        <button class="pull-right" type="button" data-toggle="modal" data-target="#fileUploadModal">Upload Files</button>
-        <button class="pull-right" type="button" data-toggle="modal" data-target="#fileUploadModal">Use Existing Files</button>
-        <button class="pull-right" id="btnViewFiles" type="button">View Files</button>
-        <div class="clearfix"></div>
-    </div>
-    <div class="panel-body">
-        @using (Html.BeginForm("Edit", "Receipts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <div id="panel" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title pull-left">Edit Receipt</h3>
+            <button class="pull-right" type="button" data-toggle="modal" data-target="#fileUploadModal">Upload Files</button>
+            <button class="pull-right" type="button" data-toggle="modal" data-target="#fileUploadModal">Use Existing Files</button>
+            <button class="pull-right" id="btnViewFiles" type="button">View Files</button>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("Edit", "Receipts", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            @Html.HiddenFor(x => x.ReceiptViewModel.Id)
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.Description)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.Description, new { @class = "form-control input-sm" })
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.PurchaseDate)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.PurchaseDate, "{0:d MMM yyyy}", new { @class = "form-control input-sm" })
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.VendorId)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.VendorId, new { @class = "form-control input-sm" })
+        @Html.HiddenFor(x => x.ReceiptViewModel.Id)
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.Description)
+                @Html.TextBoxFor(x => x.ReceiptViewModel.Description, new { @class = "form-control input-sm" })
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.PurchaseDate)
+                @Html.TextBoxFor(x => x.ReceiptViewModel.PurchaseDate, "{0:d MMM yyyy}", new { @class = "form-control input-sm" })
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.VendorId)
+                @Html.TextBoxFor(x => x.ReceiptViewModel.VendorId, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.Price)
+                <div class="input-group">
+                    <span class="input-group-addon">$</span>
+                    @Html.TextBoxFor(x => x.ReceiptViewModel.Price, "{0:#0.00}", new { @class = "form-control input-sm" })
                 </div>
             </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.Price)
-                    <div class="input-group">
-                        <span class="input-group-addon">$</span>
-                        @Html.TextBoxFor(x => x.ReceiptViewModel.Price, "{0:#0.00}", new { @class = "form-control input-sm" })
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.GstRate)
-                    <div class="input-group">
-                        @Html.TextBoxFor(x => x.ReceiptViewModel.GstRate, "{0:#0}", new { @class = "form-control input-sm" })
-                        <span class="input-group-addon">%</span>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.AccountTypeId)
-                    @Html.DropDownListFor(x => x.ReceiptViewModel.AccountTypeId, Model.AccountTypeSelectList, string.Empty, new { style = "width: 100%" })
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.GstRate)
+                <div class="input-group">
+                    @Html.TextBoxFor(x => x.ReceiptViewModel.GstRate, "{0:#0}", new { @class = "form-control input-sm" })
+                    <span class="input-group-addon">%</span>
                 </div>
             </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.Reference)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.Reference, new { @class = "form-control input-sm" })
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    <br />
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            @Html.CheckBoxFor(x => x.ReceiptViewModel.IsBulk)
-                        </span>
-                        @Html.LabelFor(x => x.ReceiptViewModel.IsBulk, new { @class = "form-control input-sm" })
-                    </div><!-- /input-group -->
-                </div>
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.CurrencyId)
-                    @Html.DropDownListFor(x => x.ReceiptViewModel.CurrencyId, Model.CurrencySelectList, string.Empty, new { style = "width: 100%" })
-                </div>
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.AccountTypeId)
+                @Html.DropDownListFor(x => x.ReceiptViewModel.AccountTypeId, Model.AccountTypeSelectList, string.Empty, new { style = "width: 100%" })
             </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.ReceiptCategoryId)
-                    @Html.DropDownListFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, string.Empty, new { style = "width: 100%" })
-                    @*@Html.ListBoxFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, new { style = "width: 100%" }) //for multi select*@
-                </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.Reference)
+                @Html.TextBoxFor(x => x.ReceiptViewModel.Reference, new { @class = "form-control input-sm" })
             </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    @Html.Label("Image")
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    div to delete
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    @Html.Label("Upload new receipt image")
-                    <input type="file" name="Image" />
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.Note)
-                    @Html.TextAreaFor(x => x.ReceiptViewModel.Note, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    <input type="submit" value="Save" />
-                    @Html.ActionLink("Cancel and return to List", "Index")
-                </div>
-            </div>
-        }
-    </div>
-</div>
-<div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 660px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><span class="glyphicon glyphicon-camera fontSize16"></span> Upload images or PDFs</h4>
-            </div>
-            <div class="modal-body" style="max-height: 350px; overflow-y: auto">
-                <div id="dropzone" class="well hide">Drop files here</div>
-                <div id="bodyContent">
-                    <div id="desc">
-                        <h5>Attach uploaded images or PDFs to this receipt as evidence.</h5>
-                        <h5>You can also drag & drop files into this dialog.</h5>
-                        <h5>Attachment type can be jpg, jpeg or pdf.</h5>
-                        <br />
-                        <div>Having trouble? Switch to basic uploader.</div>
-                    </div>
-                    <div id="filelistholder" class="hide">
-                        <h5>You can give a description for each of the file upto 50 chars.</h5>
-                        <table class="table table-striped">
-                            <tr>
-                                <th></th>
-                                <th>Description (Max. 50 Chars)</th>
-                                <th>File Size</th>
-                                <th></th>
-                                <th>Status</th>
-                            </tr>
-                            <tbody id="fileListTBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="progress" id="overallProgress"><div class="progress-bar" id="overallbar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>
-            <div class="modal-footer">
-                <span id="footer-left" class="pull-left"></span>
-                <div class="pull-right" id="footer-right">
-                    <span id="btnAddFiles" class="btn btn-info fileinput-button btn-sm">
-                        <i class="icon-plus icon-white"></i>
-                        <span id="btnName">Add files...</span>
-                        <input type="file" id="fileupload" name="files" multiple> @*ccept="image/*"*@
+            <div class="col-xs-6 col-sm-4">
+                <br />
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        @Html.CheckBoxFor(x => x.ReceiptViewModel.IsBulk)
                     </span>
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                </div>
+                    @Html.LabelFor(x => x.ReceiptViewModel.IsBulk, new { @class = "form-control input-sm" })
+                </div><!-- /input-group -->
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<div id="viewer" class="ui-widget-content hidden">
-    <div id="viewerHeader">
-        <h5 class="pull-left">File Viewer</h5>
-        <button class="pull-right"><b>X</b></button>
-        <div class="clearfix"></div>
-        <hr />
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.CurrencyId)
+                @Html.DropDownListFor(x => x.ReceiptViewModel.CurrencyId, Model.CurrencySelectList, string.Empty, new { style = "width: 100%" })
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.ReceiptCategoryId)
+                @Html.DropDownListFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, string.Empty, new { style = "width: 100%" })
+                @*@Html.ListBoxFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, new { style = "width: 100%" }) //for multi select*@
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                @Html.Label("Image")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                div to delete
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                @Html.Label("Upload new receipt image")
+                <input type="file" name="Image" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(x => x.ReceiptViewModel.Note)
+                @Html.TextAreaFor(x => x.ReceiptViewModel.Note, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-4">
+                <input type="submit" value="Save" />
+                @Html.ActionLink("Cancel and return to List", "Index")
+            </div>
+        </div>
+        }
+        </div>
     </div>
-    <div id="viewerBody">
-        <div id="imageViewer" class="viewer"></div>
+    <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 660px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-camera fontSize16"></span> Upload images or PDFs</h4>
+                </div>
+                <div class="modal-body" style="max-height: 350px; overflow-y: auto">
+                    <div id="dropzone" class="well hide">Drop files here</div>
+                    <div id="bodyContent">
+                        <div id="desc">
+                            <h5>Attach uploaded images or PDFs to this receipt as evidence.</h5>
+                            <h5>You can also drag & drop files into this dialog.</h5>
+                            <h5>Attachment type can be jpg, jpeg or pdf.</h5>
+                            <br />
+                            <div>Having trouble? Switch to basic uploader.</div>
+                        </div>
+                        <div id="filelistholder" class="hide">
+                            <h5>You can give a description for each of the file upto 50 chars.</h5>
+                            <table class="table table-striped">
+                                <tr>
+                                    <th></th>
+                                    <th>Description (Max. 50 Chars)</th>
+                                    <th>File Size</th>
+                                    <th></th>
+                                    <th>Status</th>
+                                </tr>
+                                <tbody id="fileListTBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress" id="overallProgress"><div class="progress-bar" id="overallbar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="sr-only">0% Complete</span></div></div>
+                <div class="modal-footer">
+                    <span id="footer-left" class="pull-left"></span>
+                    <div class="pull-right" id="footer-right">
+                        <span id="btnAddFiles" class="btn btn-info fileinput-button btn-sm">
+                            <i class="icon-plus icon-white"></i>
+                            <span id="btnName">Add files...</span>
+                            <input type="file" id="fileupload" name="files" multiple> @*ccept="image/*"*@
+                        </span>
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="viewDragger" class="ui-widget-content">
+        <div id="viewerHeader">
+            <h5 id="title"class="pull-left">File Viewer</h5>
+            <button class="pull-right"><b>X</b></button>
+            <div class="clearfix"></div>
+            <hr />
+        </div>
+        <div id="viewerBody">
+            <div id="imageViewer" class="viewer"></div>
+        </div>
+        <div id="viewerFooter">
+            <hr />
+        </div>
     </div>
-    <div id="viewerFooter">
-        <hr />
-    </div>
-</div>
-@section Contents{
-    @Styles.Render("~/Content/receipts_edit")
-    @Styles.Render("~/Content/fileupload")
-    @*@Styles.Render("~/bundles/fileupload/bootstrap/BasicPlus/css")*@
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/jquery-ui-min")
-    @Scripts.Render("~/bundles/receipts_edit")
-    @Scripts.Render("~/bundles/fileupload")
-    @*@Scripts.Render("~/bundles/fileupload/bootstrap/BasicPlus/js")
-        <script src="/Scripts/LMate/FileUpload.js"></script>*@
-}
-@section DocumentReady
+    @section Contents{
+        @Styles.Render("~/Content/receipts_edit")
+        @Styles.Render("~/Content/fileupload")
+        @*@Styles.Render("~/bundles/fileupload/bootstrap/BasicPlus/css")*@
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jquery-ui-min")
+        @Scripts.Render("~/bundles/receipts_edit")
+        @Scripts.Render("~/bundles/fileupload")
+        @*@Scripts.Render("~/bundles/fileupload/bootstrap/BasicPlus/js")
+            <script src="/Scripts/LMate/FileUpload.js"></script>*@
+    }
+    @section DocumentReady
 {
-    docReady();
-    ReceiptUpload();
-    //$('#fileUploadModal').modal();
-}
+        docReady();
+        ReceiptUpload();
+        //$('#fileUploadModal').modal();
+    }

@@ -33,13 +33,13 @@ function InitialViewFiles() {
             , trigger: 'manual'
             , container: 'body'
         })
-        .click(function (e) {            
+        .click(function (e) {
             setButtonLoading(true);
             GetImagesForPopover();
             InitDraggableViewer();
             InitImageViewer();
             e.stopPropagation();
-    });
+        });
 
     $('html').on('click', function (e) {
         if ($('div.popover').hasClass('in')) { //hide the popover if clicked elsewhere
@@ -59,7 +59,7 @@ function InitialViewFiles() {
 }
 
 function InitDraggableViewer() {
-    var offsetBottom = 75;
+    var offsetBottom = 85;
     var sidesMargin = 11;
     $("div#viewDragger").draggable({
         cancel: 'div#viewerBody',
@@ -71,7 +71,7 @@ function InitDraggableViewer() {
             var left = ($(window).width() - w) / 2, top = ($(window).height() - h) / 2;
             $(this).css({ 'position': 'fixed', 'left': left + 'px', 'top': top + 'px' });
 
-            $("div#viewerBody").css({'height': h - offsetBottom, 'width' : w - sidesMargin});
+            $("div#viewerBody").css({ 'height': h - offsetBottom, 'width': w - sidesMargin });
         }
     }).css('z-index', 1500).resizable({
         minHeight: 250
@@ -79,13 +79,46 @@ function InitDraggableViewer() {
         , resize: function (event, ui) {
             $("div#viewerBody")
                 .height(ui.size.height - offsetBottom)
-                .width(ui.size.width-sidesMargin);
+                .width(ui.size.width - sidesMargin);
         }
+    });
+
+    $('div#viewerFooter button#prev').click(function () {
+        navigateFiles(false);
+    });
+
+    $('div#viewerFooter button#next').click(function () {
+        navigateFiles(true);
     });
 
     $('div#viewDragger div#viewerHeader button').click(function () {
         $('div#viewDragger').addClass('hidden');
     });
+}
+
+function navigateFiles(isNext) {
+    var currentImg = $('div#viewerBody img').prop('src');
+    currentImg = currentImg.replace(window.location.protocol + '//' + window.location.host, '');
+    var currentTr = $('div#fileList table tbody tr td').find('img[src="' + currentImg + '"]').parent().parent();
+
+    var nextTr;
+    if (isNext) {
+        nextTr = currentTr.next();
+        if (nextTr[0] == null) { //get the 1st if it's the end
+            nextTr =  $('div#fileList table tbody tr').first();
+        }
+    } else {
+        nextTr = currentTr.prev();
+        if (nextTr[0] == null) { //get the 1st if it's the end
+            nextTr = $('div#fileList table tbody tr').last();
+        }
+    }
+
+    var nextImg = nextTr.find('img');
+    var nextDesc = nextTr.find('p').text();
+
+    $("div#viewerBody").iviewer('loadImage', nextImg.prop('src'));
+    $('div#viewerFooter label#fileDesc').text(nextDesc);
 }
 
 function GetImagesForPopover() {
@@ -105,6 +138,7 @@ function GetImagesForPopover() {
                 var arr = imageArray[i].split(",");
                 popoverContent += '<tr><td style="width:10%"><img width="60" height="60" class="img-rounded" src="/Receipts/GetImage?imageId=';
                 popoverContent += arr[0] + '" alt="ReceiptImage" /></td><td style="width:80%"><p>' + arr[1] + '</p></td><td style="width:10%">Update<br />Delete</td></tr>';
+                //todo alt should set to desc, but need to test for invalid chars not break html
             }
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
@@ -118,8 +152,9 @@ function GetImagesForPopover() {
 
             // popover row click event
             $('div#fileList table tbody tr').click(function () {
-                    $("div#viewerBody").iviewer('loadImage', $(this).find('img').prop('src'));
-                    $('div#viewDragger').removeClass('hidden');
+                $("div#viewerBody").iviewer('loadImage', $(this).find('img').prop('src'));
+                $('div#viewerFooter label#fileDesc').text($(this).find('p').text());
+                $('div#viewDragger').removeClass('hidden');
             });
         }
         , fail: function () {
@@ -135,7 +170,7 @@ function setButtonLoading(isLoading) {
     if (isLoading) {
         var w = $('button#btnViewFiles').css('width'); //when text is set to empty, have to set w and h
         var h = $('button#btnViewFiles').css('height');
-        $('button#btnViewFiles').prop('disabled', true).addClass('buttonLoading').css({ 'width': w , 'height': h}).text('');
+        $('button#btnViewFiles').prop('disabled', true).addClass('buttonLoading').css({ 'width': w, 'height': h }).text('');
     } else {
         $('button#btnViewFiles').removeClass('buttonLoading').text('View Files').prop('disabled', false);
     }

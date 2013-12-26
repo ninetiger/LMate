@@ -49,20 +49,41 @@ div#viewDragger hr {
 
 div#viewerBody {
     position: relative;
-    /*background-color: violet;*/
     margin: 5px 5px 0 5px; /*todo need a way that nonIE use this line, IE use the line before*/
     /*margin-top: 10px;*/ /*for IE only*/
     /*  below is the jquery way in case calc is not browser compatable well.
         $('#yourEl').css('width', '100%').css('width', '-=100px');*/
     overflow: hidden;
+
+    /*background-color: violet;*/
 }
 
 div#viewerFooter {
     position: absolute;
-    bottom: 2.2em;
+    bottom: 2.8em;
     width: 100%;
 }
 
+    div#viewerFooter button {
+        position:inherit;
+        width: 2.4em;
+        height: 2.4em;
+        font-weight: bold;
+    }
+
+        div#viewerFooter label {
+            position:inherit;
+            left: 1em;
+            font-size: 2em;
+        }
+
+        div#viewerFooter button#prev {
+            left: 85%;
+        }
+
+        div#viewerFooter button#next {
+            left: calc(85% + 40px);
+        }
 
 div#fileList table tbody tr {
     cursor: pointer;

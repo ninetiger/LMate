@@ -25,7 +25,7 @@
 function InitialViewFiles() {
     var placeHolder = '<div id="viewFilesHolder" class="hidden"><div id="fileList"></div></div>';
     $('body').append(placeHolder);
-    $('#btnViewFiles')
+    $('button#btnViewFiles')
         .popover({
             placement: 'bottom'
             , html: true
@@ -39,12 +39,14 @@ function InitialViewFiles() {
             InitDraggableViewer();
             InitImageViewer();
             e.stopPropagation();
-        });
+    });
 
     $('html').on('click', function (e) {
-        if ($(e.target).closest('.popover').length < 1
-            && $(e.target).closest('div#viewDragger').length < 1) {
-            $('#btnViewFiles').popover('hide');
+        if ($('div.popover').hasClass('in')) { //hide the popover if clicked elsewhere
+            if ($(e.target).closest('.popover').length < 1
+                && $(e.target).closest('div#viewDragger').length < 1) {
+                $('#btnViewFiles').popover('hide');
+            }
         }
     });
 
@@ -102,14 +104,19 @@ function GetImagesForPopover() {
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
 
-            $('#btnViewFiles').popover('toggle');
-            $('div.popover').css('left', (parseFloat($('div.popover').css('left')) + 80));
+            if ($('div.popover').hasClass('in')) {
+                $('#btnViewFiles').popover('hide');
+            } else {
+                $('#btnViewFiles').popover('show');
+                $('div.popover').css('left', '+=80px');
+            }
 
             // popover row click event
             $('div#fileList table tbody tr').click(function () {
-                $("div#viewerBody").iviewer('loadImage', $(this).find('img').prop('src'));
-                $('div#viewDragger').removeClass('hidden');
+                    $("div#viewerBody").iviewer('loadImage', $(this).find('img').prop('src'));
+                    $('div#viewDragger').removeClass('hidden');
             });
+
 
         }
         , fail: function () {

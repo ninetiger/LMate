@@ -33,8 +33,8 @@ function InitialViewFiles() {
             , trigger: 'manual'
             , container: 'body'
         })
-        .click(function (e) {
-            $('#btnViewFiles').prop('disabled', true).text('Loading...'); //todo need image
+        .click(function (e) {            
+            setButtonLoading(true);
             GetImagesForPopover();
             InitDraggableViewer();
             InitImageViewer();
@@ -116,9 +116,19 @@ function GetImagesForPopover() {
             alert("fail");
         }
         , complete: function () {
-            $('#btnViewFiles').text('View Files').prop('disabled', false);
+            setButtonLoading(false);
         }
     });
+}
+
+function setButtonLoading(isLoading) {
+    if (isLoading) {
+        var w = $('button#btnViewFiles').css('width'); //when text is set to empty, have to set w and h
+        var h = $('button#btnViewFiles').css('height');
+        $('button#btnViewFiles').prop('disabled', true).addClass('buttonLoading').css({ 'width': w , 'height': h}).text('');
+    } else {
+        $('button#btnViewFiles').removeClass('buttonLoading').text('View Files').prop('disabled', false);
+    }
 }
 
 function InitImageViewer() {

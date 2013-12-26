@@ -35,28 +35,27 @@
 }
 
 .iviewer_zoom_in {
-    bottom: 348px;
+    bottom: 208px;
     background: url(img/iviewer.zoom_in.gif);
 }
 
 .iviewer_zoom_out {
-    bottom: 315px;
+    bottom: 175px;
     background: url(img/iviewer.zoom_out.gif);
 }
 
 .iviewer_zoom_zero {
-    /*left: 90px;*/
-    bottom: 282px;
+    bottom: 142px;
     background: url(img/iviewer.zoom_zero.gif);
 }
 
 .iviewer_zoom_fit {
-    bottom: 249px;
+    bottom: 109px;
     background: url(img/iviewer.zoom_fit.gif);
 }
 
 .iviewer_zoom_status {
-    bottom: 216px;
+    bottom: 76px;
     font: 1em/28px Sans;
     color: #000;
     background-color: #fff;
@@ -65,11 +64,11 @@
 }
 
 .iviewer_rotate_left {
-    bottom: 183px;
+    bottom: 43px;
     background: #fff url(img/iviewer.rotate_left.png) center center no-repeat;
 }
 
 .iviewer_rotate_right {
-    bottom: 150px;
+    bottom: 10px;
     background: #fff url(img/iviewer.rotate_right.png) center center no-repeat;
 }

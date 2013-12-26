@@ -129,14 +129,14 @@ input[type="checkbox"].input-validation-error {
 
     //use add/remove processing below to run
     $('.panel-body').addClass('processing');*/
-.loading {
+/*.loading {
     position: absolute;
     left: 50%;
     width: 128px;
     height: 128px;
     background: url(FileUpload/css/../img/loading.gif) center no-repeat;
     display: none;
-}
+}*/
 .processing .loading {
     display: block;
 }
@@ -148,4 +148,8 @@ input[type="checkbox"].input-validation-error {
     -ms-transition: none !important;
     -o-transition: none !important;
     transition: none !important;
+}
+
+.buttonLoading {
+    background: url('/images/loading20.gif') center no-repeat;
 }

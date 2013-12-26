@@ -2,6 +2,10 @@
     min-width: 500px;
 }
 
+div.panel-heading button {
+    margin-left: 3px;
+}
+
 .arrow {
     left: 15% !important;
 }
@@ -17,10 +21,8 @@ div.popover {
 div#viewDragger {
     width: 800px; /*change the size also need to change div#viewerBody below*/
     height: 500px;
-
     margin: 0;
     padding: 0;
-
     /*text-align: center;*/
 }
 
@@ -51,7 +53,7 @@ div#viewerBody {
     width: 800px; /*use the same size as div#viewDragger*/
     height: 500px;
     margin: 5px 5px 0 5px; /*todo need a way that nonIE use this line, IE use the line before*/
-    /*margin-top: 10px;*/ /*for IE only*/ 
+    /*margin-top: 10px;*/ /*for IE only*/
     /*  below is the jquery way in case calc is not browser compatable well.
         $('#yourEl').css('width', '100%').css('width', '-=100px');*/
     overflow: hidden;

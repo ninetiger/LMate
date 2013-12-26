@@ -444,6 +444,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\ninetiger - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ninetiger - Web Deploy.pubxml" />
+    <Content Include="Images\loading128.gif" />
+    <Content Include="Images\loading20.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\DataTables-1.9.4\docs\media\js\doc.js" />
@@ -556,6 +558,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\LMate\Common.js" />
     <Content Include="Scripts\LMate\FileUploadDemo.js" />
     <Content Include="Scripts\LMate\FileUpload.js" />
     <Content Include="Scripts\LMate\Receipts_Edit.js" />

@@ -65,8 +65,13 @@ function InitDraggableViewer() {
         cancel: 'div#viewerBody',
         cursor: 'move',
         create: function () {
-            $(this).css({ 'top': -690, 'left': 25 });
-            $("div#viewerBody").css({'height': '-='+offsetBottom+'px', 'width' : '-='+sidesMargin +'px'});
+            var w = $(this).width(), h = $(this).height();
+
+            //set pop up the the center of the screen
+            var left = ($(window).width() - w) / 2, top = ($(window).height() - h) / 2;
+            $(this).css({ 'position': 'fixed', 'left': left + 'px', 'top': top + 'px' });
+
+            $("div#viewerBody").css({'height': h - offsetBottom, 'width' : w - sidesMargin});
         }
     }).css('z-index', 1500).resizable({
         minHeight: 250
@@ -116,8 +121,6 @@ function GetImagesForPopover() {
                     $("div#viewerBody").iviewer('loadImage', $(this).find('img').prop('src'));
                     $('div#viewDragger').removeClass('hidden');
             });
-
-
         }
         , fail: function () {
             alert("fail");

@@ -16,16 +16,9 @@ namespace WebUI.Controllers
 {
     public class ReceiptsController : Controller
     {
-        private ReceiptRepository _efReceiptRepository;
+        private IReceiptRepository _efReceiptRepository;
 
-        //todo need DI later
-        public ReceiptsController()
-        {
-            _efReceiptRepository = new ReceiptRepository();
-        }
-        //todo need a destructor???
-
-        public ReceiptsController(ReceiptRepository efReceiptRepository)
+        public ReceiptsController(IReceiptRepository efReceiptRepository)
         {
             _efReceiptRepository = efReceiptRepository;
         }
@@ -87,7 +80,6 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(ReceiptViewModel receiptViewModel)
         {
-
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();

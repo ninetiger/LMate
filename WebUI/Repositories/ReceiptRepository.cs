@@ -48,7 +48,6 @@ namespace WebUI.Repositories
             _entityReceiptDao.Insert(Mapper.Map(entityToInsert));
         }
 
-        //public async Task Update(ReceiptViewModel entityToUpdate)
         public async Task Update(ReceiptViewModel entityToUpdate)
         {
             var receipt = await GetReceiptSecure(entityToUpdate.Id, entityToUpdate.UserId);
@@ -195,7 +194,6 @@ namespace WebUI.Repositories
             };
         }
 
-        //todo need add to interface below methods
         public async Task InsertImage(ReceiptImage image, int receiptId, string userId)
         {
             var receipt = await GetReceiptSecure(receiptId, userId);

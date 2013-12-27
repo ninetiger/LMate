@@ -42,7 +42,7 @@
     //    progressInterval: 100,
     //    maxChunkSize: 10000000,
     //    add: function (e, data) {
-    //        $('#filelistholder').removeClass('hide');
+    //        $('#filelistholder').removeClass('hidden');
     //        data.context = $('<div />').text(data.files[0].name).appendTo('#filelistholder');
     //        $('</div><div class="progress"><div class="bar" style="width:0%"></div></div>').appendTo(data.context);
     //        $('#btnUploadAll').click(function () {
@@ -80,7 +80,7 @@ function fileUploadInit1() {
             progressInterval: 5,
             maxChunkSize: 1073741824,
             add: function (e, data) {
-                $('#filelistholder').removeClass('hide');
+                $('#filelistholder').removeClass('hidden');
                 var tpl = $('<tr><td style="width:5%;vertical-align: middle"><span class="glyphicon glyphicon-picture fontSize16"></span></td>' +
                     '<td style="width: 40%; vertical-align: middle"><input class="form-control input-sm" id="name" value="002.jpg" /></td>' +
                     '<td style="width: 15%; vertical-align: middle"><span id="size" class="gray">300kb</span></td>' +

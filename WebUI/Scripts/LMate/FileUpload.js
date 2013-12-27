@@ -19,8 +19,8 @@ var submitCount = 1, addCount = 1;
 
 function AfterCancelUpload() {
     if ($('#fileListTBody').find('tr').length <= 1) { //1 coz of the header row
-        $('#desc').removeClass('hide');
-        $('#filelistholder').addClass('hide');
+        $('#desc').removeClass('hidden');
+        $('#filelistholder').addClass('hidden');
 
         $('#btnName').text('Add files...');
         var addFiles = $('#btnAddFiles').detach();
@@ -88,8 +88,8 @@ function ReceiptUpload() {
                 '</td></tr>');
             data.context = tpl.appendTo('#fileListTBody');
 
-            if (!$('#desc').hasClass('hide')) {
-                $('#desc').addClass('hide');
+            if (!$('#desc').hasClass('hidden')) {
+                $('#desc').addClass('hidden');
                 $('#btnName').text('Add more files...');
                 var addFiles = $('#btnAddFiles').detach();
                 var btnUpload = '<button id="btnUploadAll" class="btn btn-success btn-sm" type="button"><i class="icon-upload icon-white"></i><span>Upload</span></button>';
@@ -195,16 +195,16 @@ function ReceiptUpload() {
 
             var timeout = window.dropZoneTimeout;
             if (timeout) {
-                $('#bodyContent').addClass('hide');
-                $('#dropzone').removeClass('hide');
+                $('#bodyContent').addClass('hidden');
+                $('#dropzone').removeClass('hidden');
                 $('#dropzone').removeClass('in');
                 clearTimeout(timeout);
             }
 
             window.dropZoneTimeout = setTimeout(function () {
                 window.dropZoneTimeout = null;
-                $('#bodyContent').removeClass('hide');
-                $('#dropzone').addClass('hide');
+                $('#bodyContent').removeClass('hidden');
+                $('#dropzone').addClass('hidden');
             }, 100);
         });
 }

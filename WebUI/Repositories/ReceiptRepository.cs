@@ -48,9 +48,10 @@ namespace WebUI.Repositories
             _entityReceiptDao.Insert(Mapper.Map(entityToInsert));
         }
 
+        //public async Task Update(ReceiptViewModel entityToUpdate)
         public async Task Update(ReceiptViewModel entityToUpdate)
         {
-            var receipt = await _entityReceiptDao.GetByIDAsync(entityToUpdate.Id);
+            var receipt = await GetReceiptSecure(entityToUpdate.Id, entityToUpdate.UserId);
             receipt.Description = entityToUpdate.Description;
             receipt.Reference = entityToUpdate.Reference;
             receipt.IsBulk = entityToUpdate.IsBulk;
@@ -74,10 +75,9 @@ namespace WebUI.Repositories
         /// <summary>
         /// Delete a receipt
         /// </summary>
-        /// <param name="id">Receipt id</param>
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(ReceiptViewModel entityToDelete)
         {
-            var receipt = await _entityReceiptDao.GetByIDAsync(id);
+            var receipt = await GetReceiptSecure(entityToDelete.Id, entityToDelete.UserId);
             receipt.ReceiptImages.Clear();
             _entityReceiptDao.Delete(receipt);
         }
@@ -108,6 +108,9 @@ namespace WebUI.Repositories
 
         #region IReceiptRepository
 
+        /// <summary>
+        /// Get a receipt by its id and make sure the receipt does belong to the user
+        /// </summary>
         public async Task<Receipt> GetReceiptSecure(int receiptId, string userId)
         {
             var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
@@ -116,6 +119,8 @@ namespace WebUI.Repositories
                 return receipt;
             }
 
+            //todo seems that the exception is send back to the client that .ajax's error func is raised
+            //need to log and see how to handel the exception at the server side
             throw new Exception("User " + userId + "is tring to access a receipt does not belong to him/her");
         }
 
@@ -146,7 +151,7 @@ namespace WebUI.Repositories
             }
             else
             {
-                var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+                var receipt = await GetReceiptSecure(receiptId, userId);
                 receiptVm = Mapper.Map(receipt);
             }
 
@@ -191,14 +196,14 @@ namespace WebUI.Repositories
         }
 
         //todo need add to interface below methods
-        public async Task InsertImage(ReceiptImage image, int receiptId)
+        public async Task InsertImage(ReceiptImage image, int receiptId, string userId)
         {
-            var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+            var receipt = await GetReceiptSecure(receiptId, userId);
             image.Receipts.Add(receipt);
             _entityReceiptImageDao.Insert(image);
         }
 
-        public async Task<ReceiptImage> GetImage(int imageId)
+        public async Task<ReceiptImage> GetImageSecure(int imageId, string userId)
         {
             var image = await _entityReceiptImageDao.GetAsync(x => x.Id == imageId);
 
@@ -206,12 +211,24 @@ namespace WebUI.Repositories
             if (receiptImages.Count() > 1)
                 throw new Exception("Duplicated receiptImage id!!!");
 
-            return receiptImages.Count() == 1 ? receiptImages.ToArray()[0] : null;
+            if (receiptImages.Count() == 1)
+            {
+                var receiptImage = receiptImages.ToArray()[0];
+                if (receiptImage.User_Id.Equals(userId))
+                {
+                    return receiptImage;
+                }
+
+                throw new Exception(string.Format("User {0} is tring to access a receipt does not belong to him/her", userId));
+            }
+
+            return null;
         }
 
-        public async Task<string> GetImageAddrsByReceiptId(int receiptId)
+        public async Task<string> GetImageAddrsByReceiptId(int receiptId, string userId)
         {
-            var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+            var receipt = await GetReceiptSecure(receiptId, userId);
+
             var sb = new StringBuilder();
             foreach (var image in receipt.ReceiptImages)
             {
@@ -220,8 +237,9 @@ namespace WebUI.Repositories
             return sb.ToString();
         }
 
-        public async Task DetachAnImageFromReceipt(int imageId, Receipt receipt)
+        public async Task DetachAnImageFromReceipt(int imageId, int receiptId, string userId)
         {
+            var receipt = await GetReceiptSecure(receiptId, userId);
             var image = receipt.ReceiptImages.SingleOrDefault(x => x.Id == imageId);
             if (image != null)
             {

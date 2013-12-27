@@ -13,7 +13,7 @@ namespace WebUI.Repositories
 
         Task Update(TEntity entityToUpdate);
 
-        Task DeleteAsync(int id);
+        Task DeleteAsync(TEntity entityToDelete);
 
         Task<int> SaveChangesAsync();
     }

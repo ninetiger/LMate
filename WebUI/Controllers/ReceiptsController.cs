@@ -87,10 +87,11 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(ReceiptViewModel receiptViewModel, HttpPostedFileBase image)
         {
+
             if (ModelState.IsValid)
             {
-                receiptViewModel.UserId = User.Identity.GetUserId();
-
+                var userId = User.Identity.GetUserId();
+                receiptViewModel.UserId = userId;
                 if (image != null)
                 {
                     var receiptImage = new ReceiptImage
@@ -100,10 +101,11 @@ namespace WebUI.Controllers
                         Description = "dd",
                         Date = DateTime.Now,
                         IsActive = true,
-                        User_Id = User.Identity.GetUserId()
+                        User_Id = userId
                     };
-                    image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength); //todo image
-                    await _efReceiptRepository.InsertImage(receiptImage, receiptViewModel.Id);
+                    image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength);
+
+                    await _efReceiptRepository.InsertImage(receiptImage, receiptViewModel.Id, userId);
                 }
 
                 if (receiptViewModel.Id == 0)
@@ -137,18 +139,26 @@ namespace WebUI.Controllers
         //[HttpPost]
         public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief)
         {
+
             if (receiptBrief.Id < 1) return RedirectToAction("Index"); //TODO LOG it
 
-            await _efReceiptRepository.DeleteAsync(receiptBrief.Id);
+            var receiptViewModel = new ReceiptViewModel()
+            {
+                Id = receiptBrief.Id,
+                UserId = User.Identity.GetUserId()
+            };
+            await _efReceiptRepository.DeleteAsync(receiptViewModel);
             await _efReceiptRepository.SaveChangesAsync();
 
             TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);
             return RedirectToAction("Index");
+
         }
 
         public async Task<FileContentResult> GetImage(int imageId)
         {
-            var image = await _efReceiptRepository.GetImage(imageId);
+            var userId = User.Identity.GetUserId();
+            var image = await _efReceiptRepository.GetImageSecure(imageId, userId);
             if (image != null)
             {
                 return File(image.ImageData, image.ImageMimeType);
@@ -162,7 +172,8 @@ namespace WebUI.Controllers
             string result = string.Empty;
             if (receiptId > 0)
             {
-                result = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId);
+                var userId = User.Identity.GetUserId();
+                result = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId, userId);
             }
             return result;
         }
@@ -171,33 +182,43 @@ namespace WebUI.Controllers
         public async Task UploadFiles(int? receiptId, string desc, IEnumerable<HttpPostedFileBase> files)
         {
             //todo need to check the receipt belong to this user
+            int id = receiptId ?? 0;
+            if (id <= 0)
+            {
+                //todo log
+                return;
+            }
+
             HttpPostedFileBase image = files.FirstOrDefault();
             if (image != null && image.ContentLength > 0)
             {
-                 string savedFileName = Path.Combine(
-                   AppDomain.CurrentDomain.BaseDirectory + "Files",
-                   Path.GetFileName(image.FileName));
-                 image.SaveAs(savedFileName);
-                //var receiptImage = new ReceiptImage
-                //{
-                //    ImageData = new byte[image.ContentLength],
-                //    ImageMimeType = image.ContentType,
-                //    Description = "dd",
-                //    Date = DateTime.Now,
-                //    IsActive = true,
-                //    User_Id = User.Identity.GetUserId()
-                //};
-                //image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength);
-                //await _efReceiptRepository.InsertImage(receiptImage, receiptId.Value);
-                //await _efReceiptRepository.SaveChangesAsync();
+                //string savedFileName = Path.Combine(
+                //  AppDomain.CurrentDomain.BaseDirectory + "Files",
+                //  Path.GetFileName(image.FileName));
+                //image.SaveAs(savedFileName);
+
+                var userId = User.Identity.GetUserId();
+
+                var receiptImage = new ReceiptImage
+                {
+                    ImageData = new byte[image.ContentLength],
+                    ImageMimeType = image.ContentType,
+                    Description = desc,
+                    Date = DateTime.Now,
+                    IsActive = true,
+                    User_Id = userId,
+                };
+
+                image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength);
+                await _efReceiptRepository.InsertImage(receiptImage, id, userId);
+                await _efReceiptRepository.SaveChangesAsync();
             }
         }
 
         public async Task DetachAnImage(int imageId, int receiptId)
         {
             var userId = User.Identity.GetUserId();
-            var receipt = await _efReceiptRepository.GetReceiptSecure(receiptId, userId);
-            await _efReceiptRepository.DetachAnImageFromReceipt(imageId, receipt);
+            await _efReceiptRepository.DetachAnImageFromReceipt(imageId, receiptId, userId);
         }
 
         protected override void Dispose(bool disposing)

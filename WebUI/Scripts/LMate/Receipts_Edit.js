@@ -34,10 +34,14 @@ function InitialViewFiles() {
             , container: 'body'
         })
         .click(function (e) {
-            setButtonLoading(true);
-            GetImagesForPopover();
-            InitDraggableViewer();
-            InitImageViewer();
+            if ($('div.popover').hasClass('in')) {
+                $('#btnViewFiles').popover('hide');
+            } else {
+                setButtonLoading(true);
+                GetImagesForPopover();
+                InitDraggableViewer();
+                InitImageViewer();
+            }
             e.stopPropagation();
         });
 
@@ -130,6 +134,8 @@ function GetImagesForPopover() {
             receiptId: $('#ReceiptViewModel_Id').val()
         },
         success: function (data) {
+            $('button#btnViewFiles').popover('show');
+
             ////for debug
             //var popoverContent = '<div id="viewFilesHolder" class="hidden"><div id="fileList"><table class="table-condensed table-hover"><tbody><tr><td style="width:10%"><img width="60" height="60" class="img-thumbnail"src="/Images/orderedList2.png" alt="ReceiptImage" /></td><td style="width:80%"><p style="vertical-align:middle">dasfafafafs.jpg</p></td><td style="width:10%">Edit<br />Cancel<br />Delete</td></tr></tbody></table></div></div>';
             var popoverContent = '<table class="table-condensed table-hover"><tbody>';
@@ -144,12 +150,9 @@ function GetImagesForPopover() {
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
 
-            if ($('div.popover').hasClass('in')) {
-                $('#btnViewFiles').popover('hide');
-            } else {
-                $('#btnViewFiles').popover('show');
-                $('div.popover').css('left', '+=80px');
-            }
+    
+            $('div.popover').css('left', '+=80px');
+
 
             //update event
             $('div#fileList table tbody tr td a.imageUpdate').click(function (e) {

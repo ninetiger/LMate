@@ -101,7 +101,7 @@ function navigateFiles(isNext) {
     currentImg = currentImg.replace(window.location.protocol + '//' + window.location.host, '');
     var currentTr = $('div#fileList table tbody tr td').find('img[src="' + currentImg + '"]').parent().parent();
 
-    var nextTr, tr =$('div#fileList table tbody tr');
+    var nextTr, tr = $('div#fileList table tbody tr');
     if (isNext) {
         nextTr = currentTr.next();
         if (nextTr[0] == null) { //get the 1st if it's the end
@@ -137,7 +137,8 @@ function GetImagesForPopover() {
             for (var i = 0; i < imageArray.length - 1; i++) {
                 var arr = imageArray[i].split(",");
                 popoverContent += '<tr><td style="width:10%"><img width="60" height="60" class="img-rounded" src="/Receipts/GetImage?imageId=';
-                popoverContent += arr[0] + '" alt="ReceiptImage" /></td><td style="width:80%"><p>' + arr[1] + '</p></td><td style="width:10%">Update<br />Delete</td></tr>';
+                popoverContent += arr[0] + '" alt="ReceiptImage" /></td><td style="width:80%"><p>'
+                    + arr[1] + '</p></td><td style="width:10%"><a class="" id="' + arr[0] + '" href="#">Update</a><br /><a class="imageDel" id="' + arr[0] + '" href="#">Delete</a></td></tr>';
                 //todo alt should set to desc, but need to test for invalid chars not break html
             }
             popoverContent += '</tbody></table>';
@@ -149,6 +150,18 @@ function GetImagesForPopover() {
                 $('#btnViewFiles').popover('show');
                 $('div.popover').css('left', '+=80px');
             }
+
+            //update event
+            $('div#fileList table tbody tr td a.imageUpdate').click(function (e) {
+                alert('update clicked');
+                e.stopPropagation();
+            });
+
+            //delete event
+            $('div#fileList table tbody tr td a.imageDel').click(function (e) {
+                deleteImage($(this));
+                e.stopPropagation();
+            });
 
             // popover row click event
             $('div#fileList table tbody tr').click(function () {
@@ -166,6 +179,17 @@ function GetImagesForPopover() {
     });
 }
 
+function deleteImage(obj) {
+    DetachAnImage(obj.prop('id'));
+
+    var popUp = $('div#viewDragger');
+    if (popUp != null && !popUp.hasClass('hidden')) {
+        navigateFiles(true);
+    }
+
+    obj.closest('tr').remove();
+}
+
 function setButtonLoading(isLoading) {
     if (isLoading) {
         var w = $('button#btnViewFiles').css('width'); //when text is set to empty, have to set w and h
@@ -175,7 +199,6 @@ function setButtonLoading(isLoading) {
         $('button#btnViewFiles').removeClass('buttonLoading').text('View Files').prop('disabled', false);
     }
 }
-
 
 function InitImageViewer() {
     var iv1 = $("div#viewerBody").iviewer({
@@ -196,4 +219,18 @@ function InitImageViewer() {
     //$("#update").click(function () { iv1.iviewer('update_container_info'); });
 }
 
-//var dragger = '<div id="viewDragger" class="ui-widget-content"><div id="viewerHeader"><h5 id="title"class="pull-left">File Viewer</h5><button class="pull-right"><b>X</b></button><div class="clearfix"></div><hr /></div><div id="viewerBody"><div id="imageViewer" class="viewer"></div><input id="imageSrc" type="hidden" value=""/></div><div id="viewerFooter"><hr /></div></div>';
+function DetachAnImage(imgId) {
+    $.ajax({
+        url: "/receipts/DetachAnImage",
+        data: {
+            receiptId: $('#ReceiptViewModel_Id').val(),
+            imageId: imgId
+        }
+        , fail: function () {
+            alert("fail");
+        }
+        , error: function () {
+            alert("an error has happened");
+        }
+    });
+}

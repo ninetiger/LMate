@@ -34,28 +34,12 @@ namespace WebUI.Repositories
             _entityReceiptCategoryDao = new EntityReceiptCategoryDao(_context);
         }
 
+        #region IRepository
+
         public async Task<IEnumerable<ReceiptViewModel>> GetAllByUserIdAsync(string userId)
         {
             var list = await _entityReceiptDao.GetAsync(x => x.User_Id == userId);
             var vmQuery = list.Select(Mapper.Map);
-            return vmQuery;
-        }
-
-        public async Task<IEnumerable<ReceiptBriefViewModel>> GetReceiptBriefsByUserIdAsync(string userId)
-        {
-            var list = await _entityReceiptDao.GetAsync(x => x.User_Id == userId);
-            var vmQuery = list.Select(x => new ReceiptBriefViewModel
-            {
-                Id = x.Id,
-                Description = x.Description,
-                Vendor = x.Vendor != null ? x.Vendor.Name : string.Empty,
-                PurchaseDate = x.PurchaseDate,
-                Price = x.Price,
-                HasImage = x.ReceiptImages.Any() ? "Yes" : "No",
-                DateEntered = x.DateEntered,
-                Status = x.ReceiptStatus.Status
-            });
-
             return vmQuery;
         }
 
@@ -87,6 +71,17 @@ namespace WebUI.Repositories
             _entityReceiptDao.Update(receipt);
         }
 
+        /// <summary>
+        /// Delete a receipt
+        /// </summary>
+        /// <param name="id">Receipt id</param>
+        public async Task DeleteAsync(int id)
+        {
+            var receipt = await _entityReceiptDao.GetByIDAsync(id);
+            receipt.ReceiptImages.Clear();
+            _entityReceiptDao.Delete(receipt);
+        }
+
         public async Task<int> SaveChangesAsync()
         {
             try
@@ -109,15 +104,37 @@ namespace WebUI.Repositories
             }
         }
 
-        /// <summary>
-        /// Delete a receipt
-        /// </summary>
-        /// <param name="id">Receipt id</param>
-        public async Task DeleteAsync(int id)
+        #endregion
+
+        #region IReceiptRepository
+
+        public async Task<Receipt> GetReceiptSecure(int receiptId, string userId)
         {
-            var receipt = await _entityReceiptDao.GetByIDAsync(id);
-            receipt.ReceiptImages.Clear();
-            _entityReceiptDao.Delete(receipt);
+            var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
+            if (receipt.User_Id.Equals(userId)) //only if the receipt belong to the user
+            {
+                return receipt;
+            }
+
+            throw new Exception("User " + userId + "is tring to access a receipt does not belong to him/her");
+        }
+
+        public async Task<IEnumerable<ReceiptBriefViewModel>> GetReceiptBriefsByUserIdAsync(string userId)
+        {
+            var list = await _entityReceiptDao.GetAsync(x => x.User_Id == userId);
+            var vmQuery = list.Select(x => new ReceiptBriefViewModel
+            {
+                Id = x.Id,
+                Description = x.Description,
+                Vendor = x.Vendor != null ? x.Vendor.Name : string.Empty,
+                PurchaseDate = x.PurchaseDate,
+                Price = x.Price,
+                HasImage = x.ReceiptImages.Any() ? "Yes" : "No",
+                DateEntered = x.DateEntered,
+                Status = x.ReceiptStatus.Status
+            });
+
+            return vmQuery;
         }
 
         public async Task<ReceiptEditViewModel> GetReceiptForEditAsync(int receiptId, string userId)
@@ -173,6 +190,7 @@ namespace WebUI.Repositories
             };
         }
 
+        //todo need add to interface below methods
         public async Task InsertImage(ReceiptImage image, int receiptId)
         {
             var receipt = await _entityReceiptDao.GetByIDAsync(receiptId);
@@ -202,6 +220,19 @@ namespace WebUI.Repositories
             return sb.ToString();
         }
 
+        public async Task DetachAnImageFromReceipt(int imageId, Receipt receipt)
+        {
+            var image = receipt.ReceiptImages.SingleOrDefault(x => x.Id == imageId);
+            if (image != null)
+            {
+                receipt.ReceiptImages.Remove(image);
+                await SaveChangesAsync();
+            }
+        }
+
+        #endregion
+
+        #region IDispose
         private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {
@@ -219,5 +250,7 @@ namespace WebUI.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion
+
     }
 }

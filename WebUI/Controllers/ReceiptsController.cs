@@ -193,6 +193,13 @@ namespace WebUI.Controllers
             }
         }
 
+        public async Task DetachAnImage(int imageId, int receiptId)
+        {
+            var userId = User.Identity.GetUserId();
+            var receipt = await _efReceiptRepository.GetReceiptSecure(receiptId, userId);
+            await _efReceiptRepository.DetachAnImageFromReceipt(imageId, receipt);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _efReceiptRepository != null)

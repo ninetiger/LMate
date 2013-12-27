@@ -85,28 +85,13 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(ReceiptViewModel receiptViewModel, HttpPostedFileBase image)
+        public async Task<ActionResult> Edit(ReceiptViewModel receiptViewModel)
         {
 
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
                 receiptViewModel.UserId = userId;
-                if (image != null)
-                {
-                    var receiptImage = new ReceiptImage
-                    {
-                        ImageData = new byte[image.ContentLength],
-                        ImageMimeType = image.ContentType,
-                        Description = "dd",
-                        Date = DateTime.Now,
-                        IsActive = true,
-                        User_Id = userId
-                    };
-                    image.InputStream.Read(receiptImage.ImageData, 0, image.ContentLength);
-
-                    await _efReceiptRepository.InsertImage(receiptImage, receiptViewModel.Id, userId);
-                }
 
                 if (receiptViewModel.Id == 0)
                 {

@@ -75,7 +75,7 @@ function ReceiptUpload() {
             var file = data.files[0];
             var icon = IsAllowedFileTypes(file);
             if (icon === '') return;
-            $('#filelistholder').removeClass('hide');
+            $('#filelistholder').removeClass('hidden');
             var descId = 'desc' + addCount++;
 
             var tpl = $('<tr><td style="width:5%;">' + icon + '</td>' +

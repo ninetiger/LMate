@@ -70,19 +70,19 @@ namespace WebUI.Controllers
             }).ToList();
         }
 
-        public async Task<ViewResult> Edit(int id)
+        public async Task<ViewResult> Edit(int id, UserViewModel user)
         {
-            string userID = User.Identity.GetUserId();
+            string userID = user.UserId;
             var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(id, userID);
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(ReceiptViewModel receiptViewModel)
+        public async Task<ActionResult> Edit(ReceiptViewModel receiptViewModel, UserViewModel user)
         {
             if (ModelState.IsValid)
             {
-                var userId = User.Identity.GetUserId();
+                var userId = user.UserId;
                 receiptViewModel.UserId = userId;
 
                 if (receiptViewModel.Id == 0)
@@ -106,9 +106,9 @@ namespace WebUI.Controllers
             return View(receiptEditViewModel);
         }
 
-        public async Task<ViewResult> Create()
+        public async Task<ViewResult> Create(UserViewModel user)
         {
-            string userID = User.Identity.GetUserId();
+            string userID = user.UserId;
             var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(0, userID);
             return View("Edit", viewModel);
         }
@@ -132,9 +132,9 @@ namespace WebUI.Controllers
 
         }
 
-        public async Task<FileContentResult> GetImage(int imageId)
+        public async Task<FileContentResult> GetImage(int imageId, UserViewModel user)
         {
-            var userId = User.Identity.GetUserId();
+            var userId = user.UserId;
             var image = await _efReceiptRepository.GetImageSecure(imageId, userId);
             if (image != null)
             {
@@ -144,19 +144,19 @@ namespace WebUI.Controllers
             return null;
         }
 
-        public async Task<string> GetImageAddrsByReceiptId(int receiptId)
+        public async Task<string> GetImageAddrsByReceiptId(int receiptId, UserViewModel user)
         {
             string result = string.Empty;
             if (receiptId > 0)
             {
-                var userId = User.Identity.GetUserId();
+                var userId = user.UserId;
                 result = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId, userId);
             }
             return result;
         }
 
         [HttpPost]
-        public async Task UploadFiles(int? receiptId, string desc, IEnumerable<HttpPostedFileBase> files)
+        public async Task UploadFiles(int? receiptId, string desc, IEnumerable<HttpPostedFileBase> files, UserViewModel user)
         {
             //todo need to check the receipt belong to this user
             int id = receiptId ?? 0;
@@ -174,7 +174,7 @@ namespace WebUI.Controllers
                 //  Path.GetFileName(image.FileName));
                 //image.SaveAs(savedFileName);
 
-                var userId = User.Identity.GetUserId();
+                var userId = user.UserId;
 
                 var receiptImage = new ReceiptImage
                 {
@@ -192,9 +192,9 @@ namespace WebUI.Controllers
             }
         }
 
-        public async Task DetachAnImage(int imageId, int receiptId)
+        public async Task DetachAnImage(int imageId, int receiptId, UserViewModel user)
         {
-            var userId = User.Identity.GetUserId();
+            var userId = user.UserId;
             await _efReceiptRepository.DetachAnImageFromReceipt(imageId, receiptId, userId);
         }
 

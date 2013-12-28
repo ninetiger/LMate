@@ -28,9 +28,15 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public JsonResult AutoCompleteSearch(string id, string searchString)
+        public JsonResult AutoCompleteReceiptSearch(string id, string searchString)
         {
             var list = new List<string>() { "aaa", "bbb", "abc" };
+            return Json(new { list }, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> AutoCompleteVendor(string searchString)
+        {
+            var list = await _efReceiptRepository.SearchVendor(searchString);
             return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 

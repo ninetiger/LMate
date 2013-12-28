@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System.Web.WebPages;
 using BusinessObjects;
 using DataObjects.EntityFramework;
 using DataObjects.EntityFramework.Implementation;
@@ -23,6 +24,7 @@ namespace WebUI.Repositories
         private readonly EntityCurrencyDao _entityCurrencyDao;
         private readonly EntityReceiptImageDao _entityReceiptImageDao;
         private readonly EntityReceiptCategoryDao _entityReceiptCategoryDao;
+        private readonly EntityVendorDao _entityVendorDao;
 
         public ReceiptRepository()
         {
@@ -32,6 +34,7 @@ namespace WebUI.Repositories
             _entityCurrencyDao = new EntityCurrencyDao(_context);
             _entityReceiptImageDao = new EntityReceiptImageDao(_context);
             _entityReceiptCategoryDao = new EntityReceiptCategoryDao(_context);
+            _entityVendorDao = new EntityVendorDao(_context);
         }
 
         #region IRepository
@@ -244,6 +247,20 @@ namespace WebUI.Repositories
                 receipt.ReceiptImages.Remove(image);
                 await SaveChangesAsync();
             }
+        }
+
+        public async Task<List<string>> SearchVendor(string searchString)
+        {
+            IEnumerable<Vendor> list;
+            if (string.IsNullOrEmpty(searchString))
+            {
+                list = await _entityVendorDao.GetAsync();
+            }
+            else
+            {
+                list = await _entityVendorDao.GetAsync(x => x.Name.ToLower().Contains(searchString.ToLower()));
+            }
+            return list.ToArray().Select(item => item.Name).ToList();
         }
 
         #endregion

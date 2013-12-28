@@ -101,7 +101,7 @@ function AutoComplete() {
     $("#Receipts_Desc").autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: "/receipts/AutoCompleteSearch",
+                url: "/receipts/AutoCompleteReceiptSearch",
                 dataType: "json",
                 data: {
                     id: "Receipts_Desc",

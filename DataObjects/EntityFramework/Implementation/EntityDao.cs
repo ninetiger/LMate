@@ -27,7 +27,10 @@ namespace DataObjects.EntityFramework.Implementation
         /// But in this case, the input to the expression is an IQueryable object for the TEntity type. 
         /// The expression will return an ordered version of that IQueryable object. 
         /// Eg, if the repository is instantiated for the Student entity type, the code in the calling method might specify q => q.OrderBy(s => s.LastName) for the orderBy parameter.</param>
-        /// <param name="includeProperties">parsing the comma-delimited list</param>
+        /// <param name="includeProperties">parsing the comma-delimited list.
+        /// ref: http://msdn.microsoft.com/en-nz/data/jj574232.aspx
+        /// eg. "Receipt.ReceiptImages" to load the sub level as well
+        /// </param>
         /// <returns></returns>
         public async virtual Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,

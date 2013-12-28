@@ -23,5 +23,7 @@ namespace WebUI.Repositories
         Task<string> GetImageAddrsByReceiptId(int receiptId, string userId);
 
         Task DetachAnImageFromReceipt(int imageId, int receiptId, string userId);
+
+        Task<List<string>> SearchVendor(string searchString);
     }
 }

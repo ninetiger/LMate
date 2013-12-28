@@ -20,6 +20,8 @@
     , allowClear: true
     });
 
+    AutoCompleteVendor();
+
     InitialViewFiles();
 }
 
@@ -151,7 +153,7 @@ function GetImagesForPopover() {
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
 
-    
+
             $('div.popover').css('left', '+=80px');
 
 
@@ -238,3 +240,37 @@ function DetachAnImage(imgId) {
         }
     });
 }
+
+function AutoCompleteVendor() {
+    var auto = $('#ReceiptViewModel_VendorId').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/receipts/AutoCompleteVendor",
+                dataType: "json",
+                data: {
+                    searchString: $('#ReceiptViewModel_VendorId').val()
+                },
+                success: function (data) {
+                    response($.map(data.list, function (item) {
+                        return {
+                            label: item,
+                            value: item
+                        };
+                    }));
+                }
+            });
+        },
+        minLength: 1
+    });
+
+    $('span#vendorDropDown').click(function () {
+        if ($('ul#ui-id-1').css('display') == 'none') {
+            auto.autocomplete('option', 'minLength', 0)
+                .autocomplete('search', '')
+                .autocomplete('option', 'minLength', 1);
+        } else {
+            $('ul#ui-id-1').css('display', 'none');
+        }
+    });
+}
+

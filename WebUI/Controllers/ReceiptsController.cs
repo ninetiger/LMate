@@ -1,15 +1,16 @@
 ﻿using System;
-using System.IO;
+using System.Security.Principal;
 using BusinessObjects;
 using DataObjects.EntityFramework;
 using Microsoft.AspNet.Identity;
-using Mvc.JQuery.Datatables;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebUI.Common;
+using WebUI.Models;
 using WebUI.Repositories;
 
 namespace WebUI.Controllers
@@ -36,9 +37,9 @@ namespace WebUI.Controllers
 
         //[HttpPost]
         //todo check json attributes eg hannel json exception
-        public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param) //todo copy DataTablesParam in and remove mvc.jquery.datatables lib
+        public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param, UserViewModel user) //todo copy DataTablesParam in and remove mvc.jquery.datatables lib
         {
-            var userId = User.Identity.GetUserId();
+            var userId = user.UserId;
             var recieptBriefList = await _efReceiptRepository.GetReceiptBriefsByUserIdAsync(userId);
 
             var json = GenerateJsonContent(recieptBriefList);

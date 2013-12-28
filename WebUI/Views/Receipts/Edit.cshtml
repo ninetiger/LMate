@@ -6,7 +6,7 @@
 }
 
 <div class="page-header">
-    <h2>Edit Receipt @Model.ReceiptViewModel.Description</h2>
+    <h2>Edit Receipt - @Model.ReceiptViewModel.Id</h2>
 </div>
 @Html.ValidationSummary()
 <div id="panel" class="panel panel-default">
@@ -22,17 +22,20 @@
         {
             @Html.HiddenFor(x => x.ReceiptViewModel.Id)
             <div class="row">
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.Description)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.Description, new { @class = "form-control input-sm" })
+                    @Html.TextBoxFor(x => x.ReceiptViewModel.Description, new { @class = "form-control input-sm", maxlength = 255 })
                 </div>
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.PurchaseDate)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.PurchaseDate, "{0:d MMM yyyy}", new { @class = "form-control input-sm" })
+                    @Html.TextBoxFor(x => x.ReceiptViewModel.PurchaseDate, "{0:d MMM yyyy}", new { @class = "form-control input-sm", maxlength = 50 })
                 </div>
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.VendorId)
-                    @Html.TextBoxFor(x => x.ReceiptViewModel.VendorId, new { @class = "form-control input-sm" })
+                    <div class="input-group">
+                        @Html.TextBoxFor(x => x.ReceiptViewModel.VendorId, new { @class = "form-control input-sm" })
+                        <span id="vendorDropDown" class="input-group-addon caretCursor"><span class="caret"></span></span>
+                    </div>
                 </div>
             </div>
             <br />
@@ -44,25 +47,25 @@
                         @Html.TextBoxFor(x => x.ReceiptViewModel.Price, "{0:#0.00}", new { @class = "form-control input-sm" })
                     </div>
                 </div>
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.GstRate)
                     <div class="input-group">
-                        @Html.TextBoxFor(x => x.ReceiptViewModel.GstRate, "{0:#0}", new { @class = "form-control input-sm" })
+                        @Html.TextBoxFor(x => x.ReceiptViewModel.GstRate, "{0:#0.00}", new { @class = "form-control input-sm" })
                         <span class="input-group-addon">%</span>
                     </div>
                 </div>
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.AccountTypeId)
                     @Html.DropDownListFor(x => x.ReceiptViewModel.AccountTypeId, Model.AccountTypeSelectList, string.Empty, new { style = "width: 100%" })
                 </div>
             </div>
             <br />
             <div class="row">
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.Reference)
                     @Html.TextBoxFor(x => x.ReceiptViewModel.Reference, new { @class = "form-control input-sm" })
                 </div>
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     <br />
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -71,38 +74,27 @@
                         @Html.LabelFor(x => x.ReceiptViewModel.IsBulk, new { @class = "form-control input-sm" })
                     </div><!-- /input-group -->
                 </div>
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.CurrencyId)
                     @Html.DropDownListFor(x => x.ReceiptViewModel.CurrencyId, Model.CurrencySelectList, string.Empty, new { style = "width: 100%" })
                 </div>
             </div>
             <br />
             <div class="row">
-                <div class="col-xs-6 col-sm-4">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.ReceiptCategoryId)
                     @Html.DropDownListFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, string.Empty, new { style = "width: 100%" })
                     @*@Html.ListBoxFor(x => x.ReceiptViewModel.ReceiptCategoryId, Model.CategorySelectList, new { style = "width: 100%" }) //for multi select*@
                 </div>
             </div>
             <br />
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    @Html.Label("Image")
+            @*<div class="row">  //todo add to Upload Files
+                    <div class="col-xs-12 col-sm-4">
+                        @Html.Label("Upload new receipt image")
+                        <input type="file" name="Image" />
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    div to delete
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    @Html.Label("Upload new receipt image")
-                    <input type="file" name="Image" />
-                </div>
-            </div>
-            <br />
+                <br />*@
             <div class="row">
                 <div class="col-xs-6 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.Note)

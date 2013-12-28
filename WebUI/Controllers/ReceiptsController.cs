@@ -34,7 +34,6 @@ namespace WebUI.Controllers
             return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
-        //[HttpPost]
         //todo check json attributes eg hannel json exception
         public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param, UserViewModel user)
         {

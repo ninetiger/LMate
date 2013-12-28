@@ -1,7 +1,8 @@
 ﻿function docReady() {
     $("#ReceiptViewModel_PurchaseDate").datepicker({
-        changeMonth: true,
-        changeYear: true
+        changeMonth: true
+        , changeYear: true
+        , dateFormat: 'd M yy'
     });
 
     $('#ReceiptViewModel_AccountTypeId').select2({
@@ -139,7 +140,7 @@ function GetImagesForPopover() {
             ////for debug
             //var popoverContent = '<div id="viewFilesHolder" class="hidden"><div id="fileList"><table class="table-condensed table-hover"><tbody><tr><td style="width:10%"><img width="60" height="60" class="img-thumbnail"src="/Images/orderedList2.png" alt="ReceiptImage" /></td><td style="width:80%"><p style="vertical-align:middle">dasfafafafs.jpg</p></td><td style="width:10%">Edit<br />Cancel<br />Delete</td></tr></tbody></table></div></div>';
             var popoverContent = '<table class="table-condensed table-hover"><tbody>';
-            var imageArray = data.split(";");
+            var imageArray = data.split(";");  //todo need change to json, as ; & , in desc break this code
             for (var i = 0; i < imageArray.length - 1; i++) {
                 var arr = imageArray[i].split(",");
                 popoverContent += '<tr><td style="width:10%"><img width="60" height="60" class="img-rounded" src="/Receipts/GetImage?imageId=';

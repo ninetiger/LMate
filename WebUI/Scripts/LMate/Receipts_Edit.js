@@ -200,9 +200,9 @@ function setButtonLoading(isLoading) {
     if (isLoading) {
         var w = $('button#btnViewFiles').css('width'); //when text is set to empty, have to set w and h
         var h = $('button#btnViewFiles').css('height');
-        $('button#btnViewFiles').prop('disabled', true).addClass('buttonLoading').css({ 'width': w, 'height': h }).text('');
+        $('button#btnViewFiles').prop('disabled', true).addClass('loading20').css({ 'width': w, 'height': h }).text('');
     } else {
-        $('button#btnViewFiles').removeClass('buttonLoading').text('View Files').prop('disabled', false);
+        $('button#btnViewFiles').removeClass('loading20').text('View Files').prop('disabled', false);
     }
 }
 
@@ -244,9 +244,10 @@ function DetachAnImage(imgId) {
 function AutoCompleteVendor() {
     var auto = $('#ReceiptViewModel_VendorName').autocomplete({
         source: function (request, response) {
+            $('input#ReceiptViewModel_VendorName').addClass('loading20 vendorLoading');
             $.ajax({
                 url: "/receipts/AutoCompleteVendor",
-                cache : false,
+                cache: false,
                 dataType: "json",
                 data: {
                     searchString: $('#ReceiptViewModel_VendorName').val()
@@ -258,6 +259,12 @@ function AutoCompleteVendor() {
                             value: item
                         };
                     }));
+                }
+                , fail: function () {
+                    alert("fail");
+                }
+                , complete: function () {
+                    $('input#ReceiptViewModel_VendorName').removeClass('loading20 vendorLoading');
                 }
             });
         }

@@ -54,7 +54,6 @@ div#viewerBody {
     /*  below is the jquery way in case calc is not browser compatable well.
         $('#yourEl').css('width', '100%').css('width', '-=100px');*/
     overflow: hidden;
-
     /*background-color: violet;*/
 }
 
@@ -65,26 +64,30 @@ div#viewerFooter {
 }
 
     div#viewerFooter button {
-        position:inherit;
+        position: inherit;
         width: 2.4em;
         height: 2.4em;
         font-weight: bold;
     }
 
-        div#viewerFooter label {
-            position:inherit;
-            left: 1em;
-            font-size: 2em;
-        }
+    div#viewerFooter label {
+        position: inherit;
+        left: 1em;
+        font-size: 2em;
+    }
 
-        div#viewerFooter button#prev {
-            left: calc(100% - 90px);
-        }
+    div#viewerFooter button#prev {
+        left: calc(100% - 90px);
+    }
 
-        div#viewerFooter button#next {
-            left: calc(100% - 50px);
-        }
+    div#viewerFooter button#next {
+        left: calc(100% - 50px);
+    }
 
 div#fileList table tbody tr {
     cursor: pointer;
+}
+
+.vendorLoading { /*todo only ie need the 30px */
+    background-position: right 30px center;
 }

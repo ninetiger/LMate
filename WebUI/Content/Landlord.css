@@ -149,7 +149,7 @@ input[type="checkbox"].input-validation-error {
     transition: none !important;
 }
 
-.buttonLoading {
+.loading20 {
     background: url('/images/loading20.gif') center no-repeat;
 }
 

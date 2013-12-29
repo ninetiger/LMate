@@ -246,6 +246,7 @@ function AutoCompleteVendor() {
         source: function (request, response) {
             $.ajax({
                 url: "/receipts/AutoCompleteVendor",
+                cache : false,
                 dataType: "json",
                 data: {
                     searchString: $('#ReceiptViewModel_VendorName').val()

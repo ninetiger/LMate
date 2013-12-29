@@ -9,16 +9,9 @@ namespace WebUI.Controllers
 {
     public class FileUploadController : Controller
     {
-                private ReceiptRepository _efReceiptRepository;
+        private IReceiptRepository _efReceiptRepository;
 
-        //todo need DI later
-        public FileUploadController()
-        {
-            _efReceiptRepository = new ReceiptRepository();
-        }
-        //todo need a destructor???
-
-        public FileUploadController(ReceiptRepository efReceiptRepository)
+        public FileUploadController(IReceiptRepository efReceiptRepository)
         {
             _efReceiptRepository = efReceiptRepository;
         }

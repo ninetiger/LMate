@@ -16,6 +16,7 @@ namespace WebUI.Repositories
 
         Task<ReceiptEditViewModel> GetReceiptForEditViewModelAsync(ReceiptViewModel receipt);
 
+        #region ReceiptImage
         Task InsertImage(ReceiptImage image, int receiptId, string userId);
 
         Task<ReceiptImage> GetImageSecure(int imageId, string userId);
@@ -23,7 +24,14 @@ namespace WebUI.Repositories
         Task<string> GetImageAddrsByReceiptId(int receiptId, string userId);
 
         Task DetachAnImageFromReceipt(int imageId, int receiptId, string userId);
+        #endregion
 
-        Task<List<string>> SearchVendor(string searchString);
+        #region Vendor
+        Task<Vendor> GetVednorSecure(int vendorId, string userId);
+        Task<Vendor> GetVednorSecure(string vendorName, string userId);
+        Task<string[]> SearchVendorNameSecure(string searchString, string userId);
+        //void InsertVendor(Vendor vendor);
+        #endregion
+
     }
 }

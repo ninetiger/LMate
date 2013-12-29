@@ -62,17 +62,17 @@ namespace WebUI.Tests.Controllers
         public void Index_CanCall()
         {
             // Mocking
-            var mock = new Mock<IReceiptRepository>();
+            var mockReceipt = new Mock<IReceiptRepository>();
 
             // Arrange
-            var controller = new ReceiptsController(mock.Object);
+            var controller = new ReceiptsController(mockReceipt.Object);
 
             // Act
             var viewResult = controller.Index() as ViewResult;
             // Assert
             Assert.IsNotNull(viewResult);
         }
-        
+
         [TestMethod]
         public void DataTableAjaxHandler()
         {

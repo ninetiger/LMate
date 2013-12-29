@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Web.WebPages;
-using BusinessObjects;
+﻿using BusinessObjects;
 using DataObjects.EntityFramework;
 using DataObjects.EntityFramework.Implementation;
+using DataObjects.EntityFramework.ModelMapper;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using DataObjects.EntityFramework.ModelMapper;
 using WebUI.Models;
 
 namespace WebUI.Repositories
@@ -26,9 +25,9 @@ namespace WebUI.Repositories
         private readonly EntityReceiptCategoryDao _entityReceiptCategoryDao;
         private readonly EntityVendorDao _entityVendorDao;
 
-        public ReceiptRepository()
+        public ReceiptRepository(LMateEntities context)
         {
-            _context = new LMateEntities();
+            _context = context;
             _entityAccountTypeDao = new EntityAccountTypeDao(_context);
             _entityReceiptDao = new EntityReceiptDao(_context);
             _entityCurrencyDao = new EntityCurrencyDao(_context);
@@ -48,7 +47,10 @@ namespace WebUI.Repositories
 
         public void Insert(ReceiptViewModel entityToInsert)
         {
-            _entityReceiptDao.Insert(Mapper.Map(entityToInsert));
+            var receipt = Mapper.Map(entityToInsert);
+            receipt.ReceiptStatus_Id = 1; //new record default to 1 //todo need te move this line to controler level later
+
+            _entityReceiptDao.Insert(receipt);
         }
 
         public async Task Update(ReceiptViewModel entityToUpdate)
@@ -64,12 +66,16 @@ namespace WebUI.Repositories
             receipt.GstRate = entityToUpdate.GstRate;
             receipt.Tax = entityToUpdate.Tax;
             receipt.Note = entityToUpdate.Note;
-            receipt.Vendor_Id = entityToUpdate.VendorId;
             receipt.ReceiptCategory_Id = entityToUpdate.ReceiptCategoryId;
             receipt.Currency_Id = entityToUpdate.CurrencyId;
             receipt.AccountType_Id = entityToUpdate.AccountTypeId;
             //receipt.Version = entityToUpdate.Version.AsByteArray(); //todo need to understand how to use it
-            //receipt.ReceiptImages.Add(entityToUpdate.im);  //todo not sure how to add multi photos yet
+
+            if (receipt.Vendor_Id != entityToUpdate.VendorId)
+            {
+                receipt.Vendor_Id = entityToUpdate.VendorId;
+                receipt.Vendor = Mapper.Map(entityToUpdate.Vendor);
+            }
 
             _entityReceiptDao.Update(receipt);
         }
@@ -249,7 +255,31 @@ namespace WebUI.Repositories
             }
         }
 
-        public async Task<List<string>> SearchVendor(string searchString)
+        #region Vendor
+        public async Task<Vendor> GetVednorSecure(int vendorId, string userId)
+        {
+            var vendor = await _entityVendorDao.GetByIDAsync(vendorId);
+            return VendorSeureCheck(vendor, userId);
+        }
+
+        public async Task<Vendor> GetVednorSecure(string vendorName, string userId)
+        {
+            var vendorEnumerable = await _entityVendorDao.GetAsync(x => x.Name == vendorName);
+            var vendor = vendorEnumerable.SingleOrDefault();
+            return VendorSeureCheck(vendor, userId);
+        }
+
+        private static Vendor VendorSeureCheck(Vendor vendor, string userId)
+        {
+            if (vendor != null && (vendor.User_Id == null || vendor.User_Id.Equals(userId)))
+            {
+                return vendor;
+            }
+
+            return null;
+        }
+
+        public async Task<string[]> SearchVendorNameSecure(string searchString, string userId)
         {
             IEnumerable<Vendor> list;
             if (string.IsNullOrEmpty(searchString))
@@ -260,8 +290,14 @@ namespace WebUI.Repositories
             {
                 list = await _entityVendorDao.GetAsync(x => x.Name.ToLower().Contains(searchString.ToLower()));
             }
-            return list.ToArray().Select(item => item.Name).ToList();
+            return list.Where(x => x.User_Id == null || x.User_Id.Equals(userId)).Select(item => item.Name).ToArray();
         }
+
+        //public void InsertVendor(Vendor vendor)
+        //{
+        //    _entityVendorDao.Insert(vendor);
+        //}
+        #endregion
 
         #endregion
 

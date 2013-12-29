@@ -70,24 +70,28 @@ namespace BusinessObjects
         [StringLength(4000, ErrorMessage = "The {0} cannot be longer than {1} characters.")]
         public string Note { get; set; }
 
-        [DisplayName("Vendor")]
-        [Range(1, int.MaxValue, ErrorMessage = "Id should be greater than 1")]
+		//todo could remove vendorId and VendorViewModel below just leave VendorName and change mapper accordingly
+        [Range(1, int.MaxValue, ErrorMessage = "{0} is not valid.")]
         public int? VendorId { get; set; }
 
+        [DisplayName("Vendor")]
+        [StringLength(50, ErrorMessage = "The {0} cannot be longer than {1} characters.")]
+        public string VendorName { get; set; }
+
         [DisplayName("Receipt Category")]
-        [Range(1, int.MaxValue, ErrorMessage = "Id should be greater than 1")]
+        [Range(1, int.MaxValue, ErrorMessage = "{0} is not valid.")]
         public int? ReceiptCategoryId { get; set; }
 
-        [DisplayName("Receipt Status")]
-        [Range(1, int.MaxValue, ErrorMessage = "Id should be greater than 1")]
-        public int ReceiptStatusId { get; set; }
+        //[DisplayName("Receipt Status")]
+        //[Range(1, int.MaxValue, ErrorMessage = "{0} is not valid.")]
+        //public int ReceiptStatusId { get; set; }
 
         [DisplayName("Currency")]
-        [Range(1, int.MaxValue, ErrorMessage = "Id should be greater than 1")]
+        [Range(1, int.MaxValue, ErrorMessage = "{0} is not valid.")]
         public int? CurrencyId { get; set; }
 
         [DisplayName("Account Type")]
-        [Range(1, int.MaxValue, ErrorMessage = "Id should be greater than 1")]
+        [Range(1, int.MaxValue, ErrorMessage = "{0} is not valid.")]
         public int? AccountTypeId { get; set; }
 
         [HiddenInput(DisplayValue = false)]
@@ -96,7 +100,10 @@ namespace BusinessObjects
         [HiddenInput(DisplayValue = false)]
         public string Version { get; set; }
 
+        public string ReceiptStatus { get; set; }
+
         public string AccountTypeName { get; set; }
-        public string VendorName { get; set; }
+
+        public VendorViewModel Vendor { get; set; }
     }
 }

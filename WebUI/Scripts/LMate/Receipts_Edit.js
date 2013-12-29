@@ -242,13 +242,13 @@ function DetachAnImage(imgId) {
 }
 
 function AutoCompleteVendor() {
-    var auto = $('#ReceiptViewModel_VendorId').autocomplete({
+    var auto = $('#ReceiptViewModel_VendorName').autocomplete({
         source: function (request, response) {
             $.ajax({
                 url: "/receipts/AutoCompleteVendor",
                 dataType: "json",
                 data: {
-                    searchString: $('#ReceiptViewModel_VendorId').val()
+                    searchString: $('#ReceiptViewModel_VendorName').val()
                 },
                 success: function (data) {
                     response($.map(data.list, function (item) {
@@ -259,15 +259,18 @@ function AutoCompleteVendor() {
                     }));
                 }
             });
-        },
-        minLength: 1
+        }
+        , minLength: 1
     });
 
     $('span#vendorDropDown').click(function () {
         if ($('ul#ui-id-1').css('display') == 'none') {
+            var temp = $('#ReceiptViewModel_VendorName').val();
+            $('#ReceiptViewModel_VendorName').val('');
             auto.autocomplete('option', 'minLength', 0)
                 .autocomplete('search', '')
                 .autocomplete('option', 'minLength', 1);
+            $('#ReceiptViewModel_VendorName').val(temp);
         } else {
             $('ul#ui-id-1').css('display', 'none');
         }

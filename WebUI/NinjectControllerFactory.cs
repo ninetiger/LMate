@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Ninject;
+using System;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Ninject;
 using WebUI.Repositories;
 
 namespace WebUI

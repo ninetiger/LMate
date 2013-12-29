@@ -1,7 +1,7 @@
-﻿using System;
-using BusinessObjects;
+﻿using BusinessObjects;
 using DataObjects.EntityFramework;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -28,15 +28,15 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public JsonResult AutoCompleteReceiptSearch(string id, string searchString)
+        public JsonResult AutoCompleteReceiptSearch(string id, string searchString) //todo need userId secure
         {
             var list = new List<string>() { "aaa", "bbb", "abc" };
             return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> AutoCompleteVendor(string searchString)
+        public async Task<JsonResult> AutoCompleteVendor(string searchString, UserViewModel user)
         {
-            var list = await _efReceiptRepository.SearchVendor(searchString);
+            var list = await _efReceiptRepository.SearchVendorNameSecure(searchString, user.UserId);
             return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
@@ -90,6 +90,9 @@ namespace WebUI.Controllers
                 var userId = user.UserId;
                 receiptViewModel.UserId = userId;
 
+                await UpdateVendor(receiptViewModel, userId);
+
+                //todo receiptstatus set to 1 when add new; why id start from 1000?
                 if (receiptViewModel.Id == 0)
                 {
                     _efReceiptRepository.Insert(receiptViewModel);
@@ -109,6 +112,32 @@ namespace WebUI.Controllers
 
             var receiptEditViewModel = await _efReceiptRepository.GetReceiptForEditViewModelAsync(receiptViewModel);
             return View(receiptEditViewModel);
+        }
+
+        private async Task UpdateVendor(ReceiptViewModel receiptViewModel, string userId)
+        {
+            if (!string.IsNullOrEmpty(receiptViewModel.VendorName))
+            {
+                var vendor = await _efReceiptRepository.GetVednorSecure(receiptViewModel.VendorName, userId);
+                if (vendor == null)
+                {
+                    var newVednor = new VendorViewModel()
+                    {
+                        VendorName = receiptViewModel.VendorName,
+                        UserId = receiptViewModel.UserId
+                    };
+                    receiptViewModel.VendorId = 0;
+                    receiptViewModel.Vendor = newVednor;
+                }
+                else
+                {
+                    receiptViewModel.VendorId = vendor.Id;
+                }
+            }
+            else
+            {
+                receiptViewModel.VendorId = null;
+            }
         }
 
         public async Task<ViewResult> Create(UserViewModel user)

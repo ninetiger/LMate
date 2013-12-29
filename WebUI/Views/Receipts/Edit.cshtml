@@ -6,12 +6,12 @@
 }
 
 <div class="page-header">
-    <h2>Edit Receipt - @Model.ReceiptViewModel.Id</h2>
+    <h2>Edit Receipt</h2>
 </div>
-@Html.ValidationSummary()
+@Html.ValidationSummary("Error occurred:")
 <div id="panel" class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title pull-left">Edit Receipt</h3>
+        <h3 class="panel-title pull-left">Edit Receipt - <b>@Model.ReceiptViewModel.Id</b> (Status: <b>@Model.ReceiptViewModel.ReceiptStatus</b>)</h3>
         <button class="pull-right btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#fileUploadModal">Upload Files</button>
         <button class="pull-right btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#fileUploadModal">Use Existing Files</button>
         <button class="pull-right btn btn-primary btn-sm" id="btnViewFiles" type="button">View Files</button>
@@ -21,6 +21,7 @@
         @using (Html.BeginForm("Edit", "Receipts", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(x => x.ReceiptViewModel.Id)
+            @Html.HiddenFor(x => x.ReceiptViewModel.ReceiptStatus)
             <div class="row">
                 <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.ReceiptViewModel.Description)
@@ -31,9 +32,10 @@
                     @Html.TextBoxFor(x => x.ReceiptViewModel.PurchaseDate, "{0:d MMM yyyy}", new { @class = "form-control input-sm", maxlength = 50 })
                 </div>
                 <div class="col-xs-12 col-sm-4">
-                    @Html.LabelFor(x => x.ReceiptViewModel.VendorId)
+                    @Html.LabelFor(x => x.ReceiptViewModel.VendorName)
                     <div class="input-group">
-                        @Html.TextBoxFor(x => x.ReceiptViewModel.VendorId, new { @class = "form-control input-sm" })
+                        @Html.TextBoxFor(x => x.ReceiptViewModel.VendorName, new { @class = "form-control input-sm", maxlength = 50 })
+                        @Html.HiddenFor(x => x.ReceiptViewModel.VendorId)
                         <span id="vendorDropDown" class="input-group-addon caretCursor"><span class="caret"></span></span>
                     </div>
                 </div>

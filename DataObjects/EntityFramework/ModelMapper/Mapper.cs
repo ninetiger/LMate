@@ -32,7 +32,7 @@ namespace DataObjects.EntityFramework.ModelMapper
                 Note = entity.Note,
                 VendorId = entity.Vendor_Id,
                 ReceiptCategoryId = entity.ReceiptCategory_Id,
-                ReceiptStatusId = entity.ReceiptStatus_Id,
+                //ReceiptStatusId = entity.ReceiptStatus_Id,
                 CurrencyId = entity.Currency_Id ?? 0,
                 AccountTypeId = entity.AccountType_Id,
                 UserId = entity.User_Id,
@@ -42,6 +42,7 @@ namespace DataObjects.EntityFramework.ModelMapper
                 //DepreciationAssets = entity.DepreciationAssets,
                 //Disposals = entity.Disposals,
                 VendorName = entity.Vendor !=null ? entity.Vendor.Name :　string.Empty,
+                ReceiptStatus = entity.ReceiptStatus.Status,
             };
 
             return viewModel;
@@ -67,12 +68,14 @@ namespace DataObjects.EntityFramework.ModelMapper
                 GstRate = viewModel.GstRate,
                 Tax = viewModel.Tax,
                 Note = viewModel.Note,
-                Vendor_Id = viewModel.VendorId,
                 ReceiptCategory_Id = viewModel.ReceiptCategoryId,
-                ReceiptStatus_Id = viewModel.ReceiptStatusId,
+                //ReceiptStatus_Id = viewModel.ReceiptStatusId,  //todo need to tidy up status
                 Currency_Id = viewModel.CurrencyId,
                 AccountType_Id = viewModel.AccountTypeId,
                 User_Id = viewModel.UserId,
+
+                Vendor_Id = viewModel.VendorId,
+                Vendor = Map(viewModel.Vendor)
             };
 
             
@@ -180,6 +183,37 @@ namespace DataObjects.EntityFramework.ModelMapper
         //    };
         //}
         //#endregion
+
+
+        #region Vendor
+        public static VendorViewModel Map(Vendor entity)
+        {
+            if (entity == null) return null;
+
+            var viewModel = new VendorViewModel()
+            {
+                Id = entity.Id,
+                VendorName = entity.Name,
+                UserId = entity.User_Id,
+                Version = entity.Version.AsBase64String()
+            };
+
+            return viewModel;
+        }
+
+        public static Vendor Map(VendorViewModel viewModel)
+        {
+            if (viewModel == null) return null;
+
+            var vendor = new Vendor
+            {
+                Id = viewModel.Id,
+                Name = viewModel.VendorName,
+                User_Id = viewModel.UserId,
+            };
+            return vendor;
+        }
+        #endregion
 
     }
 }

@@ -104,8 +104,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-6 col-sm-4">
-                    <input type="submit" value="Save" />
+                <div class="col-xs-12 col-sm-12 text-right">
+                    <input class="btn btn-success btn-sm" type="submit" value="Save" />
                     @Html.ActionLink("Cancel and return to List", "Index")
                 </div>
             </div>
@@ -159,7 +159,8 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div id="viewDragger" class="ui-widget-content hidden">  @*todo move it to js*@
+<div id="viewDragger" class="ui-widget-content hidden">
+    @*todo move it to js*@
     <div id="viewerHeader">
         <h5 id="title" class="pull-left">File Viewer</h5>
         <button class="pull-right"><b>X</b></button>

@@ -53,7 +53,7 @@ namespace BusinessObjects
         public bool IsTaxExclusive { get; set; }
 
         [DisplayName("Gst Rate")]
-        [Range(0, 100, ErrorMessage = "Range is 0 - 100")]
+        [Range(0, 100, ErrorMessage = "{0} range is 0 - 100")]
         public decimal? GstRate
         {
             get

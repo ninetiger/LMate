@@ -23,6 +23,19 @@
     AutoCompleteVendor();
 
     InitialViewFiles();
+
+    //DraggablePannel(); //todo future feature
+}
+
+function DraggablePannel() {
+    $("div#panel").draggable({
+        cancel: 'div.panel-body',
+        cursor: 'move',
+        create: function () { }
+    }).css('z-index', 1500).resizable({
+        minHeight: 350
+    , minWidth: 250
+    });
 }
 
 function InitialViewFiles() {
@@ -38,7 +51,8 @@ function InitialViewFiles() {
         })
         .click(function (e) {
             if ($('div.popover').hasClass('in')) {
-                $('#btnViewFiles').popover('hide');
+                $('button#btnViewFiles').popover('hide');
+
             } else {
                 setButtonLoading(true);
                 GetImagesForPopover();
@@ -52,14 +66,19 @@ function InitialViewFiles() {
         if ($('div.popover').hasClass('in')) { //hide the popover if clicked elsewhere
             if ($(e.target).closest('.popover').length < 1
                 && $(e.target).closest('div#viewDragger').length < 1) {
-                $('#btnViewFiles').popover('hide');
+                $('button#btnViewFiles').popover('hide');
             }
+        }
+
+        //hide the vendor autocomplete
+        if ($('ul#ui-id-1').css('display') != 'none') {
+            $('ul#ui-id-1').css('display', 'none');
         }
     });
 
     $(window).resize(function () {
         if ($('div.popover').hasClass('in')) {
-            $('#btnViewFiles').popover('show');
+            $('button#btnViewFiles').popover('show');
             $('div.popover').css('left', (parseFloat($('div.popover').css('left')) + 80));
         }
     });
@@ -103,29 +122,44 @@ function InitDraggableViewer() {
     });
 }
 
-function navigateFiles(isNext) {
-    var currentImg = $('div#viewerBody img').prop('src');
-    currentImg = currentImg.replace(window.location.protocol + '//' + window.location.host, '');
-    var currentTr = $('div#fileList table tbody tr td').find('img[src="' + currentImg + '"]').parent().parent();
+//used for image navigation
+var popoverImageArray = [];
 
-    var nextTr, tr = $('div#fileList table tbody tr');
+function getCurrentImageIndex() {
+    var currentImg = $('div#viewerBody img').prop('src');
+    var currentImageId = currentImg.substr(currentImg.lastIndexOf('=') + 1);
+    var index = -1;
+
+    for (var i = 0; i < popoverImageArray.length; i++) {
+        if (popoverImageArray[i][0] == currentImageId) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+function navigateFiles(isNext) {
+    var index = getCurrentImageIndex();
+    if (index == -1) return;
+
+    var arrLen = popoverImageArray.length;
+    var next = index;
+
     if (isNext) {
-        nextTr = currentTr.next();
-        if (nextTr[0] == null) { //get the 1st if it's the end
-            nextTr = tr.first();
+        next += 1;
+        if (next >= arrLen) {
+            next = 0;
         }
     } else {
-        nextTr = currentTr.prev();
-        if (nextTr[0] == null) {
-            nextTr = tr.last();
+        next -= 1;
+        if (next < 0) {
+            next = arrLen -1;
         }
     }
 
-    var nextImg = nextTr.find('img');
-    var nextDesc = nextTr.find('p').text();
-
-    $("div#viewerBody").iviewer('loadImage', nextImg.prop('src'));
-    $('div#viewerFooter label#fileDesc').text(nextDesc);
+    $("div#viewerBody").iviewer('loadImage', '/Receipts/GetImage?imageId=' + popoverImageArray[next][0]);
+    $('div#viewerFooter label#fileDesc').text(popoverImageArray[next][1]);
 }
 
 function GetImagesForPopover() {
@@ -138,6 +172,7 @@ function GetImagesForPopover() {
         },
         success: function (data) {
             $('button#btnViewFiles').popover('show');
+            popoverImageArray = [];
 
             ////for debug
             //var popoverContent = '<div id="viewFilesHolder" class="hidden"><div id="fileList"><table class="table-condensed table-hover"><tbody><tr><td style="width:10%"><img width="60" height="60" class="img-thumbnail"src="/Images/orderedList2.png" alt="ReceiptImage" /></td><td style="width:80%"><p style="vertical-align:middle">dasfafafafs.jpg</p></td><td style="width:10%">Edit<br />Cancel<br />Delete</td></tr></tbody></table></div></div>';
@@ -145,6 +180,7 @@ function GetImagesForPopover() {
             var imageArray = data.split(";");  //todo need change to json, as ; & , in desc break this code
             for (var i = 0; i < imageArray.length - 1; i++) {
                 var arr = imageArray[i].split(",");
+                popoverImageArray.push(arr);
                 popoverContent += '<tr><td style="width:10%"><img width="60" height="60" class="img-rounded" src="/Receipts/GetImage?imageId=';
                 popoverContent += arr[0] + '" alt="ReceiptImage" /></td><td style="width:80%"><p>'
                     + arr[1] + '</p></td><td style="width:10%"><a class="" id="' + arr[0] + '" href="#">Update</a><br /><a class="imageDel" id="' + arr[0] + '" href="#">Delete</a></td></tr>';
@@ -153,19 +189,26 @@ function GetImagesForPopover() {
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
 
-
             $('div.popover').css('left', '+=80px');
-
 
             //update event
             $('div#fileList table tbody tr td a.imageUpdate').click(function (e) {
                 alert('update clicked');
+                var newDesc = 'new desc';
+
+                var index = getCurrentImageIndex();
+                popoverImageArray[index][0] = newDesc;
+                $('div#viewerFooter label#fileDesc').text(newDesc);
                 e.stopPropagation();
             });
 
             //delete event
             $('div#fileList table tbody tr td a.imageDel').click(function (e) {
                 deleteImage($(this));
+
+                var index = getCurrentImageIndex();
+                navigateFiles(true);
+                popoverImageArray.splice(index, 1);
                 e.stopPropagation();
             });
 

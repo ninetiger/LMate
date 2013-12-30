@@ -16,6 +16,7 @@ body {
 /* main layout
 ----------------------------------------------------------*/
 .centerlised {
+    width: 960px;
     margin: 0 auto;
     min-height: 100%;
     height: auto !important;

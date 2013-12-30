@@ -23,6 +23,7 @@ namespace WebUI.Controllers
             _efReceiptRepository = efReceiptRepository;
         }
 
+        #region Index page
         public ActionResult Index()
         {
             return View();
@@ -30,20 +31,8 @@ namespace WebUI.Controllers
 
         public JsonResult AutoCompleteReceiptSearch(string id, string searchString, UserViewModel user) //todo need userId secure
         {
-            var list = new List<string>() { "aaa", "bbb", "abc" };
+            var list = new List<string> { "aaa", "bbb", "abc" };
             return Json(new { list }, JsonRequestBehavior.AllowGet);
-        }
-
-        public async Task<JsonResult> AutoCompleteVendor(string searchString, UserViewModel user)
-        {
-            var list = await _efReceiptRepository.SearchVendorNameSecure(searchString, user.UserId);
-            return Json(new { list }, JsonRequestBehavior.AllowGet);
-        }
-
-        public async Task DeleteVendor(string name, UserViewModel user)
-        {
-            await _efReceiptRepository.DeleteVendorSecure(name, user.UserId);
-            await _efReceiptRepository.SaveChangesAsync();
         }
 
         //todo check json attributes eg hannel json exception
@@ -54,12 +43,12 @@ namespace WebUI.Controllers
 
             var json = GenerateJsonContent(recieptBriefList);
             var jsonString = Json(new
-           {
-               sEcho = param.sEcho,
-               iTotalRecords = recieptBriefList.Count(),
-               iTotalDisplayRecords = 3,
-               aaData = json
-           },
+            {
+                sEcho = param.sEcho,
+                iTotalRecords = recieptBriefList.Count(),
+                iTotalDisplayRecords = 3,
+                aaData = json
+            },
            JsonRequestBehavior.AllowGet);
 
             return jsonString;
@@ -67,7 +56,7 @@ namespace WebUI.Controllers
 
         private static List<List<string>> GenerateJsonContent(IEnumerable<ReceiptBriefViewModel> data)
         {
-            return data.Select(receiptBrief => new List<string>()
+            return data.Select(receiptBrief => new List<string>
             {
                 receiptBrief.Id.ToString(CultureInfo.InvariantCulture), 
                 receiptBrief.Description, 
@@ -80,6 +69,36 @@ namespace WebUI.Controllers
                 string.Empty
             }).ToList();
         }
+
+        public async Task<ViewResult> Create(UserViewModel user)
+        {
+            string userID = user.UserId;
+            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(0, userID);
+            return View("Edit", viewModel);
+        }
+
+        //[HttpPost]
+        public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief)
+        {
+
+            if (receiptBrief.Id < 1) return RedirectToAction("Index"); //TODO LOG it
+
+            var receiptViewModel = new ReceiptViewModel
+            {
+                Id = receiptBrief.Id,
+                UserId = User.Identity.GetUserId()
+            };
+            await _efReceiptRepository.DeleteAsync(receiptViewModel);
+            await _efReceiptRepository.SaveChangesAsync();
+
+            TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);
+            return RedirectToAction("Index");
+
+        }
+
+        #endregion
+
+        #region Edit page
 
         public async Task<ViewResult> Edit(int id, UserViewModel user)
         {
@@ -127,7 +146,7 @@ namespace WebUI.Controllers
                 var vendor = await _efReceiptRepository.GetVednorSecure(receiptViewModel.VendorName, userId);
                 if (vendor == null)
                 {
-                    var newVednor = new VendorViewModel()
+                    var newVednor = new VendorViewModel
                     {
                         VendorName = receiptViewModel.VendorName,
                         UserId = receiptViewModel.UserId
@@ -146,31 +165,25 @@ namespace WebUI.Controllers
             }
         }
 
-        public async Task<ViewResult> Create(UserViewModel user)
+        #endregion
+
+        #region Vendor
+
+        public async Task<JsonResult> AutoCompleteVendor(string searchString, UserViewModel user)
         {
-            string userID = user.UserId;
-            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(0, userID);
-            return View("Edit", viewModel);
+            var list = await _efReceiptRepository.SearchVendorNameSecure(searchString, user.UserId);
+            return Json(new { list }, JsonRequestBehavior.AllowGet);
         }
 
-        //[HttpPost]
-        public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief)
+        public async Task DeleteVendor(string name, UserViewModel user)
         {
-
-            if (receiptBrief.Id < 1) return RedirectToAction("Index"); //TODO LOG it
-
-            var receiptViewModel = new ReceiptViewModel()
-            {
-                Id = receiptBrief.Id,
-                UserId = User.Identity.GetUserId()
-            };
-            await _efReceiptRepository.DeleteAsync(receiptViewModel);
+            await _efReceiptRepository.DeleteVendorSecure(name, user.UserId);
             await _efReceiptRepository.SaveChangesAsync();
-
-            TempData["message"] = string.Format("{0} was deleted", receiptBrief.Description);
-            return RedirectToAction("Index");
-
         }
+
+        #endregion
+
+        #region images
 
         public async Task<FileContentResult> GetImage(int imageId, UserViewModel user)
         {
@@ -237,6 +250,7 @@ namespace WebUI.Controllers
             var userId = user.UserId;
             await _efReceiptRepository.DetachAnImageFromReceipt(imageId, receiptId, userId);
         }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

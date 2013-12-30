@@ -293,7 +293,6 @@ namespace WebUI.Repositories
 
             return list.Where(x => x.User_Id == null || x.User_Id.Equals(userId))
                 .Select(item => new List<string> { item.Name, (item.User_Id != null && item.Receipts.Count == 0) ? "Y" : "N" }).ToList();
-            ;
         }
 
         //public void InsertVendor(Vendor vendor)

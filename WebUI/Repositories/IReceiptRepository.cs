@@ -29,8 +29,10 @@ namespace WebUI.Repositories
         #region Vendor
         Task<Vendor> GetVednorSecure(int vendorId, string userId);
         Task<Vendor> GetVednorSecure(string vendorName, string userId);
-        Task<string[]> SearchVendorNameSecure(string searchString, string userId);
+        Task<List<List<string>>> SearchVendorNameSecure(string searchString, string userId);
         //void InsertVendor(Vendor vendor);
+        Task DeleteVendorSecure(string vendorName, string userId);
+
         #endregion
 
     }

@@ -91,3 +91,7 @@ div#fileList table tbody tr {
 .vendorLoading { /*todo only ie need the 30px */
     background-position: right 30px center;
 }
+
+ul#ui-id-1 li.odd {
+    background-color: lightgray;
+}

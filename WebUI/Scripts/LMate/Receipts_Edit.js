@@ -214,7 +214,7 @@ function InitImageViewer() {
         mousewheel: false,
         onMouseMove: function (ev, coords) { },
         onStartDrag: function (ev, coords) { }, //this image will not be dragged if set: return false;
-        onDrag: function (ev, coords) { },
+        onDrag: function (ev, coords) { }
         //onFinishLoad: function (ev, src) { $(this).iviewer('center'); }
     });
 
@@ -255,8 +255,8 @@ function AutoCompleteVendor() {
                 success: function (data) {
                     response($.map(data.list, function (item) {
                         return {
-                            label: item,
-                            value: item
+                            label: item[0],
+                            value: item[1]
                         };
                     }));
                 }
@@ -268,8 +268,51 @@ function AutoCompleteVendor() {
                 }
             });
         }
+        , select: function (event, ui) {
+            $('input#ReceiptViewModel_VendorName').val(ui.item.label);
+            return false;
+        }
+        , open: function (event, ui) {
+            var width = $('ul#ui-id-1 li').width() - 20;
+            $.each($('ul#ui-id-1 li a.pull-left'), function (ind, val) {
+                $(val).css('width', width);
+            });
+
+            $('a.delete').click(function () {
+                //alert($(this).prev().text());
+                $.ajax({
+                    url: "/receipts/DeleteVendor",
+                    data: {
+                        name: $(this).prev().text()
+                    }
+                  , fail: function () {
+                      alert("fail");
+                  }
+                });
+                $(this).parent().remove();
+                return false;
+            });
+        }
         , minLength: 1
     });
+    //$('#ReceiptViewModel_VendorName').data('ui-autocomplete')._renderMenu = function (ul, items) {
+    //    var that = this;
+    //    $.each(items, function (index, item) {
+    //        that._renderItemData(ul, item);
+    //    });
+    //    $(ul).find('li:odd').addClass('odd');
+    //};
+    $('#ReceiptViewModel_VendorName').data('ui-autocomplete')._renderItem = function (ul, item) {
+        var li = $('<li>').prop('data-value', item.value);
+        if (item.value == 'Y') {
+            li.append($("<a>").addClass('pull-left').text(item.label));
+            li.append('<a href="#" class="delete pull-right text-center" style="width: 20px">X</a><div class="clearfix"></div>');
+        } else {
+            li.append($("<a>").text(item.label));
+        }
+        li.appendTo(ul);
+        return li;
+    };
 
     $('span#vendorDropDown').click(function () {
         if ($('ul#ui-id-1').css('display') == 'none') {

@@ -28,7 +28,7 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public JsonResult AutoCompleteReceiptSearch(string id, string searchString) //todo need userId secure
+        public JsonResult AutoCompleteReceiptSearch(string id, string searchString, UserViewModel user) //todo need userId secure
         {
             var list = new List<string>() { "aaa", "bbb", "abc" };
             return Json(new { list }, JsonRequestBehavior.AllowGet);
@@ -38,6 +38,12 @@ namespace WebUI.Controllers
         {
             var list = await _efReceiptRepository.SearchVendorNameSecure(searchString, user.UserId);
             return Json(new { list }, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task DeleteVendor(string name, UserViewModel user)
+        {
+            await _efReceiptRepository.DeleteVendorSecure(name, user.UserId);
+            await _efReceiptRepository.SaveChangesAsync();
         }
 
         //todo check json attributes eg hannel json exception

@@ -279,7 +279,7 @@ namespace WebUI.Repositories
             return null;
         }
 
-        public async Task<string[]> SearchVendorNameSecure(string searchString, string userId)
+        public async Task<List<List<string>>> SearchVendorNameSecure(string searchString, string userId)
         {
             IEnumerable<Vendor> list;
             if (string.IsNullOrEmpty(searchString))
@@ -290,13 +290,26 @@ namespace WebUI.Repositories
             {
                 list = await _entityVendorDao.GetAsync(x => x.Name.ToLower().Contains(searchString.ToLower()));
             }
-            return list.Where(x => x.User_Id == null || x.User_Id.Equals(userId)).Select(item => item.Name).ToArray();
+
+            return list.Where(x => x.User_Id == null || x.User_Id.Equals(userId))
+                .Select(item => new List<string> { item.Name, (item.User_Id != null && item.Receipts.Count == 0) ? "Y" : "N" }).ToList();
+            ;
         }
 
         //public void InsertVendor(Vendor vendor)
         //{
         //    _entityVendorDao.Insert(vendor);
         //}
+        public async Task DeleteVendorSecure(string vendorName, string userId)
+        {
+            var vendor = await GetVednorSecure(vendorName, userId);
+            if (vendor != null && vendor.User_Id != null && vendor.Receipts.Count == 0)
+            {
+                _entityVendorDao.Delete(vendor);
+                await SaveChangesAsync();
+            }
+        }
+
         #endregion
 
         #endregion

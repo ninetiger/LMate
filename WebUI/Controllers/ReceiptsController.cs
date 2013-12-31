@@ -172,7 +172,7 @@ namespace WebUI.Controllers
         public async Task<JsonResult> AutoCompleteVendor(string searchString, UserViewModel user)
         {
             var list = await _efReceiptRepository.SearchVendorNameSecure(searchString, user.UserId);
-            return Json(new { list }, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public async Task DeleteVendor(string name, UserViewModel user)
@@ -197,15 +197,15 @@ namespace WebUI.Controllers
             return null;
         }
 
-        public async Task<string> GetImageAddrsByReceiptId(int receiptId, UserViewModel user)
+        public async Task<JsonResult> GetImages(int receiptId, UserViewModel user)
         {
-            string result = string.Empty;
             if (receiptId > 0)
             {
-                var userId = user.UserId;
-                result = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId, userId);
+                var list = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId, user.UserId);
+                var jsonResult = Json(list, JsonRequestBehavior.AllowGet);
+                return jsonResult;
             }
-            return result;
+            return null; //todo ajax return raise error event, what's the best way to handel?
         }
 
         [HttpPost]

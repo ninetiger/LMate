@@ -32,7 +32,7 @@ namespace WebUI.App_Start
 
             bundles.Add(new ScriptBundle("~/bundles/receipts_index").Include(
                          "~/Scripts/jquery-ui-{version}.js",
-                        "~/Scripts/DataTables-1.9.4/media/js/*.js", //todo need to be specific rather then *
+                        "~/Scripts/DataTables-1.9.4/media/js/jquery.dataTables.js", //todo need to be specific rather then *
                          "~/Scripts/LMate/Receipts_Index.js"
                         ));
 
@@ -85,7 +85,7 @@ namespace WebUI.App_Start
                         "~/Content/DataTables-1.9.4/media/css/*.css"));
 
             bundles.Add(new ScriptBundle("~/Content/receipts_index").Include(
-                      "~/Content/DataTables-1.9.4/media/css/*.css",//todo need to be specific rather then *
+                      "~/Content/DataTables-1.9.4/media/css/jquery.dataTables.css",//todo need to be specific rather then *
                       "~/Content/themes/base/jquery-ui.css"));
 
             bundles.Add(new ScriptBundle("~/Content/receipts_edit").Include(

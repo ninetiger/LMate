@@ -21,7 +21,7 @@ namespace WebUI.Repositories
 
         Task<ReceiptImage> GetImageSecure(int imageId, string userId);
 
-        Task<string> GetImageAddrsByReceiptId(int receiptId, string userId);
+        Task<List<string[]>> GetImageAddrsByReceiptId(int receiptId, string userId);
 
         Task DetachAnImageFromReceipt(int imageId, int receiptId, string userId);
         #endregion

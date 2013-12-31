@@ -11464,11 +11464,11 @@
 		/* Sorting */
 		"sSortAsc": "sorting_asc",
 		"sSortDesc": "sorting_desc",
-		"sSortable": "sorting", /* Sortable in both directions */
+		//"sSortable": "sorting", /* Sortable in both directions */
 		"sSortableAsc": "sorting_asc_disabled",
 		"sSortableDesc": "sorting_desc_disabled",
 		"sSortableNone": "sorting_disabled",
-		"sSortColumn": "sorting_", /* Note that an int is postfixed for the sorting order */
+		//"sSortColumn": "sorting_", /* Note that an int is postfixed for the sorting order */
 		"sSortJUIAsc": "",
 		"sSortJUIDesc": "",
 		"sSortJUI": "",

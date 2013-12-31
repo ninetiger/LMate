@@ -154,7 +154,7 @@ function navigateFiles(isNext) {
     } else {
         next -= 1;
         if (next < 0) {
-            next = arrLen -1;
+            next = arrLen - 1;
         }
     }
 
@@ -164,8 +164,8 @@ function navigateFiles(isNext) {
 
 function GetImagesForPopover() {
     $.ajax({
-        url: "/receipts/GetImageAddrsByReceiptId",
-        dataType: "text",
+        url: "/receipts/GetImages",
+        dataType: "json",
         cache: false,
         data: {
             receiptId: $('#ReceiptViewModel_Id').val()
@@ -177,15 +177,17 @@ function GetImagesForPopover() {
             ////for debug
             //var popoverContent = '<div id="viewFilesHolder" class="hidden"><div id="fileList"><table class="table-condensed table-hover"><tbody><tr><td style="width:10%"><img width="60" height="60" class="img-thumbnail"src="/Images/orderedList2.png" alt="ReceiptImage" /></td><td style="width:80%"><p style="vertical-align:middle">dasfafafafs.jpg</p></td><td style="width:10%">Edit<br />Cancel<br />Delete</td></tr></tbody></table></div></div>';
             var popoverContent = '<table class="table-condensed table-hover"><tbody>';
-            var imageArray = data.split(";");  //todo need change to json, as ; & , in desc break this code
-            for (var i = 0; i < imageArray.length - 1; i++) {
-                var arr = imageArray[i].split(",");
+
+            var len = data.length;
+            for (var i = 0; i < len - 1; i++) {
+                var arr = data[i];
                 popoverImageArray.push(arr);
                 popoverContent += '<tr><td style="width:10%"><img width="60" height="60" class="img-rounded" src="/Receipts/GetImage?imageId=';
                 popoverContent += arr[0] + '" alt="ReceiptImage" /></td><td style="width:80%"><p>'
                     + arr[1] + '</p></td><td style="width:10%"><a class="" id="' + arr[0] + '" href="#">Update</a><br /><a class="imageDel" id="' + arr[0] + '" href="#">Delete</a></td></tr>';
                 //todo alt should set to desc, but need to test for invalid chars not break html
             }
+
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
 
@@ -221,6 +223,9 @@ function GetImagesForPopover() {
         }
         , fail: function () {
             alert("fail");
+        }
+        , error: function() {
+            alert('error');
         }
         , complete: function () {
             setButtonLoading(false);
@@ -296,7 +301,7 @@ function AutoCompleteVendor() {
                     searchString: $('#ReceiptViewModel_VendorName').val()
                 },
                 success: function (data) {
-                    response($.map(data.list, function (item) {
+                    response($.map(data, function (item) {
                         return {
                             label: item[0],
                             value: item[1]

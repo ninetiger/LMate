@@ -232,16 +232,15 @@ namespace WebUI.Repositories
             return null;
         }
 
-        public async Task<string> GetImageAddrsByReceiptId(int receiptId, string userId)
+        public async Task<List<string[]>> GetImageAddrsByReceiptId(int receiptId, string userId)
         {
             var receipt = await GetReceiptSecure(receiptId, userId);
+            if (receipt == null) return null;
 
-            var sb = new StringBuilder();
-            foreach (var image in receipt.ReceiptImages)
+            return receipt.ReceiptImages.Select(image => new[]
             {
-                sb.Append(image.Id.ToString(CultureInfo.InvariantCulture) + ',' + image.Description + ';');
-            }
-            return sb.ToString();
+                image.Id.ToString(CultureInfo.InvariantCulture), image.Description
+            }).ToList();
         }
 
         public async Task DetachAnImageFromReceipt(int imageId, int receiptId, string userId)

@@ -351,14 +351,15 @@ function AutoCompleteVendor() {
     //    $(ul).find('li:odd').addClass('odd');
     //};
     $('#ReceiptViewModel_VendorName').data('ui-autocomplete')._renderItem = function (ul, item) {
-        var li = $('<li>').prop('data-value', item.value);
+        var li = $('<li style="clear:both">').prop('data-value', item.value);
         if (item.value == 'Y') {
             li.append($("<a>").addClass('pull-left').text(item.label));
-            li.append('<a href="#" class="delete pull-right text-center" style="width: 20px">X</a><div class="clearfix"></div>');
+            li.append('<a href="#" class="delete pull-right text-center" style="width: 20px">X</a>');
         } else {
             li.append($("<a>").text(item.label));
         }
         li.appendTo(ul);
+
         return li;
     };
 

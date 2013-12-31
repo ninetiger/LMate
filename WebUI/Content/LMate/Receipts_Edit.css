@@ -86,10 +86,14 @@ div#fileList table tbody tr {
     cursor: pointer;
 }
 
-.vendorLoading { /*todo only ie need the 30px */
+.vendorLoading { /*todo only ie need the 30px as it has a x delete icon */
     background-position: right 30px center;
 }
 
 ul#ui-id-1 li.odd {
     background-color: lightgray;
+}
+
+label {
+    font-weight: normal;
 }

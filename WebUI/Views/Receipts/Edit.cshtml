@@ -10,12 +10,13 @@
 </div>
 @Html.ValidationSummary("Error occurred:")
 <div id="panel" class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading clearfix">
         <h3 class="panel-title pull-left">Edit Receipt - <b>@Model.ReceiptViewModel.Id</b> (Status: <b>@Model.ReceiptViewModel.ReceiptStatus</b>)</h3>
-        <button class="pull-right btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#fileUploadModal">Upload Files</button>
-        <button class="pull-right btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#fileUploadModal">Use Existing Files</button>
-        <button class="pull-right btn btn-primary btn-sm" id="btnViewFiles" type="button">View Files</button>
-        <div class="clearfix"></div>
+        <div class=" pull-right">
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#fileUploadModal">Upload Files</button>
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#fileUploadModal">Use Existing Files</button>
+            <button class="btn btn-primary btn-sm" id="btnViewFiles" type="button">View Files</button>
+        </div>
     </div>
     <div class="panel-body">
         @using (Html.BeginForm("Edit", "Receipts", FormMethod.Post, new { enctype = "multipart/form-data" }))

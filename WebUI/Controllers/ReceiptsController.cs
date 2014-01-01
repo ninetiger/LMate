@@ -36,6 +36,7 @@ namespace WebUI.Controllers
         }
 
         //todo check json attributes eg hannel json exception
+        [HttpPost]
         public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param, UserViewModel user)
         {
             var userId = user.UserId;
@@ -48,8 +49,7 @@ namespace WebUI.Controllers
                 iTotalRecords = recieptBriefList.Count(),
                 iTotalDisplayRecords = 3,
                 aaData = json
-            },
-           JsonRequestBehavior.AllowGet);
+            });
 
             return jsonString;
         }

@@ -33,6 +33,7 @@ namespace WebUI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/receipts_index").Include(
                          "~/Scripts/jquery-ui-{version}.js",
                         "~/Scripts/DataTables-1.9.4/media/js/jquery.dataTables.js", //todo need to be specific rather then *
+                        //"~/Scripts/jquery.dataTables.columnFilter.js",
                          "~/Scripts/LMate/Receipts_Index.js"
                         ));
 

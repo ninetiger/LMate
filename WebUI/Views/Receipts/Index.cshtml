@@ -7,34 +7,6 @@
 
 <p>@Html.ActionLink("Add a new receipt", "Create")</p>
 <br />
-<div class="center-block">
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Description</th>
-                <th>Vendor</th>
-                <th>Purchase Date</th>
-                <th>Price</th>
-                <th>Has Image</th>
-                <th>Date Entered</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tr>
-            <td></td>
-            <td><input id="Receipts_Desc" class="form-control input-sm" /></td>
-            <td><input id="Receipts_Vendor" class="form-control input-sm" /></td>
-            <td><input id="Receipts_PurchaseDate" class="form-control input-sm" /></td>
-            <td></td>
-            <td><input id="Receipts_HasImage" class="form-control input-sm" /></td>
-            <td><input id="Receipts_DataEntered" class="form-control input-sm" /></td>
-            <td><input id="Receipts_Status" class="form-control input-sm" /></td>
-            <td></td>
-        </tr>
-    </table>
-
-</div>
 <table id="dataTable">
     <thead>
         <tr>
@@ -48,8 +20,22 @@
             <th>Status</th>
             <th>Actions</th>
         </tr>
+        @*<tr>
+            <th></th>
+            <th>Description</th>
+            <th>Vendor</th>
+            <th>Purchase Date</th>
+            <th>Price</th>
+            <th>Has Image</th>
+            <th>Date Entered</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>*@
     </thead>
     <tbody></tbody>
+    <tfoot>
+
+    </tfoot>
 </table>
 <div>
     @*@Html.Partial("Index", Html.DataTableVm("id", (ReceiptsController h) => h.GetUsers(null)))*@
@@ -69,3 +55,4 @@
 
     AutoComplete();
 }
+

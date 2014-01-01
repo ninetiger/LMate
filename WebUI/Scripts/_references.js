@@ -113,3 +113,4 @@
 /// <reference path="lmate/fileuploaddemo.js" />
 /// <reference path="iviewer/jquery.iviewer.js" />
 /// <reference path="lmate/common.js" />
+/// <reference path="jquery.datatables.columnfilter.js" />

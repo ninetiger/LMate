@@ -1,46 +1,55 @@
 ﻿function ReceiptsDataTable() {
     $('#dataTable').dataTable({
-        //"bJQueryUI": true,
-        //'iDisplayLength': 100,
-        //'bRetrieve': true,
-        //'bHeader': true,
-        //"bSearchable": false
-
-        "aaSorting": [[0, "asc"]], //"desc"]]
-        "bFilter": false
-        //, "bSortable": true
-        //, "bInfo": false
-        , "bServerSide": true
-        , "sAjaxSource": "/Receipts/DataTableAjaxHandler"
-        //,"sServerMethod": "POST"
-        , "bProcessing": true
-        , "sPaginationType": "full_numbers"
-        , 'aoColumns': [
-                { 'sName': 'ID', 'bVisible': true, 'bSortable': false },
-                { 'sName': 'Description' },
-                { 'sName': 'PurchaseDate' },
-                { 'sName': 'Price' },
-                { 'sName': 'Vendor' },
-                { 'sName': 'AccountType' },
-                { 'sName': 'IsBulk' },
-                { 'sName': 'HasImage' },
-                { 'sName': 'Actions', 'bSortable': false }
-        ]
-        , 'fnRowCallback': function (nRow, aData) {
+        "sServerMethod": "POST",
+        "sAjaxSource": "/Receipts/DataTableAjaxHandler"
+        //, 'bStateSave': true
+        //, "iCookieDuration": 1800 //30 mins
+        ,
+        'bPaginate': true,
+        'bLengthChange': true,
+        'iDisplayLength': 10
+        //, 'bHeader': false
+        //, "aaSorting": [[1, "asc"]] //"desc"]]
+        ,
+        'bDeferRender': true,
+        "bFilter": true,
+        "bServerSide": false //set to true to do everything at server site inc. sorting
+        ,
+        "bProcessing": true,
+        "sPaginationType": 'full_numbers',
+        'bSortCellsTop': true,
+        'bAutoWidth': true,
+        //'aoColumns': [
+        //       { 'sName': 'ID', 'bVisible': true, 'bSortable': false, 'bSearchable': false },
+        //       { 'sName': 'Description' },
+        //       { 'sName': 'PurchaseDate' },
+        //       { 'sName': 'Price' },
+        //       { 'sName': 'Vendor' },
+        //       { 'sName': 'AccountType' },
+        //       { 'sName': 'IsBulk' },
+        //       { 'sName': 'HasImage' },
+        //       { 'sName': 'Actions', 'bSortable': false, 'bSearchable': false }
+        //],
+        'aoColumnDefs': [
+            { 'bSortable': false, 'bSearchable': false, 'aTargets': [0] },
+            { 'bSortable': false, 'bSearchable': false, 'aTargets': [8] }
+        ],
+        'oLanguage': { "sSearch": "Search all columns:" },
+        'fnCreatedRow': function(nRow, aData) {
             var path = location.pathname.split('/');
             //var appRoot = location.protocol + '//' + location.host + '/' + path[1];
 
             //todo shouldnt need jquery a css with class should do for the 2 function below
             $(nRow).css('cursor', 'pointer');
             $(nRow).hover(
-                function () {
-                    $(this).css("background-color", "#D6FF5C");
+                function() {
+                    $(this).css("background-color", "lightcyan");
                 },
-                function () {
+                function() {
                     $(this).css("background", "");
                 }
             );
-            $(nRow).click(function () {
+            $(nRow).click(function() {
                 //nRow.setAttribute("id", aData[0]);
                 document.location.href = '/receipts/Edit?ID=' + aData[0];
             });
@@ -51,50 +60,10 @@
             $('td:eq(8)', nRow)
                 .html('<a href="Receipts/Delete/?Id=' + aData[0] + '&Description=' +
                     aData[1] + '"><span class="glyphicon glyphicon-trash" style="font-size:16px"></span></a>'
-            + '<a href="Receipts/Edit/?Id=' + aData[0] + '"><span class="glyphicon glyphicon-edit" style="font-size:16px"></span></a>');
+                    + '<a href="Receipts/Edit/?Id=' + aData[0] + '"><span class="glyphicon glyphicon-edit" style="font-size:16px"></span></a>');
             return nRow;
         }
-        //, "fnDrawCallback": function () {
-        //    if (addControlInDataTableHtml.length > 0) {
-        //        $(addControlInDataTableHtml).prependTo(".reviewRuleTBody");
-        //    }
-        //}
-        //, "aaData": data
-        //, "fnServerData": function (sSource, aoData, fnCallback) {
-        //    $.getJSON(sSource, aoData, function (json) {
-        //        map = {};
-        //        map["aaData"] = json;
-        //        fnCallback(map);
-        //    });
-        //}
-
-        //, "fnServerData": function (sSource, aoData, fnCallback) {
-        //    $.getJSON(sSource, aoData, function (json) {
-        //        /* --- Here is where we massage the data --- */
-        //        /* if the variable "json" is just a string (I forgot) then evaluate it first into an object (download a json library)*/
-        //        var aaData = [];
-        //        $.each(json, function (index, object) {
-        //            alert('index:' + index + '\r\n' + 'obj:'+ object);
-        //            var aData = [];
-        //            $.each(object, function (key, value) {
-        //                aData.push(value); //be careful here, you might put things in the wrong column
-        //            });
-        //            aaData.push(aData);
-        //        });
-        //        /* --- And after we're done, we give the correctly formatted data to datatables --- */  /* --- if "json" was a string and not an object, then stringify aaData first (object to json notation, download a library) --- */
-        //        fnCallback(aaData);
-        //});
-        //}
     });
-
-    //$('#dataTable').on('click', 'tbody tr',function (event) {
-    //    //alert($(this).find('td input.receiptId').val());
-    //    //+ '<a href="Receipts/Edit/?Id=' + aData[0]
-    //    var receiptId = $(this).find('td input.receiptId').val();
-    //    document.location.href = '/receipts/Edit?ID=' + receiptId;
-    //});
-    
-
 }
 
 function AutoComplete() {

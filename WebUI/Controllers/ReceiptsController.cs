@@ -29,11 +29,11 @@ namespace WebUI.Controllers
             return View();
         }
 
-        public JsonResult AutoCompleteReceiptSearch(string id, string searchString, UserViewModel user) //todo need userId secure
-        {
-            var list = new List<string> { "aaa", "bbb", "abc" };
-            return Json(new { list }, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult AutoCompleteReceiptSearch(string id, string searchString, UserViewModel user) //todo need userId secure
+        //{
+        //    var list = new List<string> { "aaa", "bbb", "abc" };
+        //    return Json(new { list }, JsonRequestBehavior.AllowGet);
+        //}
 
         //todo check json attributes eg hannel json exception
         [HttpPost]

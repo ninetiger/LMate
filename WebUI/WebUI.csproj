@@ -403,7 +403,7 @@
     <Content Include="Content\mobile.css" />
     <Content Include="Content\landlord.css" />
     <Content Include="Content\login.css" />
-    <Content Include="Content\Site - Copy.css" />
+    <Content Include="Content\shared.css" />
     <Content Include="Content\themes\base\jquery-ui.css" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
@@ -567,6 +567,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\LMate\Frontpage.js" />
     <Content Include="Scripts\LMate\Common.js" />
     <Content Include="Scripts\LMate\FileUploadDemo.js" />
     <Content Include="Scripts\LMate\FileUpload.js" />

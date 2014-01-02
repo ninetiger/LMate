@@ -30,19 +30,6 @@ namespace WebUI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
                         "~/Scripts/DataTables-1.9.4/media/js/*.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/receipts_index").Include(
-                         "~/Scripts/jquery-ui-{version}.js",
-                        "~/Scripts/DataTables-1.9.4/media/js/jquery.dataTables.js", //todo need to be specific rather then *
-                        //"~/Scripts/jquery.dataTables.columnFilter.js",
-                         "~/Scripts/LMate/Receipts_Index.js"
-                        ));
-
-            bundles.Add(new ScriptBundle("~/bundles/receipts_edit").Include(
-                "~/Scripts/jquery-ui-{version}.js",
-                "~/Scripts/select2.js",
-                "~/Scripts/LMate/Receipts_Edit.js",
-                "~/Scripts/iViewer/jquery.iviewer.js"
-            ));
 
             //BasicPlus js
             bundles.Add(new ScriptBundle("~/bundles/fileupload").Include(
@@ -74,27 +61,59 @@ namespace WebUI.App_Start
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                                             "~/Content/bootstrap.css",
-                                            "~/Content/landlord.css"));
+                                            "~/Content/landlord.css",
+                                            "~/Content/share.css"
+                                            ));
 
-            bundles.Add(new StyleBundle("~/Content/frontpage").Include(
-                                            "~/Content/bootstrap.css",
-                                            "~/Content/site.css",
-                                            "~/Content/mobile.css",
-                                            "~/Content/login.css"));
+
 
             bundles.Add(new ScriptBundle("~/Content/datatables/css").Include(
                         "~/Content/DataTables-1.9.4/media/css/*.css"));
 
-            bundles.Add(new ScriptBundle("~/Content/receipts_index").Include(
-                      "~/Content/DataTables-1.9.4/media/css/jquery.dataTables.css",//todo need to be specific rather then *
-                      "~/Content/themes/base/jquery-ui.css"));
 
+            #region frontpage
+            bundles.Add(new StyleBundle("~/Content/frontpage").Include(
+                                "~/Content/bootstrap.css",
+                                "~/Content/site.css",
+                                "~/Content/shared.css",
+                                "~/Content/mobile.css",
+                                "~/Content/login.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/frontpage").Include(
+                      "~/Scripts/LMate/Frontpage.js"
+            ));
+            #endregion
+
+            #region receipt_index
+            bundles.Add(new ScriptBundle("~/bundles/receipts_index").Include(
+                "~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/DataTables-1.9.4/media/js/jquery.dataTables.js", //todo need to be specific rather then *
+                //"~/Scripts/jquery.dataTables.columnFilter.js",
+               "~/Scripts/LMate/Receipts_Index.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/Content/receipts_index").Include(
+                "~/Content/DataTables-1.9.4/media/css/jquery.dataTables.css",//todo need to be specific rather then *
+                "~/Content/themes/base/jquery-ui.css"));
+            #endregion
+
+            #region receipt_edit
             bundles.Add(new ScriptBundle("~/Content/receipts_edit").Include(
-                  "~/Content/css/select2.css"
-                  ,"~/Content/themes/base/jquery-ui.css"
-                  , "~/Content/LMate/Receipts_Edit.css"
-                  , "~/Scripts/iViewer/jquery.iviewer.css"
-                  ));
+              "~/Content/css/select2.css"
+              , "~/Content/themes/base/jquery-ui.css"
+              , "~/Content/LMate/Receipts_Edit.css"
+              , "~/Scripts/iViewer/jquery.iviewer.css"
+              ));
+
+            bundles.Add(new ScriptBundle("~/bundles/receipts_edit").Include(
+                "~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/select2.js",
+                "~/Scripts/LMate/Receipts_Edit.js",
+                "~/Scripts/iViewer/jquery.iviewer.js"
+            ));
+            #endregion
+
+
         }
     }
 }

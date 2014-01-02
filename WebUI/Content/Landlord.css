@@ -150,10 +150,6 @@ input[type="checkbox"].input-validation-error {
     transition: none !important;
 }
 
-.loading20 {
-    background: url('/images/loading20.gif') center no-repeat;
-}
-
 .caretCursor {
     cursor: pointer;
 }

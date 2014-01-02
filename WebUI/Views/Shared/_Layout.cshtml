@@ -75,11 +75,11 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false);
+    @Scripts.Render("~/bundles/frontpage")
+    @RenderSection("Scripts", required: false);
     <script>
         $(function () {
-            $('#navigation li').removeClass('active');
-            $('#navigation li a[href="' + window.location.pathname + '"]').parent().addClass('active');
+            docReady();
 
             @RenderSection("DocumentReady", required: false);
         });

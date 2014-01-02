@@ -11,7 +11,7 @@
     <h4>Create a new account.</h4>
     <hr />
     @Html.ValidationSummary()
-    <div class="form-group"> //todo need to give widths to each of the input below
+    <div class="form-group"> @*todo need to give widths to each of the input below*@
         @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })

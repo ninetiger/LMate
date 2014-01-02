@@ -26,8 +26,8 @@ namespace DataObjects.EntityFramework
             this.ReceiptCategories = new HashSet<ReceiptCategory>();
             this.RentalIncomeDetails = new HashSet<RentalIncomeDetail>();
             this.TaxUsers = new HashSet<TaxUser>();
-            this.UserDelegates = new HashSet<UserDelegate>();
-            this.UserDelegates1 = new HashSet<UserDelegate>();
+            this.UserPermissions = new HashSet<UserPermission>();
+            this.UserPermissions1 = new HashSet<UserPermission>();
             this.Vendors = new HashSet<Vendor>();
         }
     
@@ -36,6 +36,9 @@ namespace DataObjects.EntityFramework
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
         public string Discriminator { get; set; }
+        public string Email { get; set; }
+        public bool IsConfirmed { get; set; }
+        public string ConfirmationToken { get; set; }
     
         public virtual ICollection<AccountType> AccountTypes { get; set; }
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
@@ -47,8 +50,8 @@ namespace DataObjects.EntityFramework
         public virtual ICollection<ReceiptCategory> ReceiptCategories { get; set; }
         public virtual ICollection<RentalIncomeDetail> RentalIncomeDetails { get; set; }
         public virtual ICollection<TaxUser> TaxUsers { get; set; }
-        public virtual ICollection<UserDelegate> UserDelegates { get; set; }
-        public virtual ICollection<UserDelegate> UserDelegates1 { get; set; }
+        public virtual ICollection<UserPermission> UserPermissions { get; set; }
+        public virtual ICollection<UserPermission> UserPermissions1 { get; set; }
         public virtual ICollection<Vendor> Vendors { get; set; }
     }
 }

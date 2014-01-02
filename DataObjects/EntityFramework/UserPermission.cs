@@ -12,13 +12,14 @@ namespace DataObjects.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class UserDelegate
+    public partial class UserPermission
     {
         public int Id { get; set; }
         public string User_Id { get; set; }
-        public string DelegateUser_Id { get; set; }
+        public string ActAsUser_Id { get; set; }
         public string Role_ID { get; set; }
     
+        public virtual AspNetRole AspNetRole { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
     }

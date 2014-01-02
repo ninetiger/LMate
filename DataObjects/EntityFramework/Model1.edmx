@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="LMateModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AccountTypes">
           <Key>
             <PropertyRef Name="Id" />
@@ -22,8 +22,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
           <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
@@ -58,10 +58,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PasswordHash" Type="nvarchar(max)" />
           <Property Name="SecurityStamp" Type="nvarchar(max)" />
           <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsConfirmed" Type="bit" Nullable="false" />
+          <Property Name="ConfirmationToken" Type="nchar" MaxLength="22" />
         </EntityType>
         <EntityType Name="Currencies">
           <Key>
@@ -232,14 +235,14 @@
           <Property Name="Address" Type="nvarchar" MaxLength="400" Nullable="false" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserDelegates">
+        <EntityType Name="UserPermissions">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="DelegateUser_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Role_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ActAsUser_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Role_ID" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Vendors">
           <Key>
@@ -556,27 +559,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserDelegates_AspNetUsers">
+        <Association Name="FK_UserPermissions_AspNetRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
+          <End Role="UserPermissions" Type="Self.UserPermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPermissions">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPermissions_AspNetUsers_user">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="UserDelegates" Type="Self.UserDelegates" Multiplicity="*" />
+          <End Role="UserPermissions" Type="Self.UserPermissions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserDelegates">
+            <Dependent Role="UserPermissions">
               <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserDelegates_AspNetUsersDelegate">
+        <Association Name="FK_UserPermissions_UserPermissions_act">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="UserDelegates" Type="Self.UserDelegates" Multiplicity="*" />
+          <End Role="UserPermissions" Type="Self.UserPermissions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserDelegates">
-              <PropertyRef Name="DelegateUser_Id" />
+            <Dependent Role="UserPermissions">
+              <PropertyRef Name="ActAsUser_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -613,7 +628,7 @@
           <EntitySet Name="ReceiptStatuses" EntityType="Self.ReceiptStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RentalIncomeDetails" EntityType="Self.RentalIncomeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaxUsers" EntityType="Self.TaxUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserDelegates" EntityType="Self.UserDelegates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPermissions" EntityType="Self.UserPermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AccountTypes_AspNetUsers" Association="Self.FK_AccountTypes_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -715,20 +730,25 @@
             <End Role="Receipts" EntitySet="Receipts" />
             <End Role="Receipt_ReceiptImage" EntitySet="Receipt_ReceiptImage" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserDelegates_AspNetUsers" Association="Self.FK_UserDelegates_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserDelegates" EntitySet="UserDelegates" />
+          <AssociationSet Name="FK_UserPermissions_AspNetRoles" Association="Self.FK_UserPermissions_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="UserPermissions" EntitySet="UserPermissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserDelegates_AspNetUsersDelegate" Association="Self.FK_UserDelegates_AspNetUsersDelegate">
+          <AssociationSet Name="FK_UserPermissions_AspNetUsers_user" Association="Self.FK_UserPermissions_AspNetUsers_user">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserDelegates" EntitySet="UserDelegates" />
+            <End Role="UserPermissions" EntitySet="UserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPermissions_UserPermissions_act" Association="Self.FK_UserPermissions_UserPermissions_act">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserPermissions" EntitySet="UserPermissions" />
           </AssociationSet>
           <AssociationSet Name="FK_Vendors_AspNetUsers" Association="Self.FK_Vendors_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Vendors" EntitySet="Vendors" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LMateModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -751,9 +771,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserPermissions" Relationship="Self.FK_UserPermissions_AspNetRoles" FromRole="AspNetRoles" ToRole="UserPermissions" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -790,10 +811,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="ConfirmationToken" Type="String" MaxLength="22" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="AccountTypes" Relationship="Self.FK_AccountTypes_AspNetUsers" FromRole="AspNetUsers" ToRole="AccountTypes" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
@@ -804,8 +828,8 @@
           <NavigationProperty Name="ReceiptCategories" Relationship="Self.FK_ReceiptTypes_AspNetUsers" FromRole="AspNetUsers" ToRole="ReceiptCategories" />
           <NavigationProperty Name="RentalIncomeDetails" Relationship="Self.FK_RentalIncomeDetails_AspNetUsers" FromRole="AspNetUsers" ToRole="RentalIncomeDetails" />
           <NavigationProperty Name="TaxUsers" Relationship="Self.FK_TaxUsers_TaxUsers" FromRole="AspNetUsers" ToRole="TaxUsers" />
-          <NavigationProperty Name="UserDelegates" Relationship="Self.FK_UserDelegates_AspNetUsers" FromRole="AspNetUsers" ToRole="UserDelegates" />
-          <NavigationProperty Name="UserDelegates1" Relationship="Self.FK_UserDelegates_AspNetUsersDelegate" FromRole="AspNetUsers" ToRole="UserDelegates" />
+          <NavigationProperty Name="UserPermissions" Relationship="Self.FK_UserPermissions_AspNetUsers_user" FromRole="AspNetUsers" ToRole="UserPermissions" />
+          <NavigationProperty Name="UserPermissions1" Relationship="Self.FK_UserPermissions_UserPermissions_act" FromRole="AspNetUsers" ToRole="UserPermissions" />
           <NavigationProperty Name="Vendors" Relationship="Self.FK_Vendors_AspNetUsers" FromRole="AspNetUsers" ToRole="Vendors" />
         </EntityType>
         <EntityType Name="Currency">
@@ -1001,16 +1025,17 @@
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_TaxUsers_TaxUsers" FromRole="TaxUsers" ToRole="AspNetUsers" />
           <NavigationProperty Name="RentalIncomeDetails" Relationship="Self.FK_RentalIncomeDetails_TaxUsers" FromRole="TaxUsers" ToRole="RentalIncomeDetails" />
         </EntityType>
-        <EntityType Name="UserDelegate">
+        <EntityType Name="UserPermission">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DelegateUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Role_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_UserDelegates_AspNetUsers" FromRole="UserDelegates" ToRole="AspNetUsers" />
-          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_UserDelegates_AspNetUsersDelegate" FromRole="UserDelegates" ToRole="AspNetUsers" />
+          <Property Name="ActAsUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetRole" Relationship="Self.FK_UserPermissions_AspNetRoles" FromRole="UserPermissions" ToRole="AspNetRoles" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_UserPermissions_AspNetUsers_user" FromRole="UserPermissions" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser1" Relationship="Self.FK_UserPermissions_UserPermissions_act" FromRole="UserPermissions" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -1044,6 +1069,18 @@
             </Principal>
             <Dependent Role="Receipts">
               <PropertyRef Name="AccountType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPermissions_AspNetRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="1" />
+          <End Role="UserPermissions" Type="Self.UserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPermissions">
+              <PropertyRef Name="Role_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1161,27 +1198,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserDelegates_AspNetUsers">
+        <Association Name="FK_UserPermissions_AspNetUsers_user">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="UserDelegates" Type="Self.UserDelegate" Multiplicity="*" />
+          <End Role="UserPermissions" Type="Self.UserPermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserDelegates">
+            <Dependent Role="UserPermissions">
               <PropertyRef Name="User_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserDelegates_AspNetUsersDelegate">
+        <Association Name="FK_UserPermissions_UserPermissions_act">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-          <End Role="UserDelegates" Type="Self.UserDelegate" Multiplicity="*" />
+          <End Role="UserPermissions" Type="Self.UserPermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserDelegates">
-              <PropertyRef Name="DelegateUser_Id" />
+            <Dependent Role="UserPermissions">
+              <PropertyRef Name="ActAsUser_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1365,7 +1402,7 @@
           <EntitySet Name="ReceiptStatuses" EntityType="Self.ReceiptStatus" />
           <EntitySet Name="RentalIncomeDetails" EntityType="Self.RentalIncomeDetail" />
           <EntitySet Name="TaxUsers" EntityType="Self.TaxUser" />
-          <EntitySet Name="UserDelegates" EntityType="Self.UserDelegate" />
+          <EntitySet Name="UserPermissions" EntityType="Self.UserPermission" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <AssociationSet Name="FK_AccountTypes_AspNetUsers" Association="Self.FK_AccountTypes_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1374,6 +1411,10 @@
           <AssociationSet Name="FK_Receipts_AccountTypes" Association="Self.FK_Receipts_AccountTypes">
             <End Role="AccountTypes" EntitySet="AccountTypes" />
             <End Role="Receipts" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPermissions_AspNetRoles" Association="Self.FK_UserPermissions_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="UserPermissions" EntitySet="UserPermissions" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1411,13 +1452,13 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="TaxUsers" EntitySet="TaxUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserDelegates_AspNetUsers" Association="Self.FK_UserDelegates_AspNetUsers">
+          <AssociationSet Name="FK_UserPermissions_AspNetUsers_user" Association="Self.FK_UserPermissions_AspNetUsers_user">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserDelegates" EntitySet="UserDelegates" />
+            <End Role="UserPermissions" EntitySet="UserPermissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserDelegates_AspNetUsersDelegate" Association="Self.FK_UserDelegates_AspNetUsersDelegate">
+          <AssociationSet Name="FK_UserPermissions_UserPermissions_act" Association="Self.FK_UserPermissions_UserPermissions_act">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserDelegates" EntitySet="UserDelegates" />
+            <End Role="UserPermissions" EntitySet="UserPermissions" />
           </AssociationSet>
           <AssociationSet Name="FK_Vendors_AspNetUsers" Association="Self.FK_Vendors_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1540,6 +1581,9 @@
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
                 <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1717,12 +1761,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserDelegates">
-            <EntityTypeMapping TypeName="LMateModel.UserDelegate">
-              <MappingFragment StoreEntitySet="UserDelegates">
+          <EntitySetMapping Name="UserPermissions">
+            <EntityTypeMapping TypeName="LMateModel.UserPermission">
+              <MappingFragment StoreEntitySet="UserPermissions">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-                <ScalarProperty Name="DelegateUser_Id" ColumnName="DelegateUser_Id" />
+                <ScalarProperty Name="ActAsUser_Id" ColumnName="ActAsUser_Id" />
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -97,7 +97,7 @@
     <Compile Include="EntityFramework\Implementation\EntityReceiptStatusDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityRentalIncomeDetailDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityVendorDao.cs" />
-    <Compile Include="EntityFramework\Implementation\EntityUserDelegateDao.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityUserPermission.cs" />
     <Compile Include="EntityFramework\Implementation\EntityTaxUserDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityDisposalDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityDepreciationAssetDao.cs" />
@@ -145,7 +145,7 @@
     <Compile Include="EntityFramework\TaxUser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\UserDelegate.cs">
+    <Compile Include="EntityFramework\UserPermission.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\Vendor.cs">
@@ -163,7 +163,7 @@
     <Compile Include="IReceiptStatusDao.cs" />
     <Compile Include="IRentalIncomeDetailDao.cs" />
     <Compile Include="ITaxUserDao.cs" />
-    <Compile Include="IUserDelegateDao.cs" />
+    <Compile Include="IUserPermission.cs" />
     <Compile Include="IVendorDao.cs" />
     <Compile Include="IDao.cs" />
     <Compile Include="IDaoFactory.cs" />

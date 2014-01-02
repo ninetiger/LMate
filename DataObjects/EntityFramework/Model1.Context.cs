@@ -44,7 +44,7 @@ namespace DataObjects.EntityFramework
         public virtual DbSet<ReceiptStatus> ReceiptStatuses { get; set; }
         public virtual DbSet<RentalIncomeDetail> RentalIncomeDetails { get; set; }
         public virtual DbSet<TaxUser> TaxUsers { get; set; }
-        public virtual DbSet<UserDelegate> UserDelegates { get; set; }
+        public virtual DbSet<UserPermission> UserPermissions { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
     }
 }

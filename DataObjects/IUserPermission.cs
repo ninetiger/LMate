@@ -2,6 +2,6 @@
 
 namespace DataObjects
 {
-    public interface IUserDelegateDao : IDao<UserDelegate>
+    public interface IUserPermission : IDao<UserPermission>
     { }
 }

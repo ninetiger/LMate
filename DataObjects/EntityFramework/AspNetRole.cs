@@ -14,9 +14,16 @@ namespace DataObjects.EntityFramework
     
     public partial class AspNetRole
     {
+        public AspNetRole()
+        {
+            this.UserPermissions = new HashSet<UserPermission>();
+        }
+    
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Discriminator { get; set; }
+    
+        public virtual ICollection<UserPermission> UserPermissions { get; set; }
     }
 }

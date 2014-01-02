@@ -23,7 +23,7 @@
     <div class="centerlised container">
         <div id="header">
             <div class="float-left">
-                <p class="site-title">@Html.ActionLink("LMateLogo", "Index", "Dashboard")</p>
+                <p class="site-title">@Html.ActionLink("LMateLogo", "Index", "Home")</p>
             </div>
             <div class="float-right">
                 <section id="login">
@@ -46,8 +46,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Role", "Index", "Role")</li>
-                    <li>@Html.ActionLink("User", "Index", "Account")</li>
+                    <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         if (User.IsInRole("Super"))

@@ -191,6 +191,7 @@
     <Compile Include="Controllers\BackloadDemoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Controllers\ReceiptsController.cs" />
     <Compile Include="Controllers\RentalIncomeController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -669,6 +670,7 @@
     <Content Include="Views\FileUpload\Index.cshtml" />
     <Content Include="Views\FileUpload\List.cshtml" />
     <Content Include="Views\FileUpload\Model.cshtml" />
+    <Content Include="Views\Permission\Index.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

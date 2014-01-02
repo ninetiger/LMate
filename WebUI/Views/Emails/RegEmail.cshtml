@@ -1,0 +1,11 @@
+﻿To: @ViewBag.To
+From: lolcats@website.com
+Subject: Important Message
+
+Hello @ViewBag.Username,
+
+Your new account has been successfully created. You can start using it immediately.
+Please activate your account within 7 days by clicking the button below.  @*todo need a way to check 7days or delete*@
+
+http://localhost/account/RegisterConfirmation?id=@ViewBag.confirmationToken
+@*todo use route rather than ?id*@

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Confirmation";
+}
+
+@if (Model)
+{
+    <h2>Confirmation Success</h2>
+    <p>Redirect to @Html.ActionLink("Login", "Login", "Account") page, please wait...</p>
+}
+else
+{
+    <h2>Account Activation</h2>
+    <p>Account activation request has expired.</p>
+}

@@ -11,6 +11,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using Postal;
+using WebUI.Common;
 using WebUI.Models;
 
 namespace WebUI.Controllers
@@ -50,10 +52,17 @@ namespace WebUI.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null)
+                if (user != null )
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    if (user.IsConfirmed)
+                    {
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    //todo resending the email, need change the content, may be introduce one more flag? or go to resend email page
+                    SendEmailConfirmation(user.Email, user.UserName, user.ConfirmationToken);
+                    return RedirectToAction("ConfirmationWaiting", "Account", new { email = user.Email });
+
                 }
                 else
                 {
@@ -82,22 +91,83 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
+                string confirmationToken = CreateConfirmationToken();
+                var user = new ApplicationUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    ConfirmationToken = confirmationToken,
+                    IsConfirmed = false
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     var r = UserManager.AddToRole(user.Id, "Individual");
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+
+                    SendEmailConfirmation(model.Email, model.UserName, confirmationToken);
+                    return RedirectToAction("ConfirmationWaiting", "Account", new { email = model.Email });
                 }
-                else
-                {
-                    AddErrors(result);
-                }
+
+                AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private static string CreateConfirmationToken()
+        {
+            return ShortGuid.NewGuid();
+        }
+
+        private static void SendEmailConfirmation(string to, string username, string confirmationToken)
+        {
+            dynamic email = new Email("RegEmail");
+            email.To = to;
+            email.UserName = username;
+            email.ConfirmationToken = confirmationToken;
+            email.Send();
+        }
+
+        [AllowAnonymous] //todo anti forgery
+        public ActionResult ConfirmationWaiting(string email)
+        {
+            ViewBag.Email = email;
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult Confirmation(bool isConfirmed)
+        {
+            return View(isConfirmed);
+        }
+        [AllowAnonymous]
+        public ActionResult RegisterConfirmation(string id)
+        {
+            if (ConfirmAccount(id))
+            {
+                return RedirectToAction("Confirmation", new {isConfirmed = true});
+            }
+            return RedirectToAction("Confirmation", new { isConfirmed = false});
+        }
+
+        private static bool ConfirmAccount(string confirmationToken)
+        {
+            if (confirmationToken != null)
+            {
+                var context = new ApplicationDbContext();
+                ApplicationUser user = context.Users.SingleOrDefault(u => u.ConfirmationToken.Equals(confirmationToken));
+                if (user != null)
+                {
+                    user.IsConfirmed = true;
+                    DbSet<ApplicationUser> dbSet = context.Set<ApplicationUser>();
+                    dbSet.Attach(user);
+                    context.Entry(user).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    return true;
+                }
+            }
+            return false;
         }
 
         //
@@ -369,7 +439,7 @@ namespace WebUI.Controllers
             {
                 User = await UserManager.FindByIdAsync(id)
             };
-            
+
             if (userRoleViewModel.User == null)
             {
                 return HttpNotFound();
@@ -412,7 +482,7 @@ namespace WebUI.Controllers
         //todo not getting to role lists back
         public async Task<ActionResult> Edit(
             //[Bind(Include = "Id,Name,IRDNumber,Address")]  //todo need to put bind back
-            UserRoleViewModel viewModel) 
+            UserRoleViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -507,7 +577,8 @@ namespace WebUI.Controllers
 
         private class ChallengeResult : HttpUnauthorizedResult
         {
-            public ChallengeResult(string provider, string redirectUri) : this(provider, redirectUri, null)
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
             {
             }
 

@@ -102,6 +102,9 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Postal">
+      <HintPath>..\packages\Postal.0.9.0\lib\net40\Postal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -186,6 +189,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Binders\UserModelBinder.cs" />
     <Compile Include="Common\DataTablesParam.cs" />
+    <Compile Include="Common\ShortGuid.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\BackloadDemoController.cs" />
@@ -671,6 +675,11 @@
     <Content Include="Views\FileUpload\List.cshtml" />
     <Content Include="Views\FileUpload\Model.cshtml" />
     <Content Include="Views\Permission\Index.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\RegEmail.cshtml" />
+    <Content Include="Views\Account\ConfirmationWaiting.cshtml" />
+    <Content Include="Views\Account\Confirmation.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

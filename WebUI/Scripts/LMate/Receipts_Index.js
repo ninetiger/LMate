@@ -1,6 +1,5 @@
 ﻿function docReady() {
     ReceiptsDataTable();
-
 }
 
 function ReceiptsDataTable() {

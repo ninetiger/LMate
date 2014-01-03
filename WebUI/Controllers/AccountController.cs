@@ -364,6 +364,7 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session.Clear();
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }

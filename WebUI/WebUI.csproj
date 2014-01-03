@@ -191,6 +191,7 @@
     <Compile Include="Common\DataTablesParam.cs" />
     <Compile Include="Common\ShortGuid.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\UserDelegateController.cs" />
     <Compile Include="Controllers\FileUploadController.cs" />
     <Compile Include="Controllers\BackloadDemoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -681,6 +682,7 @@
     <Content Include="Views\Emails\RegEmail.cshtml" />
     <Content Include="Views\Account\ConfirmationWaiting.cshtml" />
     <Content Include="Views\Account\Confirmation.cshtml" />
+    <Content Include="Views\UserDelegate\Index.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>
@@ -688,6 +690,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Default1\" />
   </ItemGroup>
   <ItemGroup>

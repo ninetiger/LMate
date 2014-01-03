@@ -237,9 +237,11 @@
         </EntityType>
         <EntityType Name="UserPermissions">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="User_Id" />
+            <PropertyRef Name="ActAsUser_Id" />
+            <PropertyRef Name="Role_ID" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="ActAsUser_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Role_ID" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -1027,9 +1029,11 @@
         </EntityType>
         <EntityType Name="UserPermission">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="User_Id" />
+            <PropertyRef Name="ActAsUser_Id" />
+            <PropertyRef Name="Role_ID" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="User_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ActAsUser_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Role_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />

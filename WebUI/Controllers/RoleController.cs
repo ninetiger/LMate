@@ -39,13 +39,13 @@ namespace WebUI.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //todo could use it more
             }
 
             var applicationRole = await RoleManager.FindByIdAsync(id);
             if (applicationRole == null)
             {
-                return HttpNotFound();
+                return HttpNotFound();  //todo could use it more
             }
             return View(new RoleViewModel(applicationRole));
         }

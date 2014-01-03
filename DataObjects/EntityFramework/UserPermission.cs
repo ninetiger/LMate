@@ -14,7 +14,7 @@ namespace DataObjects.EntityFramework
     
     public partial class UserPermission
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string User_Id { get; set; }
         public string ActAsUser_Id { get; set; }
         public string Role_ID { get; set; }

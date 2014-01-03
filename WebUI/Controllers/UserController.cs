@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DataObjects.EntityFramework;
+using DataObjects.EntityFramework.Implementation;
 using WebUI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -104,6 +106,9 @@ namespace WebUI.Controllers
             {
                 using (var repo = new ApplicationDbContext())
                 {
+                    //var entityAspNetUserDao = new EntityAspNetUserDao(new LMateEntities());
+                    //var userDao = await entityAspNetUserDao.GetByIDAsync(user.Id);
+                    //userDao.AspNetUserRoles.Add(user.Roles[0]);
                     repo.Entry(user).State = EntityState.Modified;
                     await repo.SaveChangesAsync();
                 }

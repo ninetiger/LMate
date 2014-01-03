@@ -42,7 +42,7 @@ namespace DataObjects.EntityFramework.Implementation
             {
                 query = query.Where(filter);
             }
-            query = includeProperties.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
+            query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
 
             if (orderBy != null)
@@ -51,6 +51,27 @@ namespace DataObjects.EntityFramework.Implementation
             }
 
             return await query.ToListAsync();
+        }
+
+        public virtual IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<TEntity> query = DbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            query = includeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+
+            return query.ToList();
         }
 
         public async virtual Task<TEntity> GetByIDAsync(object id)

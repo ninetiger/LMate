@@ -1,0 +1,6 @@
+﻿@model BusinessObjects.UserDelegateViewModel
+
+@Html.DropDownListFor(
+    x => x.PermissionId,
+    Model.PermissionSelectList,
+    null, new { style = "width: 200px", @class = "dropdown" })

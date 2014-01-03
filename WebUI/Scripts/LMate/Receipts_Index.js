@@ -1,9 +1,39 @@
-﻿function docReady() {
+﻿var receiptTable;
+
+function docReady() {
     ReceiptsDataTable();
+
+    UserPermissionChange();
+}
+
+function UserPermissionChange() {
+    var actAsUser = $('select#PermissionId');
+    actAsUser.change(function () {
+        $.ajax({
+            url: "/Permission/SetCurrentUser",
+            cache: false,
+            data: {
+                permissionId: actAsUser.val(),
+                returnUrl: window.location.pathname
+            }
+            , success: function (hasPermission) {
+                if (hasPermission == 'False') {
+                    $('select#PermissionId')[0].selectedIndex = 0;
+                }
+            }
+            , error: function () {
+                alert("an error has happened");
+                $('select#PermissionId')[0].selectedIndex = 0;
+            }
+            ,complete: function() {
+                receiptTable.fnReloadAjax();
+            }
+        });
+    });
 }
 
 function ReceiptsDataTable() {
-    $('#dataTable').dataTable({
+    receiptTable = $('#dataTable').dataTable({
         "sServerMethod": "POST",
         "sAjaxSource": "/Receipts/DataTableAjaxHandler"
         //, 'bStateSave': true
@@ -39,21 +69,21 @@ function ReceiptsDataTable() {
             { 'bSortable': false, 'bSearchable': false, 'aTargets': [8] }
         ],
         'oLanguage': { "sSearch": "Search all columns:" },
-        'fnCreatedRow': function(nRow, aData) {
+        'fnCreatedRow': function (nRow, aData) {
             var path = location.pathname.split('/');
             //var appRoot = location.protocol + '//' + location.host + '/' + path[1];
 
             //todo shouldnt need jquery a css with class should do for the 2 function below
             $(nRow).css('cursor', 'pointer');
             $(nRow).hover(
-                function() {
+                function () {
                     $(this).css("background-color", "lightcyan");
                 },
-                function() {
+                function () {
                     $(this).css("background", "");
                 }
             );
-            $(nRow).click(function() {
+            $(nRow).click(function () {
                 //nRow.setAttribute("id", aData[0]);
                 document.location.href = '/receipts/Edit?ID=' + aData[0];
             });

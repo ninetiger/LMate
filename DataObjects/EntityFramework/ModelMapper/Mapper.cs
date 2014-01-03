@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BusinessObjects;
 using DataObjects.Shared;
 
@@ -82,6 +83,39 @@ namespace DataObjects.EntityFramework.ModelMapper
             return receipt;
         }
         #endregion
+
+
+        #region UserPermission
+        public static UserPermissionViewModel Map(UserPermission entity)
+        {
+            if (entity == null) return null;
+
+            var viewModel = new UserPermissionViewModel
+            {
+                Id = entity.Id,
+                UserId = entity.User_Id,
+                ActAsUserId = entity.ActAsUser_Id,
+                RoleID = entity.Role_ID
+            };
+
+            return viewModel;
+        }
+
+        public static UserPermission Map(UserPermissionViewModel viewModel)
+        {
+            if (viewModel == null) return null;
+
+            var efObject = new UserPermission
+            {
+                Id = viewModel.Id,
+                User_Id = viewModel.UserId,
+                ActAsUser_Id = viewModel.ActAsUserId,
+                Role_ID = viewModel.RoleID
+            };
+            return efObject;
+        }
+        #endregion
+
 
         //#region  AccountType
         //internal static AccountType Map(AccountTypes entity)

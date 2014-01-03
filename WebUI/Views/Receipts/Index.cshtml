@@ -2,10 +2,9 @@
     ViewBag.Title = "All Receipts";
     Layout = "~/Views/Shared/_LandlordLayout.cshtml";
 }
-@Html.Action("Index", "UserDelegate")
+@Html.Action("PermissionDropDown", "Permission")
 <br/>
 <h2>All Receipts</h2>
-
 <p>@Html.ActionLink("Add a new receipt", "Create")</p>
 <br />
 <table id="dataTable">
@@ -55,6 +54,5 @@
 {
     docReady();
 
-    UserPermissionChange();
 }
 

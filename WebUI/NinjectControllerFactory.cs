@@ -24,6 +24,7 @@ namespace WebUI
         private void AddBindings()
         {
             _ninjectKernel.Bind<IReceiptRepository>().To<ReceiptRepository>();
+            _ninjectKernel.Bind<IUserPermissionRepository>().To<UserPermissionRepository>();
 
             //    Mock<IProductRepository> mock = new Mock<IProductRepository>();
             //    mock.Setup(m => m.Products)

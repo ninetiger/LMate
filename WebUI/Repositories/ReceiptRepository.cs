@@ -203,6 +203,7 @@ namespace WebUI.Repositories
             };
         }
 
+        #region ReceiptImage
         public async Task InsertImage(ReceiptImage image, int receiptId, string userId)
         {
             var receipt = await GetReceiptSecure(receiptId, userId);
@@ -253,6 +254,7 @@ namespace WebUI.Repositories
                 await SaveChangesAsync();
             }
         }
+        #endregion
 
         #region Vendor
         public async Task<Vendor> GetVednorSecure(int vendorId, string userId)
@@ -309,6 +311,12 @@ namespace WebUI.Repositories
         }
 
         #endregion
+
+        #region UserPermission
+            
+
+        #endregion
+
 
         #endregion
 

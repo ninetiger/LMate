@@ -1,6 +1,5 @@
 ﻿using BusinessObjects;
 using DataObjects.EntityFramework;
-using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,13 +13,16 @@ using WebUI.Repositories;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     public class ReceiptsController : Controller
     {
         private IReceiptRepository _efReceiptRepository;
+        private readonly IUserPermissionRepository _efUserPermissionRepository;
 
-        public ReceiptsController(IReceiptRepository efReceiptRepository)
+        public ReceiptsController(IReceiptRepository efReceiptRepository, IUserPermissionRepository efUserPermissionRepository)
         {
             _efReceiptRepository = efReceiptRepository;
+            _efUserPermissionRepository = efUserPermissionRepository;
         }
 
         #region Index page
@@ -39,7 +41,7 @@ namespace WebUI.Controllers
         [HttpPost]
         public async Task<JsonResult> DataTableAjaxHandler(DataTablesParam param, UserViewModel user)
         {
-            var userId = user.UserId;
+            var userId = await ImpersonateCheckAsync(user.UserId);
             var recieptBriefList = await _efReceiptRepository.GetReceiptBriefsByUserIdAsync(userId);
 
             var json = GenerateJsonContent(recieptBriefList);
@@ -52,6 +54,26 @@ namespace WebUI.Controllers
             });
 
             return jsonString;
+        }
+
+        //todo possible to mave this into the userPermissionRepo
+        private async Task<string> ImpersonateCheckAsync(string userId)
+        {
+            string id = userId;
+            var permissionId = Session["PermissionId"];
+
+            if (permissionId == null || string.Empty.Equals(permissionId.ToString()))
+            {
+                return id;
+            }
+
+            var userPermission = await _efUserPermissionRepository.GetUserPermissionSecure(userId, permissionId.ToString());
+            if (userPermission != null)
+            {
+                return userPermission.ActAsUser_Id;
+            }
+
+            return id;
         }
 
         private static List<List<string>> GenerateJsonContent(IEnumerable<ReceiptBriefViewModel> data)
@@ -72,21 +94,23 @@ namespace WebUI.Controllers
 
         public async Task<ViewResult> Create(UserViewModel user)
         {
-            string userID = user.UserId;
-            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(0, userID);
+            var userId = await ImpersonateCheckAsync(user.UserId);
+            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(0, userId);
             return View("Edit", viewModel);
         }
 
         //[HttpPost]
-        public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief)
+        public async Task<RedirectToRouteResult> Delete(ReceiptBriefViewModel receiptBrief, UserViewModel user)
         {
 
             if (receiptBrief.Id < 1) return RedirectToAction("Index"); //TODO LOG it
 
+            var userId = await ImpersonateCheckAsync(user.UserId);
+
             var receiptViewModel = new ReceiptViewModel
             {
                 Id = receiptBrief.Id,
-                UserId = User.Identity.GetUserId()
+                UserId = userId
             };
             await _efReceiptRepository.DeleteAsync(receiptViewModel);
             await _efReceiptRepository.SaveChangesAsync();
@@ -102,8 +126,8 @@ namespace WebUI.Controllers
 
         public async Task<ViewResult> Edit(int id, UserViewModel user)
         {
-            string userID = user.UserId;
-            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(id, userID);
+            var userId = await ImpersonateCheckAsync(user.UserId);
+            var viewModel = await _efReceiptRepository.GetReceiptForEditAsync(id, userId);
             return View(viewModel);
         }
 
@@ -112,10 +136,10 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userId = user.UserId;
+                var userId = await ImpersonateCheckAsync(user.UserId);
                 receiptViewModel.UserId = userId;
 
-                await UpdateVendor(receiptViewModel, userId);
+                await UpdateVendorAsync(receiptViewModel, userId);
 
                 //todo receiptstatus set to 1 when add new; why id start from 1000?
                 if (receiptViewModel.Id == 0)
@@ -139,7 +163,7 @@ namespace WebUI.Controllers
             return View(receiptEditViewModel);
         }
 
-        private async Task UpdateVendor(ReceiptViewModel receiptViewModel, string userId)
+        private async Task UpdateVendorAsync(ReceiptViewModel receiptViewModel, string userId)
         {
             if (!string.IsNullOrEmpty(receiptViewModel.VendorName))
             {
@@ -149,7 +173,7 @@ namespace WebUI.Controllers
                     var newVednor = new VendorViewModel
                     {
                         VendorName = receiptViewModel.VendorName,
-                        UserId = receiptViewModel.UserId
+                        UserId = userId
                     };
                     receiptViewModel.VendorId = 0;
                     receiptViewModel.Vendor = newVednor;
@@ -171,13 +195,15 @@ namespace WebUI.Controllers
 
         public async Task<JsonResult> AutoCompleteVendor(string searchString, UserViewModel user)
         {
-            var list = await _efReceiptRepository.SearchVendorNameSecure(searchString, user.UserId);
+            var userId = await ImpersonateCheckAsync(user.UserId);
+            var list = await _efReceiptRepository.SearchVendorNameSecure(searchString, userId);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         public async Task DeleteVendor(string name, UserViewModel user)
         {
-            await _efReceiptRepository.DeleteVendorSecure(name, user.UserId);
+            var userId = await ImpersonateCheckAsync(user.UserId);
+            await _efReceiptRepository.DeleteVendorSecure(name, userId);
             await _efReceiptRepository.SaveChangesAsync();
         }
 
@@ -187,7 +213,8 @@ namespace WebUI.Controllers
 
         public async Task<FileContentResult> GetImage(int imageId, UserViewModel user)
         {
-            var userId = user.UserId;
+            var userId = await ImpersonateCheckAsync(user.UserId);
+
             var image = await _efReceiptRepository.GetImageSecure(imageId, userId);
             if (image != null)
             {
@@ -201,7 +228,8 @@ namespace WebUI.Controllers
         {
             if (receiptId > 0)
             {
-                var list = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId, user.UserId);
+                var userId = await ImpersonateCheckAsync(user.UserId);
+                var list = await _efReceiptRepository.GetImageAddrsByReceiptId(receiptId, userId);
                 var jsonResult = Json(list, JsonRequestBehavior.AllowGet);
                 return jsonResult;
             }
@@ -227,7 +255,7 @@ namespace WebUI.Controllers
                 //  Path.GetFileName(image.FileName));
                 //image.SaveAs(savedFileName);
 
-                var userId = user.UserId;
+                var userId = await ImpersonateCheckAsync(user.UserId);
 
                 var receiptImage = new ReceiptImage
                 {
@@ -247,7 +275,7 @@ namespace WebUI.Controllers
 
         public async Task DetachAnImage(int imageId, int receiptId, UserViewModel user)
         {
-            var userId = user.UserId;
+            var userId = await ImpersonateCheckAsync(user.UserId);
             await _efReceiptRepository.DetachAnImageFromReceipt(imageId, receiptId, userId);
         }
         #endregion

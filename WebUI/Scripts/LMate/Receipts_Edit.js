@@ -179,7 +179,7 @@ function GetImagesForPopover() {
             var popoverContent = '<table class="table-condensed table-hover"><tbody>';
 
             var len = data.length;
-            for (var i = 0; i < len - 1; i++) {
+            for (var i = 0; i <= len - 1; i++) {
                 var arr = data[i];
                 popoverImageArray.push(arr);
                 popoverContent += '<tr><td style="width:10%"><img width="60" height="60" class="img-rounded" src="/Receipts/GetImage?imageId=';

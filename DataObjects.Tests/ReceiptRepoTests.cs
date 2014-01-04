@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataObjects.EntityFramework;
 using DataObjects.EntityFramework.Implementation;
+using DataObjects.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataObjects.Tests

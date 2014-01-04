@@ -37,3 +37,7 @@ function addPermission() {
     });
 }
 
+function removePermission()
+{
+    
+}

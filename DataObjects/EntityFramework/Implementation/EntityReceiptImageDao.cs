@@ -1,4 +1,6 @@
-﻿namespace DataObjects.EntityFramework.Implementation
+﻿using DataObjects.Interfaces;
+
+namespace DataObjects.EntityFramework.Implementation
 {
     public class EntityReceiptImageDao : EntityDao<ReceiptImage>, IReceiptImageDao
     {

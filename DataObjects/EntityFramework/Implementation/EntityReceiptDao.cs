@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataObjects.Interfaces;
 
 namespace DataObjects.EntityFramework.Implementation
 {

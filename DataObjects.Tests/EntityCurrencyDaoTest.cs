@@ -1,5 +1,6 @@
 ﻿using DataObjects.EntityFramework;
 using DataObjects.EntityFramework.Implementation;
+using DataObjects.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DataObjects.EntityFramework;
 
-namespace DataObjects
+namespace DataObjects.Interfaces
 {
     /// <summary>
     /// Defines methods to access receipts.

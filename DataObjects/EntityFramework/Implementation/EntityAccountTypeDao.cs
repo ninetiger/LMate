@@ -1,4 +1,6 @@
-﻿namespace DataObjects.EntityFramework.Implementation
+﻿using DataObjects.Interfaces;
+
+namespace DataObjects.EntityFramework.Implementation
 {
     public class EntityAccountTypeDao : EntityDao<AccountType>, IAccountTypeDao
     {

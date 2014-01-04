@@ -1,4 +1,4 @@
-﻿namespace DataObjects
+﻿namespace DataObjects.Interfaces
 {
     /// <summary>
     /// Abstract factory interface. Creates data access objects.

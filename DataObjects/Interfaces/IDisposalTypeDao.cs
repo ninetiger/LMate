@@ -1,6 +1,6 @@
 ﻿using DataObjects.EntityFramework;
 
-namespace DataObjects
+namespace DataObjects.Interfaces
 {
     public interface IDisposalTypeDao : IDao<DisposalType>
     { }

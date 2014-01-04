@@ -26,7 +26,6 @@ namespace WebUI.Repositories
 
         public async Task<IEnumerable<UserPermissionViewModel>> GetAllByUserIdAsync(string userId)
         {
-            //get both generic and user specific vendors
             var list = await _entityUserPermission.GetAsync(x => x.User_Id == userId);
             var vmQuery = list.Select(Mapper.Map);
             return vmQuery;
@@ -84,7 +83,7 @@ namespace WebUI.Repositories
         #endregion
 
         #region IUserPermissionRepository
-        public async Task<UserPermission> GetUserPermissionSecure(string userId, string permissionId)
+        public async Task<UserPermission> GetUserPermissionSecureAsync(string userId, string permissionId)
         {
             if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(permissionId))
             {
@@ -101,7 +100,10 @@ namespace WebUI.Repositories
             return null;
         }
 
-
+        public IEnumerable<UserPermission> GetAllByUserId(string userId)
+        {
+            return  _entityUserPermission.Get(x => x.User_Id == userId);
+        }
         #endregion
 
 

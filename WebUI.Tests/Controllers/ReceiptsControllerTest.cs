@@ -63,9 +63,10 @@ namespace WebUI.Tests.Controllers
         {
             // Mocking
             var mockReceipt = new Mock<IReceiptRepository>();
+            var mockUserPermission = new Mock<IUserPermissionRepository>();
 
             // Arrange
-            var controller = new ReceiptsController(mockReceipt.Object);
+            var controller = new ReceiptsController(mockReceipt.Object, mockUserPermission.Object);
 
             // Act
             var viewResult = controller.Index() as ViewResult;
@@ -82,10 +83,11 @@ namespace WebUI.Tests.Controllers
             var userViewModel = new UserViewModel() { UserId = "uId" };
 
             var mockRepo = new Mock<IReceiptRepository>();
+            var mockUserPermission = new Mock<IUserPermissionRepository>();
             mockRepo.Setup(m => m.GetReceiptBriefsByUserIdAsync("uId")).Returns(Task.FromResult(list));
 
             // Arrange
-            var controller = new ReceiptsController(mockRepo.Object);
+            var controller = new ReceiptsController(mockRepo.Object, mockUserPermission.Object);
 
             // Act
             Task<JsonResult> taskResult = controller.DataTableAjaxHandler(dataTablesParam, userViewModel);

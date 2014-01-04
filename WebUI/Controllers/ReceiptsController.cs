@@ -67,7 +67,7 @@ namespace WebUI.Controllers
                 return id;
             }
 
-            var userPermission = await _efUserPermissionRepository.GetUserPermissionSecure(userId, permissionId.ToString());
+            var userPermission = await _efUserPermissionRepository.GetUserPermissionSecureAsync(userId, permissionId.ToString());
             if (userPermission != null)
             {
                 return userPermission.ActAsUser_Id;

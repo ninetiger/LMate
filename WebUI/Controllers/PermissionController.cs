@@ -1,25 +1,21 @@
-﻿using System;
+﻿using BusinessObjects;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using BusinessObjects;
-using DataObjects.EntityFramework;
-using DataObjects.EntityFramework.Implementation;
 using WebUI.Models;
+using WebUI.Repositories;
 
 namespace WebUI.Controllers
 {
     public class PermissionController : Controller
     {
-        private readonly EntityUserPermission _entityUserPermissionDao;
+        private readonly IUserPermissionRepository _efUserPermissionRepository;
 
-        public PermissionController(LMateEntities context)
+        public PermissionController(IUserPermissionRepository efUserPermissionRepository)
         {
-            _entityUserPermissionDao = new EntityUserPermission(context);
-
+            _efUserPermissionRepository = efUserPermissionRepository;
         }
         //
         // GET: /Permission/
@@ -50,7 +46,8 @@ namespace WebUI.Controllers
                 vm.PermissionId = Session["PermissionId"].ToString();
             }
 
-            var query = _entityUserPermissionDao.Get(x => x.User_Id == user.UserId);
+            //todo can not use async as this is a partialView ???
+            var query = _efUserPermissionRepository.GetAllByUserId(user.UserId);
             vm.PermissionSelectList.AddRange(query.Select(x => new SelectListItem
             {
                 Text = x.AspNetUser1.UserName + " as " + x.AspNetRole.Name,
@@ -62,7 +59,8 @@ namespace WebUI.Controllers
 
         public async Task<bool> SetCurrentUser(string permissionId, string returnUrl, UserViewModel user)
         {
-            bool hasPermission = await CheckUserCredential(user.UserId, permissionId);
+            var userPermision = await _efUserPermissionRepository.GetUserPermissionSecureAsync(user.UserId, permissionId);
+            bool hasPermission = userPermision != null;
             if (hasPermission)
             {
                 Session["PermissionId"] = permissionId;
@@ -72,34 +70,6 @@ namespace WebUI.Controllers
                 Session["PermissionId"] = string.Empty;
             }
             return hasPermission;
-        }
-
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Dashboard");
-            }
-        }
-
-        private async Task<bool> CheckUserCredential(string userId, string permissionId)
-        {
-            if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(permissionId))
-            {
-                var permissionList =
-                    await _entityUserPermissionDao.GetAsync(x => x.User_Id == userId
-                                                             && x.Id == permissionId);
-
-                if (permissionList.Count() == 1)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

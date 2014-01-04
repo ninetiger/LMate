@@ -1,7 +1,5 @@
-﻿using BusinessObjects;
-using DataObjects.EntityFramework;
+﻿using DataObjects.EntityFramework;
 using DataObjects.EntityFramework.Implementation;
-using DataObjects.EntityFramework.ModelMapper;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -15,34 +13,36 @@ namespace WebUI.Repositories
     {
         private readonly LMateEntities _context;
         private readonly EntityUserPermission _entityUserPermission;
+        private readonly EntityAspNetUserDao _entityAspNetUserDao;
+        private readonly EntityAspNetRoleDao _entityAspNetRoleDao;
 
         public UserPermissionRepository(LMateEntities context)
         {
             _context = context;
             _entityUserPermission = new EntityUserPermission(_context);
+            _entityAspNetUserDao = new EntityAspNetUserDao(_context);
+            _entityAspNetRoleDao = new EntityAspNetRoleDao(_context);
         }
 
         #region IRepository
 
-        public async Task<IEnumerable<UserPermissionViewModel>> GetAllByUserIdAsync(string userId)
+        public async Task<IEnumerable<UserPermission>> GetAllByUserIdAsync(string userId)
         {
             var list = await _entityUserPermission.GetAsync(x => x.User_Id == userId);
-            var vmQuery = list.Select(Mapper.Map);
-            return vmQuery;
+            return list;
         }
 
-        public void Insert(UserPermissionViewModel entityToInsert)
+        public void Insert(UserPermission entityToInsert)
         {
-            var userPermission = Mapper.Map(entityToInsert);
-            _entityUserPermission.Insert(userPermission);
+            _entityUserPermission.Insert(entityToInsert);
         }
 
-        public async Task Update(UserPermissionViewModel entityToUpdate)
+        public async Task Update(UserPermission entityToUpdate)
         {
             var userPermission = await _entityUserPermission.GetByIDAsync(entityToUpdate.Id);
-            userPermission.User_Id = entityToUpdate.UserId;
-            userPermission.ActAsUser_Id = entityToUpdate.ActAsUserId;
-            userPermission.Role_ID = entityToUpdate.RoleID;
+            userPermission.User_Id = entityToUpdate.User_Id;
+            userPermission.ActAsUser_Id = entityToUpdate.ActAsUser_Id;
+            userPermission.Role_ID = entityToUpdate.Role_ID;
             //userPermission.Version = entityToUpdate.Version.AsByteArray(); //todo need to understand how to use it
 
             _entityUserPermission.Update(userPermission);
@@ -52,10 +52,9 @@ namespace WebUI.Repositories
         /// <summary>
         /// Delete a userPermission
         /// </summary>
-        public async Task DeleteAsync(UserPermissionViewModel entityToDelete)
+        public async Task DeleteAsync(UserPermission entityToDelete)
         {
-            var userPermission = await _entityUserPermission.GetByIDAsync(entityToDelete.Id);
-            _entityUserPermission.Delete(userPermission);
+            await _entityUserPermission.DeleteAsync(entityToDelete);
         }
 
         public async Task<int> SaveChangesAsync()
@@ -100,10 +99,30 @@ namespace WebUI.Repositories
             return null;
         }
 
+        public async Task<UserPermission> GetUserPermissionAsync(string userId, string actAsUserId, string roleId)
+        {
+            var list = await _entityUserPermission.GetAsync(x => x.User_Id == userId && x.ActAsUser_Id == actAsUserId && x.Role_ID == roleId);
+            return list.SingleOrDefault();
+        }
+
         public IEnumerable<UserPermission> GetAllByUserId(string userId)
         {
-            return  _entityUserPermission.Get(x => x.User_Id == userId);
+            return _entityUserPermission.Get(x => x.User_Id == userId);
         }
+
+        public async Task<AspNetUser> GetUserByEmailAsync(string email)
+        {
+            var user = await _entityAspNetUserDao.GetAsync(x => x.Email.ToLower().Equals(email.ToLower()));
+            return user.SingleOrDefault();
+        }
+
+        public async Task<AspNetRole> GetRoleByName(string roleName)
+        {
+            var role = await _entityAspNetRoleDao.GetAsync(x => x.Name == roleName);
+            return role.SingleOrDefault();
+        }
+
+
         #endregion
 
 

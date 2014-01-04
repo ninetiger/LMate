@@ -400,6 +400,7 @@
     <Content Include="Content\FileUpload\img\progressbar.gif" />
     <Content Include="Content\FileUpload\img\progressblue.gif" />
     <Content Include="Content\ie.css" />
+    <Content Include="Content\LMate\userPermission_index.css" />
     <Content Include="Content\LMate\Receipts_Edit.css" />
     <Content Include="Content\LMate\FileUploadCustom.css" />
     <Content Include="Content\mobile.css" />
@@ -575,6 +576,7 @@
     <Content Include="Scripts\LMate\FileUploadDemo.js" />
     <Content Include="Scripts\LMate\FileUpload.js" />
     <Content Include="Scripts\LMate\Receipts_Edit.js" />
+    <Content Include="Scripts\LMate\permission_index.js" />
     <Content Include="Scripts\LMate\Receipts_Index.js" />
     <Content Include="Scripts\modernizr-2.7.1.js" />
     <Content Include="Scripts\respond.js" />
@@ -685,6 +687,7 @@
     <Content Include="Views\Account\ConfirmationWaiting.cshtml" />
     <Content Include="Views\Account\Confirmation.cshtml" />
     <Content Include="Views\Permission\PermissionDropDown.cshtml" />
+    <Content Include="Views\Permission\Edit.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

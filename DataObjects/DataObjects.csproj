@@ -89,6 +89,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\Implementation\EntityAccountTypeDao.cs" />
+    <Compile Include="EntityFramework\Implementation\EntityAspNetRoleDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityAspNetUserDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityDisposalTypeDao.cs" />
     <Compile Include="EntityFramework\Implementation\EntityReceiptCategoryDao.cs" />
@@ -152,6 +153,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="IAccountTypeDao.cs" />
+    <Compile Include="IAspNetRoleDao.cs" />
     <Compile Include="IAspNetUserDao.cs" />
     <Compile Include="IDepreciationAssetDao.cs" />
     <Compile Include="IDepreciationBuildingDao.cs" />

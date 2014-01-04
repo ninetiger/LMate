@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Permissions";
     Layout = "~/Views/Shared/_LandlordLayout.cshtml";
 }
@@ -7,18 +6,54 @@
 <h2>Permissions</h2>
 <br />
 <hr />
-<h5>Company</h5>
-You can create a compnay and assign employees with different permissions. <button class="btn btn-default btn-sm">Add</button>
-<br />
+<div class="section">
+    <h3 class="title">Company</h3>
+    <span class="glyphicon glyphicon-question-sign fontSize16 gray"></span>
+    <span>You can create a compnay and assign employees with different permissions.</span><br />
+    <button class="addMore btn btn-primary btn-sm">+ Add another user</button>
+</div>
 <hr />
-<h5>Acountent</h5>
-You can assign an Acountent to double check your claims and return. <button class="btn btn-default btn-sm">Add</button>
-<br />
+<div class="section">
+    <h3 class="title">Acountent</h3>
+    <span class="glyphicon glyphicon-question-sign fontSize16 gray"></span>
+    <span>You can assign an Acountent to double check your claims and return.</span><br />
+    <div class="well well-sm">
+        <label>Compay:</label><span>Mr LMate Ltd</span><br />
+        <label>Name:</label><span>Da Wang</span><br />
+        <label>Address:</label><span>chch</span><br />
+        <label>Phone:</label><span>022 3563456</span><br />
+    </div>
+    <button class="addMore btn btn-primary btn-sm">+ Add another user</button>
+</div>
 <hr />
-<h5>Delegates</h5>
-You can assign Delegates to act for you. <button class="btn btn-default btn-sm">Add</button>
-<br />
+<div class="section">
+    <h3 class="title">Delegates</h3>
+    <span class="glyphicon glyphicon-question-sign fontSize16 gray"></span>
+    <span> You can assign Delegates to act for you.</span><br />
+    <div class="well well-sm">
+        <label class="pull-left">User email</label>
+        <input class="pull-left form-control input-sm" style="width:300px" />
+        <button class="btn btn-default btn-sm">Add</button>
+        <button class="btn btn-default btn-sm">X</button>
+    </div>
+    <button class="addMore btn btn-primary btn-sm">+ Add another user</button>
+</div>
 <hr />
-<h5>Viewer</h5>
-A viewer can view your receipts and retruns only. <button class="btn btn-default btn-sm">Add</button>
+<div class="section">
+    <h3 class="title">Viewer</h3>
+    <span class="glyphicon glyphicon-question-sign fontSize16 gray"></span>
+    <span>A viewer can view your receipts and retruns only.</span><br />
+    <button class="addMore btn btn-primary btn-sm">+ Add another user</button>
+</div>
+@section Contents
+{
+    <link href="/Content/LMate/userPermission_index.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script type="text/javascript" src="\Scripts\LMate\permission_index.js"></script>
+}
 
+@section DocumentReady
+{
+    docReady();
+}

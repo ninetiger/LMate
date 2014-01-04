@@ -116,3 +116,4 @@
 /// <reference path="jquery.datatables.columnfilter.js" />
 /// <reference path="lmate/frontpage.js" />
 /// <reference path="jquery.datatables.fnreloadajax.js" />
+/// <reference path="lmate/permission_index.js" />

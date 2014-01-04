@@ -79,7 +79,7 @@ function InitialViewFiles() {
     $(window).resize(function () {
         if ($('div.popover').hasClass('in')) {
             $('button#btnViewFiles').popover('show');
-            $('div.popover').css('left', (parseFloat($('div.popover').css('left')) + 80));
+            $('div.popover').css('left', (parseFloat($('div.popover').css('left')) - 88));
         }
     });
 }
@@ -191,7 +191,7 @@ function GetImagesForPopover() {
             popoverContent += '</tbody></table>';
             $('div#fileList').empty().append(popoverContent);
 
-            $('div.popover').css('left', '+=80px');
+            $('div.popover').css('left', '-=88px');
 
             //update event
             $('div#fileList table tbody tr td a.imageUpdate').click(function (e) {
